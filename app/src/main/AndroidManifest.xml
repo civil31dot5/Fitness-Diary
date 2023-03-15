@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".APP"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,8 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitnessDiary"
         tools:targetApi="31">
+
+        <provider
+            android:name=".MyContentProvider"
+            android:authorities="com.civil31dot5.fitnessdiary.fileprovider"
+            android:enabled="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path"/>
+        </provider>
+
+
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
