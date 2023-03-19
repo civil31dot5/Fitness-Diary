@@ -4,10 +4,11 @@ import com.civil31dot5.fitnessdiary.domain.model.DietRecord
 import com.civil31dot5.fitnessdiary.domain.repository.RecordRepository
 import javax.inject.Inject
 
-class AddDietRecordUseCase @Inject constructor(
+class GetAllDietRecordUseCase @Inject constructor(
     private val repository: RecordRepository
 ) {
-    suspend operator fun invoke(record: DietRecord): Boolean{
-        return repository.addDietRecord(record).isSuccess
+
+    suspend operator fun invoke(): List<DietRecord>{
+        return repository.getAllDietRecords()
     }
 }

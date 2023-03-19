@@ -6,7 +6,4 @@ import android.database.Cursor
 import android.net.Uri
 import androidx.core.content.FileProvider
 
-class MyContentProvider : FileProvider(R.xml.file_path) {
-
-
-}
+class MyContentProvider : FileProvider(R.xml.file_path)
