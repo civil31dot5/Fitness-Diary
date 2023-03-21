@@ -1,6 +1,7 @@
 package com.civil31dot5.fitnessdiary.domain.model
 
 import java.time.LocalDateTime
+import java.util.*
 
 /**
  * Record 紀錄
@@ -98,7 +99,7 @@ data class DrinkWaterRecord(
  * @property note 備註
  */
 data class RecordImage(
-    val id: String,
+    val id: String = UUID.randomUUID().toString(),
     val filePath: String,
     val note: String = ""
 )

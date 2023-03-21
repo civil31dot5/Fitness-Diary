@@ -45,4 +45,9 @@ class RecordImageFileProcessor @Inject constructor(
 
         "$imageFolderName/$newFileName"
     }
+
+    fun deleteFile(filePath: String): Boolean{
+        val file = File(context.filesDir, filePath)
+        return file.delete()
+    }
 }

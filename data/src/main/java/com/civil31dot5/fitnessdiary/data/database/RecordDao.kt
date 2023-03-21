@@ -1,9 +1,8 @@
 package com.civil31dot5.fitnessdiary.data.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
+import com.civil31dot5.fitnessdiary.domain.model.DietRecord
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -16,7 +15,13 @@ interface RecordDao {
     suspend fun insertRecordImage(image: RecordImageEntity)
 
     @Transaction
-    @Query("SELECT * FROM diet_record")
-    suspend fun getAllDietRecord(): List<DietRecordWithImages>
+    @Query("SELECT * FROM diet_record ORDER BY datetime ASC")
+    fun getAllDietRecord(): Flow<List<DietRecordWithImages>>
+
+    @Delete
+    suspend fun deleteDietRecord(dietRecord: DietRecordEntity)
+
+    @Delete
+    suspend fun deleteRecordImage(image: RecordImageEntity)
 
 }

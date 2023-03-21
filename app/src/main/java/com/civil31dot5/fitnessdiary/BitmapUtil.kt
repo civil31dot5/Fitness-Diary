@@ -4,9 +4,9 @@ import android.graphics.*
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.io.InputStream
 
 
 object BitmapUtil {
@@ -36,16 +36,27 @@ object BitmapUtil {
 
         return bitmap
     }
+    fun inSampleSizeToFile(inputStream: InputStream, outFile: File, size: Int = 2): Boolean {
+
+        val option = BitmapFactory.Options().apply {
+            inSampleSize = size
+        }
+
+        val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream, null, option)
+        return bitmap?.writeToJPGFile(outFile) == true
+    }
 
 }
 
-fun Bitmap.writeToJPGFile(file: File){
-    try {
+fun Bitmap.writeToJPGFile(file: File): Boolean{
+    return try {
         val fos = FileOutputStream(file)
         compress(Bitmap.CompressFormat.JPEG, 90, fos)
         fos.flush()
         fos.close()
+        true
     }catch (e: Exception){
         e.printStackTrace()
+        false
     }
 }

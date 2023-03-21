@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:title="home"
+        android:icon="@drawable/ic_add"/>
+
+    <item
+        android:id="@+id/dietRecordHistoryFragment"
+        android:title="record diet"
+        android:icon="@drawable/ic_food_bank"/>
+
+</menu>

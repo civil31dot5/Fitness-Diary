@@ -1,4 +1,4 @@
-package com.civil31dot5.fitnessdiary.ui
+package com.civil31dot5.fitnessdiary.ui.main
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
