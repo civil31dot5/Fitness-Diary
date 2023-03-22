@@ -54,4 +54,10 @@ open class AddRecordViewModel @Inject constructor(
         _basicRecordDataFlow.update { it.copy(addRecordSuccess = success, isLoading = false) }
     }
 
+    fun onRecordNameChanged(newName: String) {
+        if (_basicRecordDataFlow.value.name != newName){
+            _basicRecordDataFlow.update { it.copy(name = newName) }
+        }
+    }
+
 }

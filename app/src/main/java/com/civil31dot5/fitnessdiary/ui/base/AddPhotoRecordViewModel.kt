@@ -38,4 +38,15 @@ open class AddPhotoRecordViewModel @Inject constructor(
         _photoRecordData.update { it.copy(selectedPhotos = newList, isAddButtonVisible = isAddButtonVisible) }
     }
 
+    fun onRecordImageNoteChanged(image: RecordImage, note: String) {
+        val newList = _photoRecordData.value.selectedPhotos.toMutableList()
+        newList.replaceAll {
+            if (it.id == image.id){
+                return@replaceAll it.copy(note = note)
+            }
+            return@replaceAll it
+        }
+        _photoRecordData.update { it.copy(selectedPhotos = newList) }
+    }
+
 }

@@ -14,15 +14,15 @@
     <fragment
         android:id="@+id/dietRecordHistoryFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.record.diet.DietRecordHistoryFragment"
-        android:label="DietRecordHistoryFragment"
+        android:label="飲食紀錄"
         tools:layout="@layout/fragment_diet_record_history"/>
     <fragment
-        android:id="@+id/addDietRecordDialogFragment"
-        android:name="com.civil31dot5.fitnessdiary.ui.record.diet.AddDietRecordDialogFragment"
-        android:label="fragment_add_diet_record"
+        android:id="@+id/addDietRecordFragment"
+        android:name="com.civil31dot5.fitnessdiary.ui.record.diet.AddDietRecordFragment"
+        android:label="新增飲食紀錄"
         tools:layout="@layout/fragment_add_diet_record" />
 
-    <action android:id="@+id/action_global_addDietRecordDialogFragment"
-        app:destination="@id/addDietRecordDialogFragment" />
+    <action android:id="@+id/action_global_addDietRecordFragment"
+        app:destination="@id/addDietRecordFragment" />
 
 </navigation>

@@ -16,7 +16,7 @@ private val diffUtil = object : DiffUtil.ItemCallback<DietRecord>(){
     }
 
     override fun areContentsTheSame(oldItem: DietRecord, newItem: DietRecord): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem == newItem
     }
 }
 

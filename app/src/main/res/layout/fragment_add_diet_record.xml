@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingHorizontal="16dp"
-    tools:context=".ui.record.diet.AddDietRecordDialogFragment">
+    tools:context=".ui.record.diet.AddDietRecordFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

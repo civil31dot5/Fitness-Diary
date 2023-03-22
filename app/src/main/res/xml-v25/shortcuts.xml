@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <shortcut
+        android:shortcutId="add"
+        android:enabled="true"
+        android:icon="@drawable/ic_add"
+        android:shortcutShortLabel="@string/shortcut_add_diet_record_label"
+        android:shortcutLongLabel="@string/shortcut_add_diet_record_label">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.civil31dot5.fitnessdiary"
+            android:targetClass="com.civil31dot5.fitnessdiary.ui.main.MainActivity" >
+            <extra
+                android:name="to_record"
+                android:value="diet"/>
+        </intent>
+
+    </shortcut>
+
+</shortcuts>

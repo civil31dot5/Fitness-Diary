@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -27,6 +28,7 @@ import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -38,7 +40,7 @@ import java.time.format.DateTimeFormatter
 
 
 @AndroidEntryPoint
-class AddDietRecordDialogFragment : Fragment() {
+class AddDietRecordFragment : Fragment() {
 
     private val viewModel: AddDietRecordViewModel by viewModels()
     private lateinit var binding: FragmentAddDietRecordBinding
@@ -118,6 +120,9 @@ class AddDietRecordDialogFragment : Fragment() {
         binding.rvPhotos.adapter = SelectedPhotosAdapter(
             onDeleteListener = {
                 viewModel.deleteRecordImage(it)
+            },
+            onNoteChangedListener = { recordImage, note ->
+                viewModel.onRecordImageNoteChanged(recordImage, note)
             }
         )
         binding.rvPhotos.addItemDecoration(
@@ -143,6 +148,11 @@ class AddDietRecordDialogFragment : Fragment() {
             val note = binding.tlNote.editText?.text?.toString()
             viewModel.submit(note)
         }
+
+        binding.tlName.editText?.doOnTextChanged { text, start, before, count ->
+            val text = binding.tlName.editText?.editableText?.toString() ?: return@doOnTextChanged
+            viewModel.onRecordNameChanged(text)
+        }
     }
 
     private fun bindViewModel() {
@@ -152,6 +162,7 @@ class AddDietRecordDialogFragment : Fragment() {
                     viewModel.basicRecordData.collect {
                         with(binding) {
                             tlName.editText?.setText(it.name)
+                            tlName.editText?.setSelection(it.name.length)
                             tlDate.editText?.setText(it.date.format(DateTimeFormatter.ISO_LOCAL_DATE))
                             tlTime.editText?.setText(it.time.format(DateTimeFormatter.ofPattern("HH:mm")))
                             ilLoading.root.isVisible = it.isLoading
@@ -195,8 +206,12 @@ class AddDietRecordDialogFragment : Fragment() {
     }
 
     private fun showTimePicker() {
+        val timeNow = LocalTime.now()
         val timerPicker = MaterialTimePicker.Builder()
-            .setTimeFormat(TimeFormat.CLOCK_24H)
+            .setTimeFormat(TimeFormat.CLOCK_12H)
+            .setInputMode(INPUT_MODE_CLOCK)
+            .setHour(timeNow.hour)
+            .setMinute(timeNow.minute)
             .setPositiveButtonText("Ok")
             .setNegativeButtonText("Cancel")
             .build()

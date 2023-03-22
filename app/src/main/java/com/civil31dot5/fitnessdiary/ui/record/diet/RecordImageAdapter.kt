@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.civil31dot5.fitnessdiary.GlideApp
 import com.civil31dot5.fitnessdiary.domain.model.RecordImage
+import com.civil31dot5.fitnessdiary.extraFile
 import java.io.File
 
 private val diffUtil = object : DiffUtil.ItemCallback<RecordImage>(){
@@ -15,7 +16,7 @@ private val diffUtil = object : DiffUtil.ItemCallback<RecordImage>(){
     }
 
     override fun areContentsTheSame(oldItem: RecordImage, newItem: RecordImage): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem == newItem
     }
 }
 
@@ -38,7 +39,7 @@ class RecordImageAdapter: ListAdapter<RecordImage, RecordImageAdapter.ViewHolder
 
         fun bind(recordImage: RecordImage){
             GlideApp.with(imageView)
-                .load(File(imageView.context.filesDir, recordImage.filePath))
+                .load(recordImage.extraFile(imageView.context.applicationContext))
                 .into(imageView)
         }
     }

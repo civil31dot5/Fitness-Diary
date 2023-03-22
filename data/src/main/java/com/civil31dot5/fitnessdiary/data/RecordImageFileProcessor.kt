@@ -9,8 +9,9 @@ import javax.inject.Inject
 class RecordImageFileProcessor @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-
-    private val imageFolderName = "images"
+    companion object{
+        const val imageFolderName = "images"
+    }
 
     /**
      * Copy file 複製記錄圖片到app/files/images/
