@@ -11,9 +11,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.civil31dot5.fitnessdiary.NavGraphDirections
+import com.civil31dot5.fitnessdiary.data.network.StravaApi
 import com.civil31dot5.fitnessdiary.databinding.FragmentHomeBinding
+import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetStravaSportHistoryUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.time.LocalDate
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -21,13 +26,18 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private lateinit var binding: FragmentHomeBinding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
+    @Inject
+    lateinit var stravaApi: StravaApi
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        _binding = FragmentHomeBinding.inflate(layoutInflater)
         initView()
         initListener()
         return binding.root
@@ -46,6 +56,14 @@ class HomeFragment : Fragment() {
         binding.btAdd.setOnClickListener {
             findNavController().navigate(NavGraphDirections.actionGlobalAddDietRecordFragment())
         }
+
+        binding.btTest.setOnClickListener {
+            lifecycleScope.launch {
+
+
+            }
+        }
+
     }
 
     private fun bindViewModel() {
@@ -64,4 +82,8 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

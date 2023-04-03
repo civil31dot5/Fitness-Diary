@@ -4,12 +4,17 @@
 
     <item
         android:id="@+id/homeFragment"
-        android:title="home"
+        android:title="@string/home"
         android:icon="@drawable/ic_home"/>
 
     <item
         android:id="@+id/dietRecordHistoryFragment"
-        android:title="record diet"
+        android:title="@string/diet_record"
         android:icon="@drawable/ic_food_bank"/>
+
+    <item
+        android:id="@+id/sportHistoryFragment"
+        android:title="@string/sport_record"
+        android:icon="@drawable/ic_sports"/>
 
 </menu>

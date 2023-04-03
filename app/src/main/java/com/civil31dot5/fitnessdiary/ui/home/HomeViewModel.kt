@@ -2,8 +2,7 @@ package com.civil31dot5.fitnessdiary.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.civil31dot5.fitnessdiary.domain.usecase.GetAllDietRecordUseCase
-import dagger.hilt.android.HiltAndroidApp
+import com.civil31dot5.fitnessdiary.domain.usecase.diet.GetAllDietRecordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

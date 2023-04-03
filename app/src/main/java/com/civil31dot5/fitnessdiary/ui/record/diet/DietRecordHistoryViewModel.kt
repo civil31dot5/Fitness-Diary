@@ -3,8 +3,8 @@ package com.civil31dot5.fitnessdiary.ui.record.diet
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.civil31dot5.fitnessdiary.domain.model.DietRecord
-import com.civil31dot5.fitnessdiary.domain.usecase.DeleteDietRecordUseCase
-import com.civil31dot5.fitnessdiary.domain.usecase.GetAllDietRecordUseCase
+import com.civil31dot5.fitnessdiary.domain.usecase.diet.DeleteDietRecordUseCase
+import com.civil31dot5.fitnessdiary.domain.usecase.diet.GetAllDietRecordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn

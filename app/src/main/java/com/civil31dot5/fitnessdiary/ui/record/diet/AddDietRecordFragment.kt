@@ -43,7 +43,8 @@ import java.time.format.DateTimeFormatter
 class AddDietRecordFragment : Fragment() {
 
     private val viewModel: AddDietRecordViewModel by viewModels()
-    private lateinit var binding: FragmentAddDietRecordBinding
+    private var _binding: FragmentAddDietRecordBinding? = null
+    private val binding get() = _binding!!
 
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -110,7 +111,7 @@ class AddDietRecordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAddDietRecordBinding.inflate(layoutInflater)
+        _binding = FragmentAddDietRecordBinding.inflate(layoutInflater)
         initView()
         initListener()
         return binding.root
@@ -256,4 +257,8 @@ class AddDietRecordFragment : Fragment() {
         takePhotoLauncher.launch(uri)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

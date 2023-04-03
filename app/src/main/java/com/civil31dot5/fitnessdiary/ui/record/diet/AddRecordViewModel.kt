@@ -2,7 +2,7 @@ package com.civil31dot5.fitnessdiary.ui.record.diet
 
 import androidx.lifecycle.viewModelScope
 import com.civil31dot5.fitnessdiary.domain.model.DietRecord
-import com.civil31dot5.fitnessdiary.domain.usecase.AddDietRecordUseCase
+import com.civil31dot5.fitnessdiary.domain.usecase.diet.AddDietRecordUseCase
 import com.civil31dot5.fitnessdiary.ui.base.AddPhotoRecordViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

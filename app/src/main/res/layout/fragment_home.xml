@@ -11,6 +11,14 @@
         android:layout_height="wrap_content"
         android:text="count:--"/>
 
+    <Button
+        android:id="@+id/bt_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test"
+        android:layout_marginTop="40dp"/>
+
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/bt_add"

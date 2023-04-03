@@ -22,7 +22,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DietRecordHistoryFragment : Fragment() {
 
-    private lateinit var binding: FragmentDietRecordHistoryBinding
+    private var _binding: FragmentDietRecordHistoryBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: DietRecordHistoryViewModel by viewModels()
 
@@ -30,7 +31,7 @@ class DietRecordHistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDietRecordHistoryBinding.inflate(layoutInflater)
+        _binding = FragmentDietRecordHistoryBinding.inflate(layoutInflater)
         initView()
         initListener()
         return binding.root
@@ -76,5 +77,10 @@ class DietRecordHistoryFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

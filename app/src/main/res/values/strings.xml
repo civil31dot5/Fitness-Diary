@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">FitnessDiary</string>
     <string name="shortcut_add_diet_record_label">新增飲食紀錄</string>
+    <string name="home">主頁</string>
+    <string name="diet_record">飲食紀錄</string>
+    <string name="sport_record">運動紀錄</string>
 </resources>

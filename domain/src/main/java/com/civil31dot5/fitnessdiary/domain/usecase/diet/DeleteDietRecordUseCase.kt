@@ -1,4 +1,4 @@
-package com.civil31dot5.fitnessdiary.domain.usecase
+package com.civil31dot5.fitnessdiary.domain.usecase.diet
 
 import com.civil31dot5.fitnessdiary.domain.model.DietRecord
 import com.civil31dot5.fitnessdiary.domain.repository.RecordRepository
