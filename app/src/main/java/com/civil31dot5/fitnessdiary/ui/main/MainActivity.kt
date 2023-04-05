@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -101,6 +102,10 @@ class MainActivity : AppCompatActivity(), IntentHandler {
             intentHandlerRequestCode = null
         }
 
+    }
+
+    fun setLoading(isVisible: Boolean){
+        binding.ilLoading.root.isVisible = isVisible
     }
 
     override fun onDestroy() {

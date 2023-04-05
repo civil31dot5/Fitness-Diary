@@ -10,6 +10,8 @@ import com.civil31dot5.fitnessdiary.domain.repository.RecordRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
+import java.time.LocalDateTime
+import java.time.YearMonth
 import javax.inject.Inject
 
 class RecordRepositoryImpl @Inject constructor(
@@ -46,6 +48,11 @@ class RecordRepositoryImpl @Inject constructor(
             imageFileProcessor.deleteFile(image.filePath)
             recordDao.deleteRecordImage(image.toRecordImageEntity(record.id, ""))
         }
+    }
 
+    override suspend fun getMonthDietRecord(yearMonth: YearMonth): List<DietRecord> {
+        val from = LocalDateTime.of(yearMonth.year, yearMonth.month, 1, 0, 0)
+        val to = LocalDateTime.of(yearMonth.year, yearMonth.month, yearMonth.lengthOfMonth(), 23, 59)
+        return recordDao.searchDietRecord(from, to).map { it.toDietRecord() }
     }
 }
