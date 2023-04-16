@@ -7,6 +7,7 @@ import com.civil31dot5.fitnessdiary.domain.usecase.diet.DeleteDietRecordUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.diet.GetAllDietRecordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,6 +19,7 @@ class DietRecordHistoryViewModel @Inject constructor(
 ): ViewModel() {
 
     val dietRecordList = getAllDietRecordUseCase()
+        .map { it.sortedByDescending { it.dateTime } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     fun deleteDietRecord(dietRecord: DietRecord) = viewModelScope.launch {

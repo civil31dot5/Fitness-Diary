@@ -41,7 +41,9 @@ class MainActivity : AppCompatActivity(), IntentHandler {
         val appBarConfiguration = AppBarConfiguration(
             topLevelDestinationIds = setOf(
                 R.id.homeFragment,
-                R.id.dietRecordHistoryFragment
+                R.id.dietRecordHistoryFragment,
+                R.id.sportHistoryFragment,
+                R.id.bodyShapeRecordFragment
             ),
             binding.drawerLayout
         )

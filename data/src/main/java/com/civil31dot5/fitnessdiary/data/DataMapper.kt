@@ -1,9 +1,7 @@
 package com.civil31dot5.fitnessdiary.data
 
-import com.civil31dot5.fitnessdiary.data.database.DietRecordEntity
-import com.civil31dot5.fitnessdiary.data.database.DietRecordWithImages
-import com.civil31dot5.fitnessdiary.data.database.RecordImageEntity
-import com.civil31dot5.fitnessdiary.data.database.StravaSportEntity
+import com.civil31dot5.fitnessdiary.data.database.*
+import com.civil31dot5.fitnessdiary.domain.model.BodyShapeRecord
 import com.civil31dot5.fitnessdiary.domain.model.DietRecord
 import com.civil31dot5.fitnessdiary.domain.model.RecordImage
 import com.civil31dot5.fitnessdiary.domain.model.StravaSport
@@ -37,4 +35,20 @@ fun StravaSport.toStravaSportEntity(): StravaSportEntity{
 
 fun StravaSportEntity.toStravaSport(): StravaSport{
     return StravaSport(id, datetime, name, distance, calories, type, elapsedTimeSec)
+}
+
+fun BodyShapeRecord.toBodyShapeRecordEntity(): BodyShapeRecordEntity {
+    return BodyShapeRecordEntity(id, name, dateTime, note, weight, bodyFatPercentage)
+}
+
+fun BodyShapeRecordWithImages.toBodyShapeRecord(): BodyShapeRecord {
+    return BodyShapeRecord(
+        bodyShapeRecord.id,
+        bodyShapeRecord.name,
+        bodyShapeRecord.dateTime,
+        bodyShapeRecord.note,
+        images.map { it.toRecordImage() },
+        bodyShapeRecord.weight,
+        bodyShapeRecord.bodyFatPercentage
+    )
 }

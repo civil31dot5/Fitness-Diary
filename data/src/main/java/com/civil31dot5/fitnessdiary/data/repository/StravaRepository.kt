@@ -18,32 +18,39 @@ class StravaRepositoryImpl @Inject constructor(
 
     override suspend fun getSportHistory(from: LocalDate, to: LocalDate): List<StravaSport> {
 
-        val summaryActivities = stravaApi.getSummaryActivities(from, to)
+//        val summaryActivities = stravaApi.getSummaryActivities(from, to)
+//
+//        return summaryActivities.map { summary ->
+//            val local = stravaSportDao.queryById(summary.id)
+//            if (local != null){
+//                return@map local.toStravaSport()
+//            }
+//
+//            val detailedActivity = stravaApi.getDetailActivity(summary.id)
+//            val stravaSport = StravaSport(
+//                summary.id,
+//                LocalDateTime.parse(
+//                    summary.startDateLocal.replace("Z", ""),
+//                    DateTimeFormatter.ISO_LOCAL_DATE_TIME
+//                ),
+//                summary.name,
+//                detailedActivity.distance,
+//                detailedActivity.calories,
+//                detailedActivity.type,
+//                detailedActivity.elapsedTime
+//            )
+//
+//            stravaSportDao.insertStravaSport(stravaSport.toStravaSportEntity())
+//
+//            return@map stravaSport
+//        }
 
-        return summaryActivities.map { summary ->
-            val local = stravaSportDao.queryById(summary.id)
-            if (local != null){
-                return@map local.toStravaSport()
-            }
 
-            val detailedActivity = stravaApi.getDetailActivity(summary.id)
-            val stravaSport = StravaSport(
-                summary.id,
-                LocalDateTime.parse(
-                    summary.startDateLocal.replace("Z", ""),
-                    DateTimeFormatter.ISO_LOCAL_DATE_TIME
-                ),
-                summary.name,
-                detailedActivity.distance,
-                detailedActivity.calories,
-                detailedActivity.type,
-                detailedActivity.elapsedTime
-            )
 
-            stravaSportDao.insertStravaSport(stravaSport.toStravaSportEntity())
-
-            return@map stravaSport
-        }
+        return stravaSportDao.query(
+            LocalDateTime.of(from.year, from.month, from.dayOfMonth, 0, 0),
+            LocalDateTime.of(to.year, to.month, to.dayOfMonth, 23, 59),
+        ).map { it.toStravaSport() }
     }
 
 }

@@ -17,4 +17,9 @@
         android:title="@string/sport_record"
         android:icon="@drawable/ic_sports"/>
 
+    <item
+        android:id="@+id/bodyShapeRecordFragment"
+        android:title="體態紀錄"
+        android:icon="@drawable/ic_monitor_weight"/>
+
 </menu>
