@@ -26,7 +26,7 @@ interface RecordDao {
 
     @Transaction
     @Query("SELECT * FROM diet_record WHERE datetime BETWEEN :from AND :to")
-    suspend fun searchDietRecord(from: LocalDateTime, to: LocalDateTime): List<DietRecordWithImages>
+    fun searchDietRecord(from: LocalDateTime, to: LocalDateTime): Flow<List<DietRecordWithImages>>
 
     @Insert
     suspend fun insertBodyShapeRecord(bodyShapeRecord: BodyShapeRecordEntity)

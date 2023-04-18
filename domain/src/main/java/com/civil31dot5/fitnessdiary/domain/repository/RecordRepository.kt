@@ -9,7 +9,7 @@ interface RecordRepository {
     suspend fun addDietRecord(record: DietRecord): Result<Unit>
     fun getAllDietRecords(): Flow<List<DietRecord>>
     suspend fun deleteDietRecord(record: DietRecord)
-    suspend fun getMonthDietRecord(yearMonth: YearMonth): List<DietRecord>
+    fun getMonthDietRecord(yearMonth: YearMonth): Flow<List<DietRecord>>
     suspend fun addBodyShapeRecord(record: BodyShapeRecord): Result<Unit>
     fun getAllBodyShapeRecords(): Flow<List<BodyShapeRecord>>
     suspend fun deleteBodyShapeRecord(record: BodyShapeRecord)

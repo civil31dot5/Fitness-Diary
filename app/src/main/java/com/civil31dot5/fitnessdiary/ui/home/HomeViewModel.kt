@@ -32,45 +32,48 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
+    private val selectYearMonth = MutableStateFlow<YearMonth?>(null)
+
     fun selectYearMonth(yearMonth: YearMonth) {
-        refreshMonthRecordStatus(yearMonth)
+        selectYearMonth.update { yearMonth }
     }
 
-    private fun refreshMonthRecordStatus(yearMonth: YearMonth) = viewModelScope.launch{
+    private val monthSportHistory = selectYearMonth.mapNotNull { it }
+        .flatMapLatest { getMonthStravaSportHistoryUseCase.invoke(it) }
+//        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-        _uiState.update { it.copy(isLoading = true) }
+    private val monthDietRecord = selectYearMonth.mapNotNull { it }
+        .flatMapLatest { getMonthDietRecordUseCase.invoke(it) }
+//        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-        val dietRecordsDeferred = async {getMonthDietRecordUseCase.invoke(yearMonth) }
-        val sportHistoryDeferred = async { getMonthStravaSportHistoryUseCase.invoke(yearMonth) }
 
-        val dietRecords = dietRecordsDeferred.await()
-        val sportHistory = sportHistoryDeferred.await()
+    init {
+        viewModelScope.launch {
+            monthSportHistory.combine(monthDietRecord){ sportHistory, dietRecords->
 
-        val recordStatus = _uiState.value.recordStatus.toMutableMap()
+                val recordStatus = _uiState.value.recordStatus.toMutableMap()
+                dietRecords.forEach {
 
-        dietRecords.forEach {
+                    if (recordStatus.containsKey(it.dateTime.toLocalDate())){
+                        recordStatus[it.dateTime.toLocalDate()] =  recordStatus[it.dateTime.toLocalDate()]!!.copy(hasDietRecord = true)
+                    }else{
+                        recordStatus[it.dateTime.toLocalDate()] =  RecordStatus(hasDietRecord = true)
+                    }
 
-            if (recordStatus.containsKey(it.dateTime.toLocalDate())){
-                recordStatus[it.dateTime.toLocalDate()] =  recordStatus[it.dateTime.toLocalDate()]!!.copy(hasDietRecord = true)
-            }else{
-                recordStatus[it.dateTime.toLocalDate()] =  RecordStatus(hasDietRecord = true)
-            }
+                }
 
+                sportHistory.forEach {
+
+                    if (recordStatus.containsKey(it.datetime.toLocalDate())){
+                        recordStatus[it.datetime.toLocalDate()] =  recordStatus[it.datetime.toLocalDate()]!!.copy(hasSportHistory = true)
+                    }else{
+                        recordStatus[it.datetime.toLocalDate()] =  RecordStatus(hasSportHistory = true)
+                    }
+                }
+
+                _uiState.update { it.copy(isLoading = false, recordStatus = recordStatus) }
+            }.collect()
         }
-
-        sportHistory.forEach {
-
-            if (recordStatus.containsKey(it.datetime.toLocalDate())){
-                recordStatus[it.datetime.toLocalDate()] =  recordStatus[it.datetime.toLocalDate()]!!.copy(hasSportHistory = true)
-            }else{
-                recordStatus[it.datetime.toLocalDate()] =  RecordStatus(hasSportHistory = true)
-            }
-        }
-
-        _uiState.update { it.copy(isLoading = false, recordStatus = recordStatus) }
     }
-
-
-
 
 }

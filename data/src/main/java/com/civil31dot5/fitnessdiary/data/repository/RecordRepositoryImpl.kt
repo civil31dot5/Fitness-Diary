@@ -1,6 +1,7 @@
 package com.civil31dot5.fitnessdiary.data.repository
 
 import com.civil31dot5.fitnessdiary.data.*
+import com.civil31dot5.fitnessdiary.data.database.DietRecordWithImages
 import com.civil31dot5.fitnessdiary.data.database.RecordDao
 import com.civil31dot5.fitnessdiary.domain.model.BodyShapeRecord
 import com.civil31dot5.fitnessdiary.domain.model.DietRecord
@@ -48,10 +49,10 @@ class RecordRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMonthDietRecord(yearMonth: YearMonth): List<DietRecord> {
+    override fun getMonthDietRecord(yearMonth: YearMonth): Flow<List<DietRecord>> {
         val from = LocalDateTime.of(yearMonth.year, yearMonth.month, 1, 0, 0)
         val to = LocalDateTime.of(yearMonth.year, yearMonth.month, yearMonth.lengthOfMonth(), 23, 59)
-        return recordDao.searchDietRecord(from, to).map { it.toDietRecord() }
+        return recordDao.searchDietRecord(from, to).map { it.map { it.toDietRecord() } }
     }
 
     override suspend fun addBodyShapeRecord(record: BodyShapeRecord): Result<Unit> = kotlin.runCatching{

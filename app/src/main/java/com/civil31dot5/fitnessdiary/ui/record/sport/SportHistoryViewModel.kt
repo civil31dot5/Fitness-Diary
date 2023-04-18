@@ -37,10 +37,13 @@ class SportHistoryViewModel @Inject constructor(
             uiState.map { it.hasConnectStrava == true }
                 .filter { it }
                 .take(1)
-                .collect{
+                .map {
                     val to = LocalDate.now()
-                    val from = to.minusWeeks(1)
-                    val result = getStravaSportHistoryUseCase(from, to)
+                    val from = to.minusMonths(2)
+                    getStravaSportHistoryUseCase(from, to)
+                }
+                .first()
+                .collect{result ->
                     _uiState.update { it.copy(sportHistory = result) }
                 }
         }

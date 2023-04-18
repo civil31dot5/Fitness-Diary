@@ -17,18 +17,6 @@
         android:theme="@style/Theme.FitnessDiary"
         tools:targetApi="31">
 
-        <provider
-            android:name=".MyContentProvider"
-            android:authorities="com.civil31dot5.fitnessdiary.fileprovider"
-            android:enabled="true"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_path"/>
-        </provider>
-
-
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
@@ -45,6 +33,24 @@
                 android:resource="@xml/shortcuts" />
 
         </activity>
+
+        <provider
+            android:name=".MyContentProvider"
+            android:authorities="com.civil31dot5.fitnessdiary.fileprovider"
+            android:enabled="true"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path"/>
+        </provider>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove">
+        </provider>
+
     </application>
 
 </manifest>
