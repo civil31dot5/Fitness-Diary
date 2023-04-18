@@ -35,6 +35,7 @@ class SyncStravaSportHistoryWorker @AssistedInject constructor(
 
             Result.success()
         }catch (e: Exception){
+            e.printStackTrace()
             Result.failure()
         }
     }

@@ -18,7 +18,7 @@ data class SummaryActivity(
     @SerialName("average_cadence")
     val averageCadence: Double? = null,
     @SerialName("average_heartrate")
-    val averageHeartrate: Double,
+    val averageHeartrate: Double? = null,
     @SerialName("average_speed")
     val averageSpeed: Double,
     @SerialName("distance")
@@ -40,7 +40,7 @@ data class SummaryActivity(
     @SerialName("map")
     val map: Map,
     @SerialName("max_heartrate")
-    val maxHeartrate: Double,
+    val maxHeartrate: Double? = null,
     @SerialName("max_speed")
     val maxSpeed: Double,
     @SerialName("moving_time")
