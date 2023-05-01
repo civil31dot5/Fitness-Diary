@@ -38,4 +38,8 @@ interface RecordDao {
     @Delete
     suspend fun deleteBodyShapeRecord(bodyShapeRecord: BodyShapeRecordEntity)
 
+    @Transaction
+    @Query("SELECT * FROM body_shape_record WHERE datetime BETWEEN :from AND :to ORDER BY datetime ASC")
+    fun getBodyShapeRecord(from: LocalDateTime, to: LocalDateTime): Flow<List<BodyShapeRecordWithImages>>
+
 }

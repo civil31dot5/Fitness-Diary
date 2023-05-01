@@ -43,7 +43,8 @@ class MainActivity : AppCompatActivity(), IntentHandler {
                 R.id.homeFragment,
                 R.id.dietRecordHistoryFragment,
                 R.id.sportHistoryFragment,
-                R.id.bodyShapeRecordFragment
+                R.id.bodyShapeRecordFragment,
+                R.id.reportFragment
             ),
             binding.drawerLayout
         )

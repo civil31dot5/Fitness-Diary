@@ -31,7 +31,7 @@ data class DetailedActivity(
     @SerialName("description")
     val description: String? = null,
     @SerialName("device_name")
-    val deviceName: String,
+    val deviceName: String? = null,
     @SerialName("display_hide_heartrate_option")
     val displayHideHeartrateOption: Boolean,
     @SerialName("distance")

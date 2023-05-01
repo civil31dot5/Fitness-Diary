@@ -22,4 +22,9 @@
         android:title="體態紀錄"
         android:icon="@drawable/ic_monitor_weight"/>
 
+    <item
+        android:id="@+id/reportFragment"
+        android:title="報告"
+        android:icon="@drawable/ic_analytics"/>
+
 </menu>

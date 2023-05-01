@@ -9,6 +9,7 @@ import com.civil31dot5.fitnessdiary.domain.repository.RecordRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.YearMonth
 import javax.inject.Inject
@@ -82,5 +83,11 @@ class RecordRepositoryImpl @Inject constructor(
             imageFileProcessor.deleteFile(image.filePath)
             recordDao.deleteRecordImage(image.toRecordImageEntity(record.id, ""))
         }
+    }
+
+    override fun getBodyShapeRecords(from: LocalDate, to: LocalDate): Flow<List<BodyShapeRecord>> {
+        val fromDateTime = LocalDateTime.of(from.year, from.month, from.dayOfMonth, 0, 0)
+        val toDateTime = LocalDateTime.of(to.year, to.month, to.dayOfMonth, 23, 59)
+        return recordDao.getBodyShapeRecord(fromDateTime, toDateTime).map { it.map { it.toBodyShapeRecord() } }
     }
 }

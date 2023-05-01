@@ -44,5 +44,10 @@
         android:name="com.civil31dot5.fitnessdiary.ui.record.bodyshape.AddBodyShapeRecordFragment"
         android:label="新增體態紀錄"
         tools:layout="@layout/fragment_add_body_shape_record" />
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.civil31dot5.fitnessdiary.ui.report.ReportFragment"
+        android:label="運動報告"
+        tools:layout="@layout/fragment_report" />
 
 </navigation>
