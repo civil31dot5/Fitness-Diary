@@ -34,9 +34,9 @@ class BodyShapeRecordViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             getAllBodyShapeRecordUseCase.invoke().collect { record ->
-                val chartData = record.sortedBy { it.dateTime }.take(10).map {
+                val chartData = record.sortedByDescending { it.dateTime }.take(15).map {
                     BodyShapeChartData(it.dateTime, it.weight, it.bodyFatPercentage)
-                }
+                }.sortedBy { it.dateTime }
 
                 val recordData = record.sortedByDescending { it.dateTime }
 
