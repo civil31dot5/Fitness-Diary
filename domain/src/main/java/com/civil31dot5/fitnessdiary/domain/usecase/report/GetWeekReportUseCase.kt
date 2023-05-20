@@ -35,7 +35,7 @@ class GetWeekReportUseCase @Inject constructor(
         val searchFromDate = currentWeekFirstDate.minusWeeks(numOfWeeks.toLong())
 
         return getStravaSportHistoryUseCase.invoke(searchFromDate, LocalDate.now())
-            .map { it.groupBy { it.datetime.toYearWeek() } }
+            .map { it.groupBy { it.dateTime.toYearWeek() } }
             .combine(
                 getBodyShapeRecordUseCase.invoke(searchFromDate, LocalDate.now())
                     .map { it.groupBy { it.dateTime.toYearWeek() } }

@@ -30,7 +30,7 @@ fun RecordImageEntity.toRecordImage(): RecordImage{
 }
 
 fun StravaSport.toStravaSportEntity(): StravaSportEntity{
-    return StravaSportEntity(id, datetime, name, distance, calories, type, elapsedTimeSec)
+    return StravaSportEntity(stravaId, dateTime, name, distance, calories, type, elapsedTimeSec)
 }
 
 fun StravaSportEntity.toStravaSport(): StravaSport{

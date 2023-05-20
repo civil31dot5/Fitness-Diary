@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter
 
 private val diffUtil = object : DiffUtil.ItemCallback<StravaSport>(){
     override fun areItemsTheSame(oldItem: StravaSport, newItem: StravaSport): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.stravaId == newItem.stravaId
     }
 
     override fun areContentsTheSame(oldItem: StravaSport, newItem: StravaSport): Boolean {
@@ -38,7 +38,7 @@ class SportHistoryAdapter: ListAdapter<StravaSport, SportHistoryAdapter.ViewHold
 
         fun bind(item: StravaSport) {
             with(binding){
-                tvDatetime.text = item.datetime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                tvDatetime.text = item.dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
                 tvName.text = item.name
                 tvCalories.text = "%.0f".format(item.calories)
                 tvTpye.text = item.type

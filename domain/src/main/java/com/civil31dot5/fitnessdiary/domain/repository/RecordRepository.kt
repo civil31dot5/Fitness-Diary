@@ -9,6 +9,7 @@ import java.time.YearMonth
 interface RecordRepository {
     suspend fun addDietRecord(record: DietRecord): Result<Unit>
     fun getAllDietRecords(): Flow<List<DietRecord>>
+    fun getDietRecords(from: LocalDate, to: LocalDate): Flow<List<DietRecord>>
     suspend fun deleteDietRecord(record: DietRecord)
     fun getMonthDietRecord(yearMonth: YearMonth): Flow<List<DietRecord>>
     suspend fun addBodyShapeRecord(record: BodyShapeRecord): Result<Unit>

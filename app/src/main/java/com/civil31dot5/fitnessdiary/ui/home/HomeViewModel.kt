@@ -2,11 +2,9 @@ package com.civil31dot5.fitnessdiary.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.civil31dot5.fitnessdiary.domain.usecase.diet.GetAllDietRecordUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.diet.GetMonthDietRecordUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetMonthStravaSportHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -64,10 +62,10 @@ class HomeViewModel @Inject constructor(
 
                 sportHistory.forEach {
 
-                    if (recordStatus.containsKey(it.datetime.toLocalDate())){
-                        recordStatus[it.datetime.toLocalDate()] =  recordStatus[it.datetime.toLocalDate()]!!.copy(hasSportHistory = true)
+                    if (recordStatus.containsKey(it.dateTime.toLocalDate())){
+                        recordStatus[it.dateTime.toLocalDate()] =  recordStatus[it.dateTime.toLocalDate()]!!.copy(hasSportHistory = true)
                     }else{
-                        recordStatus[it.datetime.toLocalDate()] =  RecordStatus(hasSportHistory = true)
+                        recordStatus[it.dateTime.toLocalDate()] =  RecordStatus(hasSportHistory = true)
                     }
                 }
 

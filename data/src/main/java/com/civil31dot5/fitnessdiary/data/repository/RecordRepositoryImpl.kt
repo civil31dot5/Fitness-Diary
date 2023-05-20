@@ -40,6 +40,12 @@ class RecordRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getDietRecords(from: LocalDate, to: LocalDate): Flow<List<DietRecord>> {
+        val fromDateTime = LocalDateTime.of(from.year, from.month, from.dayOfMonth, 0, 0)
+        val toDateTime = LocalDateTime.of(to.year, to.month, to.dayOfMonth, 23, 59)
+        return recordDao.searchDietRecord(fromDateTime, toDateTime).map { it.map { it.toDietRecord() } }
+    }
+
     override suspend fun deleteDietRecord(record: DietRecord) {
 
         recordDao.deleteDietRecord(record.toDietRecordEntity())

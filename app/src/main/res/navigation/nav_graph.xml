@@ -15,7 +15,11 @@
         android:id="@+id/homeFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.home.HomeFragment"
         android:label="@string/home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_dayReportFragment"
+            app:destination="@id/dayReportFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/dietRecordHistoryFragment"
@@ -49,5 +53,14 @@
         android:name="com.civil31dot5.fitnessdiary.ui.report.ReportFragment"
         android:label="運動報告"
         tools:layout="@layout/fragment_report" />
+    <fragment
+        android:id="@+id/dayReportFragment"
+        android:name="com.civil31dot5.fitnessdiary.ui.report.DayRecordFragment"
+        android:label="當日報表"
+        tools:layout="@layout/fragment_day_record" >
+        <argument
+            android:name="date"
+            app:argType="java.time.LocalDate" />
+    </fragment>
 
 </navigation>

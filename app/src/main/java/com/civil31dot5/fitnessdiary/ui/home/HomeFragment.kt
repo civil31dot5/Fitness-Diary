@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -15,31 +16,21 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.civil31dot5.fitnessdiary.NavGraphDirections
 import com.civil31dot5.fitnessdiary.R
-import com.civil31dot5.fitnessdiary.data.network.StravaApi
-import com.civil31dot5.fitnessdiary.databinding.CalendarDayLayoutBinding
 import com.civil31dot5.fitnessdiary.databinding.FragmentHomeBinding
-import com.civil31dot5.fitnessdiary.domain.usecase.diet.GetMonthDietRecordUseCase
-import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetStravaSportHistoryUseCase
 import com.civil31dot5.fitnessdiary.ui.main.MainActivity
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.daysOfWeek
-import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import com.kizitonwose.calendar.view.ViewContainer
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.*
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -71,10 +62,14 @@ class HomeFragment : Fragment() {
             override fun create(view: View): DayViewContainer = DayViewContainer(view)
 
             override fun bind(container: DayViewContainer, data: CalendarDay) {
-                container.textView.text = data.date.dayOfMonth.toString()
+                container.textView?.text = data.date.dayOfMonth.toString()
                 val recordStatus = viewModel.uiState.value.recordStatus[data.date]
-                container.viewDiet.isVisible = recordStatus?.hasDietRecord == true
-                container.viewSport.isVisible = recordStatus?.hasSportHistory == true
+                container.ivFood?.isVisible = recordStatus?.hasDietRecord == true
+                container.ivSport?.isVisible = recordStatus?.hasSportHistory == true
+
+                container.view.setOnClickListener {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDayReportFragment(data.date))
+                }
             }
 
         }
@@ -111,9 +106,7 @@ class HomeFragment : Fragment() {
         binding.calendarView.monthScrollListener = {
             viewModel.selectYearMonth(it.yearMonth)
             binding.tvYearMonth.text = it.yearMonth.toString()
-
         }
-
 
     }
 
@@ -144,9 +137,10 @@ class HomeFragment : Fragment() {
 }
 
 class DayViewContainer(view: View) : ViewContainer(view) {
-    val textView = view.findViewById<TextView>(R.id.calendarDayText)
-    val viewDiet = view.findViewById<View>(R.id.view_diet_record)
-    val viewSport = view.findViewById<View>(R.id.view_sport_history)
+    val textView: TextView? = view.findViewById<TextView>(R.id.calendarDayText)
+    val ivFood: View? = view.findViewById<View>(R.id.iv_food)
+    val ivSport: View? = view.findViewById<View>(R.id.iv_sport)
+
 }
 
 class MonthViewContainer(view: View) : ViewContainer(view) {
