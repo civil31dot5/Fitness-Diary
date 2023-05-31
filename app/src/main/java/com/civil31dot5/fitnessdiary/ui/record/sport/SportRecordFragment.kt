@@ -44,16 +44,16 @@ class SportRecordFragment : Fragment(), MenuProvider {
 
     private fun bindViewModel() {
         lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
                 launch {
                     viewModel.uiState.map { it.hasConnectStrava }
                         .distinctUntilChanged()
-                        .collect{ requireActivity().invalidateMenu() }
+                        .collect { requireActivity().invalidateMenu() }
                 }
 
                 launch {
-                    viewModel.uiState.collect{ uiState ->
+                    viewModel.uiState.collect { uiState ->
                         (binding.rvSport.adapter as? SportRecordAdapter)?.submitList(uiState.sportHistory)
                     }
                 }
@@ -74,7 +74,7 @@ class SportRecordFragment : Fragment(), MenuProvider {
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        when(menuItem.itemId){
+        when (menuItem.itemId) {
             R.id.connect_strava -> {
                 viewModel.connectStrava()
             }

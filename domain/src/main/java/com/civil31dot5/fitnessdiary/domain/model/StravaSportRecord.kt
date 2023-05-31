@@ -10,4 +10,4 @@ data class StravaSportRecord(
     val calories: Double,
     val type: String,
     val elapsedTimeSec: Long
-): Record(stravaId.toString(), name, dateTime, "")
+) : Record(stravaId.toString(), name, dateTime, "")

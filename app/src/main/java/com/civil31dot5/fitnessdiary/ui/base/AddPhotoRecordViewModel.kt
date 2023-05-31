@@ -10,7 +10,7 @@ import javax.inject.Inject
 @HiltViewModel
 open class AddPhotoRecordViewModel @Inject constructor(
 
-): AddRecordViewModel(){
+) : AddRecordViewModel() {
 
     private var photoSizeLimit = 5
 
@@ -28,20 +28,30 @@ open class AddPhotoRecordViewModel @Inject constructor(
             add(recordImage)
         }
         val isAddButtonVisible = newList.size < photoSizeLimit
-        _photoRecordData.update { it.copy(selectedPhotos = newList, isAddButtonVisible = isAddButtonVisible) }
+        _photoRecordData.update {
+            it.copy(
+                selectedPhotos = newList,
+                isAddButtonVisible = isAddButtonVisible
+            )
+        }
     }
 
     fun deleteRecordImage(image: RecordImage) {
         val newList = _photoRecordData.value.selectedPhotos.toMutableList()
         newList.removeIf { it.id == image.id }
         val isAddButtonVisible = newList.size < photoSizeLimit
-        _photoRecordData.update { it.copy(selectedPhotos = newList, isAddButtonVisible = isAddButtonVisible) }
+        _photoRecordData.update {
+            it.copy(
+                selectedPhotos = newList,
+                isAddButtonVisible = isAddButtonVisible
+            )
+        }
     }
 
     fun onRecordImageNoteChanged(image: RecordImage, note: String) {
         val newList = _photoRecordData.value.selectedPhotos.toMutableList()
         newList.replaceAll {
-            if (it.id == image.id){
+            if (it.id == image.id) {
                 return@replaceAll it.copy(note = note)
             }
             return@replaceAll it

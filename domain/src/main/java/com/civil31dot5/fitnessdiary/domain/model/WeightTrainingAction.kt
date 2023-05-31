@@ -8,6 +8,6 @@ data class WeightTrainingAction(
     val loadUnit: LoadUnit
 )
 
-enum class LoadUnit{
+enum class LoadUnit {
     Kg, Lb
 }

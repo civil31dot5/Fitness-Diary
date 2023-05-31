@@ -1,10 +1,10 @@
 package com.civil31dot5.fitnessdiary.ui.record.diet
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -58,7 +58,7 @@ class DietRecordHistoryFragment : Fragment() {
     private fun showConfirmDeleteDialog(dietRecord: DietRecord) {
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle("確認刪除?")
-            .setPositiveButton("確認"){ _, _ ->
+            .setPositiveButton("確認") { _, _ ->
                 viewModel.deleteDietRecord(dietRecord)
             }
             .setNegativeButton("取消", null)
@@ -71,8 +71,8 @@ class DietRecordHistoryFragment : Fragment() {
 
     private fun bindViewModel() {
         lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.dietRecordList.collect{
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.dietRecordList.collect {
                     (binding.rvDietHistory.adapter as? DietRecordAdapter)?.submitList(it)
                 }
             }

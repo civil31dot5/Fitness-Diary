@@ -17,24 +17,28 @@ class SyncStravaSportHistoryWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
     private val stravaRepository: StravaRepository
-): CoroutineWorker(appContext, workerParams) {
+) : CoroutineWorker(appContext, workerParams) {
 
     private val notificationId = 1001
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
-        return ForegroundInfo(notificationId, WorkNotificationUtil.createNotification(applicationContext, "同步Strava中..."))
+        return ForegroundInfo(
+            notificationId,
+            WorkNotificationUtil.createNotification(applicationContext, "同步Strava中...")
+        )
     }
 
     override suspend fun doWork(): Result {
         return try {
             setForeground(getForegroundInfo())
 
-            val from = LocalDate.parse(inputData.getString("from"), DateTimeFormatter.ISO_LOCAL_DATE)
+            val from =
+                LocalDate.parse(inputData.getString("from"), DateTimeFormatter.ISO_LOCAL_DATE)
             val to = LocalDate.parse(inputData.getString("to"), DateTimeFormatter.ISO_LOCAL_DATE)
             stravaRepository.syncSportRecord(from, to)
 
             Result.success()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             Result.failure()
         }

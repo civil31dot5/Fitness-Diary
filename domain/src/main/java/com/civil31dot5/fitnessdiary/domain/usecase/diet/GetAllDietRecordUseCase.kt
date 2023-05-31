@@ -9,7 +9,7 @@ class GetAllDietRecordUseCase @Inject constructor(
     private val repository: RecordRepository
 ) {
 
-    operator fun invoke(): Flow<List<DietRecord>>{
+    operator fun invoke(): Flow<List<DietRecord>> {
         return repository.getAllDietRecords()
     }
 }

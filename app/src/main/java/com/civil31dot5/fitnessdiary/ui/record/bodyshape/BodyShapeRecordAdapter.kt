@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.civil31dot5.fitnessdiary.R
 import com.civil31dot5.fitnessdiary.databinding.ItemBodyShapeRecordBinding
 import com.civil31dot5.fitnessdiary.domain.model.BodyShapeRecord
-import com.civil31dot5.fitnessdiary.ui.utility.GenericRecordAdapterListener
 import com.civil31dot5.fitnessdiary.ui.record.diet.RecordImageAdapter
+import com.civil31dot5.fitnessdiary.ui.utility.GenericRecordAdapterListener
 import java.time.format.DateTimeFormatter
 
 private val diffUtil: ItemCallback<BodyShapeRecord> = object : ItemCallback<BodyShapeRecord>() {
@@ -69,9 +69,9 @@ class BodyShapeRecordAdapter(private val listener: GenericRecordAdapterListener<
                 tvName.text = item.name
                 tvDatetime.text = item.dateTime.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
                 tvWeight.text = "體重：%.2fkg".format(item.weight)
-                if (item.bodyFatPercentage != null){
+                if (item.bodyFatPercentage != null) {
                     tvFatRate.text = "體脂率：%.2f%%".format(item.bodyFatPercentage)
-                }else{
+                } else {
                     tvFatRate.text = "體脂率：--%"
                 }
                 tvNote.text = item.note
@@ -81,11 +81,11 @@ class BodyShapeRecordAdapter(private val listener: GenericRecordAdapterListener<
             }
         }
 
-        private fun refreshImageViewPager(){
+        private fun refreshImageViewPager() {
             binding.vpImages.visibility = if (isImageExpend) View.VISIBLE else View.GONE
-            if (isImageExpend){
+            if (isImageExpend) {
                 binding.btCollapseExtend.setImageResource(R.drawable.ic_arrow_down)
-            }else{
+            } else {
                 binding.btCollapseExtend.setImageResource(R.drawable.ic_arrow_left)
             }
         }

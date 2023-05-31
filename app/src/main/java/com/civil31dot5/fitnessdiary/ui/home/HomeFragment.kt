@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -57,7 +56,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() {
-        binding.calendarView.dayBinder = object : MonthDayBinder<DayViewContainer>{
+        binding.calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
 
             override fun create(view: View): DayViewContainer = DayViewContainer(view)
 
@@ -68,7 +67,11 @@ class HomeFragment : Fragment() {
                 container.ivSport?.isVisible = recordStatus?.hasSportHistory == true
 
                 container.view.setOnClickListener {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDayReportFragment(data.date))
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToDayReportFragment(
+                            data.date
+                        )
+                    )
                 }
             }
 
@@ -90,7 +93,8 @@ class HomeFragment : Fragment() {
                     container.titlesContainer.children.map { it as TextView }
                         .forEachIndexed { index, textView ->
                             val dayOfWeek = daysOfWeek[index]
-                            val title = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                            val title =
+                                dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
                             textView.text = title
                         }
                 }
@@ -112,16 +116,16 @@ class HomeFragment : Fragment() {
 
     private fun bindViewModel() {
         lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.uiState.collect{
+                    viewModel.uiState.collect {
                         (requireActivity() as? MainActivity)?.setLoading(it.isLoading)
                     }
                 }
                 launch {
                     viewModel.uiState.map { it.recordStatus }
                         .distinctUntilChanged()
-                        .collect{
+                        .collect {
                             binding.calendarView.notifyCalendarChanged()
                         }
                 }

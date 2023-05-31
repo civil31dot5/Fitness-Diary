@@ -130,7 +130,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"/>
+                        android:inputType="numberDecimal" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -153,7 +153,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"/>
+                        android:inputType="numberDecimal" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,14 +168,14 @@
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="2"
-                tools:listitem="@layout/item_select_photo"/>
+                tools:listitem="@layout/item_select_photo" />
 
             <Button
                 android:id="@+id/bt_add_photo"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:text="新增照片"/>
+                android:text="新增照片" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,7 +207,7 @@
     <include
         android:id="@+id/il_loading"
         layout="@layout/layout_loading"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 
 </FrameLayout>

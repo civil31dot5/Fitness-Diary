@@ -7,7 +7,7 @@ import javax.inject.Inject
 class AddDietRecordUseCase @Inject constructor(
     private val repository: RecordRepository
 ) {
-    suspend operator fun invoke(record: DietRecord): Boolean{
+    suspend operator fun invoke(record: DietRecord): Boolean {
         return repository.addDietRecord(record).isSuccess
     }
 }

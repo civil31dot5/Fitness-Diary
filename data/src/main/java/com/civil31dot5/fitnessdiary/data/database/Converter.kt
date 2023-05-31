@@ -8,11 +8,11 @@ class Converter {
 
     @TypeConverter
     fun fromLocalDateTimeToString(dateTime: LocalDateTime): String {
-        return  DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(dateTime)
+        return DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(dateTime)
     }
 
     @TypeConverter
-    fun fromStringToLocalDateTime(string: String): LocalDateTime{
+    fun fromStringToLocalDateTime(string: String): LocalDateTime {
         return LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(string))
     }
 

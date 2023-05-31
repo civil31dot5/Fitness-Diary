@@ -9,7 +9,7 @@ import javax.inject.Inject
 class RecordImageFileProcessor @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    companion object{
+    companion object {
         const val imageFolderName = "images"
     }
 
@@ -23,14 +23,15 @@ class RecordImageFileProcessor @Inject constructor(
     fun copyFile(fromPath: String, namePrefix: String): Result<String> = kotlin.runCatching {
 
         val imageFolder = File(context.filesDir, imageFolderName)
-        if (!imageFolder.exists()){
+        if (!imageFolder.exists()) {
             imageFolder.mkdir()
         }
 
         val originFile = File(fromPath)
 
 
-        val fileExtension = if (TextUtils.isEmpty(originFile.extension)) "jpg" else originFile.extension
+        val fileExtension =
+            if (TextUtils.isEmpty(originFile.extension)) "jpg" else originFile.extension
 
         val newFileName = buildString {
             append(namePrefix)
@@ -47,7 +48,7 @@ class RecordImageFileProcessor @Inject constructor(
         "$imageFolderName/$newFileName"
     }
 
-    fun deleteFile(filePath: String): Boolean{
+    fun deleteFile(filePath: String): Boolean {
         val file = File(context.filesDir, filePath)
         return file.delete()
     }

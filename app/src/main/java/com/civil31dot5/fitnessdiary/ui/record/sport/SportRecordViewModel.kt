@@ -20,7 +20,7 @@ class SportRecordViewModel @Inject constructor(
     private val connectStravaUseCase: ConnectStravaUseCase,
     private val disconnectStravaUseCase: DisconnectStravaUseCase,
     private val getStravaSportRecordUseCase: GetStravaSportRecordUseCase
-): ViewModel() {
+) : ViewModel() {
 
     data class UiState(
         val hasConnectStrava: Boolean? = null,
@@ -43,13 +43,13 @@ class SportRecordViewModel @Inject constructor(
                     getStravaSportRecordUseCase(from, to)
                 }
                 .first()
-                .collect{result ->
+                .collect { result ->
                     _uiState.update { it.copy(sportHistory = result) }
                 }
         }
     }
 
-    fun connectStrava() = viewModelScope.launch{
+    fun connectStrava() = viewModelScope.launch {
         connectStravaUseCase()
         refreshConnectStatus()
     }
@@ -59,7 +59,7 @@ class SportRecordViewModel @Inject constructor(
         refreshConnectStatus()
     }
 
-    private fun refreshConnectStatus() = viewModelScope.launch{
+    private fun refreshConnectStatus() = viewModelScope.launch {
         _uiState.update { it.copy(hasConnectStrava = getStravaConnectStatusUseCase() == StravaConnectStatus.Connected) }
     }
 }

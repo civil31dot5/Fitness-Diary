@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddDietRecordViewModel @Inject constructor(
     private val addDietRecordUseCase: AddDietRecordUseCase
-): AddPhotoRecordViewModel(){
+) : AddPhotoRecordViewModel() {
 
     init {
         setName("飲食紀錄")

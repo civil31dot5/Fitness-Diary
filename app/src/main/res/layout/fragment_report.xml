@@ -11,22 +11,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="體重與運動卡路里 週變化圖"/>
+        android:text="體重與運動卡路里 週變化圖" />
 
     <com.github.mikephil.charting.charts.CombinedChart
         android:id="@+id/chart_weight_calories"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="300dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="體脂率與運動卡路里 週變化圖"/>
+        android:text="體脂率與運動卡路里 週變化圖" />
 
     <com.github.mikephil.charting.charts.CombinedChart
         android:id="@+id/chart_fat_rate_calories"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="300dp" />
 
 </LinearLayout>

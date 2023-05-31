@@ -8,7 +8,7 @@ class DeleteBodyShapeRecordUseCase @Inject constructor(
     private val recordRepository: RecordRepository
 ) {
 
-    suspend operator fun invoke(record: BodyShapeRecord){
+    suspend operator fun invoke(record: BodyShapeRecord) {
         return recordRepository.deleteBodyShapeRecord(record)
     }
 }

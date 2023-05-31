@@ -10,7 +10,7 @@ import com.civil31dot5.fitnessdiary.databinding.ItemDietRecordBinding
 import com.civil31dot5.fitnessdiary.domain.model.DietRecord
 import java.time.format.DateTimeFormatter
 
-private val diffUtil = object : DiffUtil.ItemCallback<DietRecord>(){
+private val diffUtil = object : DiffUtil.ItemCallback<DietRecord>() {
     override fun areItemsTheSame(oldItem: DietRecord, newItem: DietRecord): Boolean {
         return oldItem.id == newItem.id
     }
@@ -24,7 +24,7 @@ private val diffUtil = object : DiffUtil.ItemCallback<DietRecord>(){
 class DietRecordAdapter(
     private val onEditClick: (DietRecord) -> Unit,
     private val onDeleteClick: (DietRecord) -> Unit
-): ListAdapter<DietRecord, DietRecordAdapter.ViewHolder>(diffUtil) {
+) : ListAdapter<DietRecord, DietRecordAdapter.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -40,7 +40,7 @@ class DietRecordAdapter(
 
     inner class ViewHolder(
         private val binding: ItemDietRecordBinding
-    ): RecyclerView.ViewHolder(binding.root){
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.vpImages.adapter = RecordImageAdapter()
@@ -54,12 +54,13 @@ class DietRecordAdapter(
             }
         }
 
-        fun bind(item: DietRecord){
-            with(binding){
+        fun bind(item: DietRecord) {
+            with(binding) {
                 tvName.text = item.name
                 tvDatetime.text = item.dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
                 tvNote.text = item.note
-                binding.vpImages.visibility = if (item.images.isNotEmpty()) View.VISIBLE else View.GONE
+                binding.vpImages.visibility =
+                    if (item.images.isNotEmpty()) View.VISIBLE else View.GONE
                 (binding.vpImages.adapter as? RecordImageAdapter)?.submitList(item.images)
             }
         }

@@ -19,8 +19,8 @@ data class DietRecordEntity(
 data class DietRecordWithImages(
     @Embedded val dietRecord: DietRecordEntity,
     @Relation(
-       parentColumn = "id",
-       entityColumn = "record_id"
+        parentColumn = "id",
+        entityColumn = "record_id"
     )
     val images: List<RecordImageEntity>
 )

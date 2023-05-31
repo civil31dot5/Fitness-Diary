@@ -8,7 +8,7 @@ class AddBodyShapeRecordUseCase @Inject constructor(
     private val recordRepository: RecordRepository
 ) {
 
-    suspend operator fun invoke(record: BodyShapeRecord): Boolean{
+    suspend operator fun invoke(record: BodyShapeRecord): Boolean {
         return recordRepository.addBodyShapeRecord(record).isSuccess
     }
 }

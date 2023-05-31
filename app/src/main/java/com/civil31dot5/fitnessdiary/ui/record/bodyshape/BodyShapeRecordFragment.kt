@@ -82,9 +82,9 @@ class BodyShapeRecordFragment : Fragment(), GenericRecordAdapterListener<BodySha
 
     private fun bindViewModel() {
         lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.uiStateFlow.collect{ uiState ->
+                    viewModel.uiStateFlow.collect { uiState ->
                         (binding.rvBodyShape.adapter as? BodyShapeRecordAdapter)?.submitList(uiState.bodyShapeRecord)
                         setChart(uiState.chartData)
                     }
@@ -104,7 +104,7 @@ class BodyShapeRecordFragment : Fragment(), GenericRecordAdapterListener<BodySha
         chartData.mapIndexed { index, item ->
             dateTimeIndex[index.toFloat()] = item.dateTime
             weightEntry.add(Entry(index.toFloat(), item.weight.toFloat(), item))
-            if (item.fatRate != null){
+            if (item.fatRate != null) {
                 fateRateEntry.add(Entry(index.toFloat(), item.fatRate.toFloat(), item))
             }
         }
@@ -133,9 +133,9 @@ class BodyShapeRecordFragment : Fragment(), GenericRecordAdapterListener<BodySha
             setLabelCount(dateTimeIndex.size, false)
             labelRotationAngle = 90f
             axisMinimum = -0.5f
-            axisMaximum = weightDataSet.xMax+0.5f
+            axisMaximum = weightDataSet.xMax + 0.5f
         }
-        binding.chart.xAxis.valueFormatter = object : ValueFormatter(){
+        binding.chart.xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val dateTime = dateTimeIndex[value] ?: return ""
                 return dateTime.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
@@ -158,7 +158,7 @@ class BodyShapeRecordFragment : Fragment(), GenericRecordAdapterListener<BodySha
     override fun onDeleteClick(data: BodyShapeRecord) {
         AlertDialog.Builder(requireActivity())
             .setTitle("確定刪除?")
-            .setPositiveButton("確定"){ _, _ -> viewModel.deleteRecord(data) }
+            .setPositiveButton("確定") { _, _ -> viewModel.deleteRecord(data) }
             .setNegativeButton("取消", null)
             .show()
     }

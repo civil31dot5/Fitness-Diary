@@ -16,7 +16,7 @@ import javax.inject.Inject
 class DietRecordHistoryViewModel @Inject constructor(
     private val getAllDietRecordUseCase: GetAllDietRecordUseCase,
     private val deleteDietRecordUseCase: DeleteDietRecordUseCase
-): ViewModel() {
+) : ViewModel() {
 
     val dietRecordList = getAllDietRecordUseCase()
         .map { it.sortedByDescending { it.dateTime } }

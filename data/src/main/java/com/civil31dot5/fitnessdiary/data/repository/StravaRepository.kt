@@ -21,7 +21,7 @@ class StravaRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val stravaApi: StravaApi,
     private val stravaSportDao: StravaSportDao
-): StravaRepository {
+) : StravaRepository {
 
     override suspend fun syncSportRecord(from: LocalDate, to: LocalDate) {
 
@@ -29,7 +29,7 @@ class StravaRepositoryImpl @Inject constructor(
 
         summaryActivities.map { summary ->
             val local = stravaSportDao.queryById(summary.id)
-            if (local != null){
+            if (local != null) {
                 return@map local.toStravaSport()
             }
 
@@ -54,10 +54,12 @@ class StravaRepositoryImpl @Inject constructor(
     override fun getSportRecord(from: LocalDate, to: LocalDate): Flow<List<StravaSportRecord>> {
 
         val workRequest = OneTimeWorkRequestBuilder<SyncStravaSportHistoryWorker>()
-            .setInputData(workDataOf(
-                "from" to from.format(DateTimeFormatter.ISO_LOCAL_DATE),
-                "to" to to.format(DateTimeFormatter.ISO_LOCAL_DATE)
-            ))
+            .setInputData(
+                workDataOf(
+                    "from" to from.format(DateTimeFormatter.ISO_LOCAL_DATE),
+                    "to" to to.format(DateTimeFormatter.ISO_LOCAL_DATE)
+                )
+            )
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .build()
 
@@ -71,7 +73,7 @@ class StravaRepositoryImpl @Inject constructor(
         return stravaSportDao.query(
             LocalDateTime.of(from.year, from.month, from.dayOfMonth, 0, 0),
             LocalDateTime.of(to.year, to.month, to.dayOfMonth, 23, 59),
-        ).map { it.map { it.toStravaSport()} }
+        ).map { it.map { it.toStravaSport() } }
     }
 
 }

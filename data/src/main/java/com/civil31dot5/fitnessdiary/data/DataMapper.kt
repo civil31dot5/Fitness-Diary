@@ -11,11 +11,11 @@ fun DietRecord.toDietRecordEntity(): DietRecordEntity {
     return DietRecordEntity(id, name, dateTime, note)
 }
 
-fun RecordImage.toRecordImageEntity(recordId: String, newFilePath: String): RecordImageEntity{
+fun RecordImage.toRecordImageEntity(recordId: String, newFilePath: String): RecordImageEntity {
     return RecordImageEntity(id, recordId, newFilePath, note)
 }
 
-fun DietRecordWithImages.toDietRecord(): DietRecord{
+fun DietRecordWithImages.toDietRecord(): DietRecord {
     return DietRecord(
         dietRecord.id,
         dietRecord.name,
@@ -25,15 +25,15 @@ fun DietRecordWithImages.toDietRecord(): DietRecord{
     )
 }
 
-fun RecordImageEntity.toRecordImage(): RecordImage{
+fun RecordImageEntity.toRecordImage(): RecordImage {
     return RecordImage(id, filePath, note)
 }
 
-fun StravaSportRecord.toStravaSportEntity(): StravaSportEntity{
+fun StravaSportRecord.toStravaSportEntity(): StravaSportEntity {
     return StravaSportEntity(stravaId, dateTime, name, distance, calories, type, elapsedTimeSec)
 }
 
-fun StravaSportEntity.toStravaSport(): StravaSportRecord{
+fun StravaSportEntity.toStravaSport(): StravaSportRecord {
     return StravaSportRecord(id, datetime, name, distance, calories, type, elapsedTimeSec)
 }
 

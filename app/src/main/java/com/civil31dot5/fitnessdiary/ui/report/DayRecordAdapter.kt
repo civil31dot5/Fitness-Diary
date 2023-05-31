@@ -15,7 +15,7 @@ import com.civil31dot5.fitnessdiary.domain.model.StravaSportRecord
 import java.time.format.DateTimeFormatter
 
 
-private val DiffUtil = object : ItemCallback<Record>(){
+private val DiffUtil = object : ItemCallback<Record>() {
     override fun areItemsTheSame(oldItem: Record, newItem: Record): Boolean {
         return oldItem.id == newItem.id
     }
@@ -25,10 +25,10 @@ private val DiffUtil = object : ItemCallback<Record>(){
     }
 }
 
-class DayRecordAdapter: ListAdapter<Record, RecyclerView.ViewHolder>(DiffUtil) {
+class DayRecordAdapter : ListAdapter<Record, RecyclerView.ViewHolder>(DiffUtil) {
 
     override fun getItemViewType(position: Int): Int {
-        return when(getItem(position)){
+        return when (getItem(position)) {
             is DietRecord -> R.layout.item_day_diet
             is StravaSportRecord -> R.layout.item_day_sport
             else -> throw IllegalStateException("wrong type")
@@ -36,29 +36,43 @@ class DayRecordAdapter: ListAdapter<Record, RecyclerView.ViewHolder>(DiffUtil) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType){
-            R.layout.item_day_diet -> DayDietViewHolder(ItemDayDietBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            R.layout.item_day_sport -> DaySportViewHolder(ItemDaySportBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return when (viewType) {
+            R.layout.item_day_diet -> DayDietViewHolder(
+                ItemDayDietBinding.inflate(
+                    LayoutInflater.from(
+                        parent.context
+                    ), parent, false
+                )
+            )
+            R.layout.item_day_sport -> DaySportViewHolder(
+                ItemDaySportBinding.inflate(
+                    LayoutInflater.from(
+                        parent.context
+                    ), parent, false
+                )
+            )
             else -> throw IllegalStateException("wrong type")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder){
+        when (holder) {
             is DayDietViewHolder -> holder.bind(getItem(position) as DietRecord)
             is DaySportViewHolder -> holder.bind(getItem(position) as StravaSportRecord)
         }
     }
 
-    inner class DayDietViewHolder(val binding: ItemDayDietBinding): RecyclerView.ViewHolder(binding.root){
+    inner class DayDietViewHolder(val binding: ItemDayDietBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.rvImages.adapter = ImageGridViewAdapter()
         }
 
         fun bind(item: DietRecord) {
-            with(binding){
-                tvDateTime.text = item.dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+            with(binding) {
+                tvDateTime.text =
+                    item.dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
                 tvNote.text = item.note
                 tvNote.visibility = if (item.note.isEmpty()) View.GONE else View.VISIBLE
                 (rvImages.adapter as? ImageGridViewAdapter)?.submitList(item.images)
@@ -66,10 +80,12 @@ class DayRecordAdapter: ListAdapter<Record, RecyclerView.ViewHolder>(DiffUtil) {
         }
     }
 
-    inner class DaySportViewHolder(val binding: ItemDaySportBinding): RecyclerView.ViewHolder(binding.root){
+    inner class DaySportViewHolder(val binding: ItemDaySportBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: StravaSportRecord) {
-            with(binding){
-                tvDateTime.text = item.dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+            with(binding) {
+                tvDateTime.text =
+                    item.dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
                 tvName.text = item.name
                 tvCalories.text = "消耗 %.0f 卡路里".format(item.calories)
             }

@@ -33,7 +33,7 @@ data class DietRecord(
     override val dateTime: LocalDateTime,
     override val note: String,
     val images: List<RecordImage>
-): Record(id, name, dateTime, note)
+) : Record(id, name, dateTime, note)
 
 /**
  * Feeling record 心情紀錄
@@ -50,7 +50,7 @@ data class FeelingRecord(
     override val dateTime: LocalDateTime,
     override val note: String,
     val images: List<RecordImage>,
-): Record(id, name, dateTime, note)
+) : Record(id, name, dateTime, note)
 
 /**
  * Body shape record 體態紀錄
@@ -71,7 +71,7 @@ data class BodyShapeRecord(
     val images: List<RecordImage>,
     val weight: Double,
     val bodyFatPercentage: Double? = null,
-): Record(id, name, dateTime, note)
+) : Record(id, name, dateTime, note)
 
 /**
  * Drink water record 喝水紀錄
@@ -88,7 +88,7 @@ data class DrinkWaterRecord(
     override val dateTime: LocalDateTime,
     override val note: String,
     val volume: Int
-): Record(id, name, dateTime, note)
+) : Record(id, name, dateTime, note)
 
 
 /**

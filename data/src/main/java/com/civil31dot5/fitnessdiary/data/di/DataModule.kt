@@ -31,7 +31,6 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import timber.log.Timber
-import java.util.prefs.Preferences
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -70,7 +69,7 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideStravaSportDao(database: RecordDatabase): StravaSportDao{
+    fun provideStravaSportDao(database: RecordDatabase): StravaSportDao {
         return database.getStravaSportDao()
     }
 
@@ -80,8 +79,8 @@ class DataModule {
     fun provideHttpClient(
         stravaAccountManager: StravaAccountManagerImpl,
         @StravaApiBaseUrl stravaBaseUrl: String
-    ): HttpClient{
-        val client = HttpClient(OkHttp){
+    ): HttpClient {
+        val client = HttpClient(OkHttp) {
             defaultRequest {
                 url(stravaBaseUrl)
             }
@@ -103,15 +102,21 @@ class DataModule {
                 })
             }
 
-            install(Auth){
+            install(Auth) {
                 bearer {
                     loadTokens {
-                        BearerTokens(stravaAccountManager.getAccessToken(), stravaAccountManager.getRefreshToken())
+                        BearerTokens(
+                            stravaAccountManager.getAccessToken(),
+                            stravaAccountManager.getRefreshToken()
+                        )
                     }
 
                     refreshTokens {
                         stravaAccountManager.refreshToken()
-                        BearerTokens(stravaAccountManager.getAccessToken(), stravaAccountManager.getRefreshToken())
+                        BearerTokens(
+                            stravaAccountManager.getAccessToken(),
+                            stravaAccountManager.getRefreshToken()
+                        )
                     }
 
                 }
@@ -123,13 +128,13 @@ class DataModule {
 
     @StravaApiBaseUrl
     @Provides
-    fun provideStravaApiBaseUrl(): String{
+    fun provideStravaApiBaseUrl(): String {
         return "https://www.strava.com/api/v3/"
     }
 
     @Singleton
     @Provides
-    fun provideStravaApi(impl: StravaApiImpl): StravaApi{
+    fun provideStravaApi(impl: StravaApiImpl): StravaApi {
         return impl
     }
 
@@ -138,11 +143,11 @@ class DataModule {
     @Provides
     fun provideSharedPreferences(
         @ApplicationContext context: Context
-    ): SharedPreferences{
+    ): SharedPreferences {
         val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 
         return EncryptedSharedPreferences.create(
-           "secret_shared_prefs",
+            "secret_shared_prefs",
             masterKeyAlias,
             context,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,

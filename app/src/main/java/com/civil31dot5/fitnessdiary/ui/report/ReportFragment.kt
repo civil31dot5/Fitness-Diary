@@ -104,8 +104,8 @@ class ReportFragment : Fragment() {
 
     private fun bindViewModel() {
         lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.weekReport.collect{
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.weekReport.collect {
                     setupChart(it.sortedBy { it.yearWeek })
                 }
             }
@@ -138,7 +138,7 @@ class ReportFragment : Fragment() {
 
         val caloriesDataSetForWeight = BarDataSet(caloriesEntry, "運動卡路里").apply {
             axisDependency = YAxis.AxisDependency.RIGHT
-            valueFormatter = object : ValueFormatter(){
+            valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return "%.0f".format(value)
                 }
@@ -151,7 +151,7 @@ class ReportFragment : Fragment() {
             setDrawCircles(false)
             setDrawCircleHole(false)
             setDrawFilled(false)
-            valueFormatter = object : ValueFormatter(){
+            valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return "%.2f".format(value)
                 }
@@ -164,7 +164,7 @@ class ReportFragment : Fragment() {
             setDrawCircles(false)
             setDrawCircleHole(false)
             setDrawFilled(false)
-            valueFormatter = object : ValueFormatter(){
+            valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return "%.2f%%".format(value)
                 }
@@ -191,29 +191,45 @@ class ReportFragment : Fragment() {
         binding.chartWeightCalories.apply {
             data = weightCaloriesData
 
-            xAxis.valueFormatter = object : ValueFormatter(){
+            xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
-                    return xLabelMap[value]?.yearWeek?.getFirstDate()?.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) ?: ""
+                    return xLabelMap[value]?.yearWeek?.getFirstDate()
+                        ?.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) ?: ""
                 }
             }
 
-            xAxis.axisMaximum = caloriesDataForWeight.xMax+0.5f
+            xAxis.axisMaximum = caloriesDataForWeight.xMax + 0.5f
 
-            setXAxisRenderer(FixedLabelXAxisRender(viewPortHandler, xAxis, getTransformer(YAxis.AxisDependency.RIGHT), xLabelPosition))
+            setXAxisRenderer(
+                FixedLabelXAxisRender(
+                    viewPortHandler,
+                    xAxis,
+                    getTransformer(YAxis.AxisDependency.RIGHT),
+                    xLabelPosition
+                )
+            )
             invalidate()
         }
 
         binding.chartFatRateCalories.apply {
             data = fatRateCaloriesData
 
-            xAxis.valueFormatter = object : ValueFormatter(){
+            xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
-                    return xLabelMap[value]?.yearWeek?.getFirstDate()?.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) ?: ""
+                    return xLabelMap[value]?.yearWeek?.getFirstDate()
+                        ?.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) ?: ""
                 }
             }
-            xAxis.axisMaximum = caloriesDataForFatRate.xMax+0.5f
+            xAxis.axisMaximum = caloriesDataForFatRate.xMax + 0.5f
 
-            setXAxisRenderer(FixedLabelXAxisRender(viewPortHandler, xAxis, getTransformer(YAxis.AxisDependency.RIGHT), xLabelPosition))
+            setXAxisRenderer(
+                FixedLabelXAxisRender(
+                    viewPortHandler,
+                    xAxis,
+                    getTransformer(YAxis.AxisDependency.RIGHT),
+                    xLabelPosition
+                )
+            )
             invalidate()
         }
 

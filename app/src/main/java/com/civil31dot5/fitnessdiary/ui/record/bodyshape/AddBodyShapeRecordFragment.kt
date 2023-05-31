@@ -1,7 +1,6 @@
 package com.civil31dot5.fitnessdiary.ui.record.bodyshape
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.civil31dot5.fitnessdiary.R
 import com.civil31dot5.fitnessdiary.databinding.FragmentAddBodyShapeRecordBinding
 import com.civil31dot5.fitnessdiary.ui.base.BaseAddPhotoFragment
 import com.civil31dot5.fitnessdiary.ui.base.SelectedPhotosAdapter
@@ -73,7 +71,7 @@ class AddBodyShapeRecordFragment : BaseAddPhotoFragment() {
             val weight = binding.tlWeight.editText?.text.toString().toDoubleOrNull()
             val fatRate = binding.tlFat.editText?.text.toString().toDoubleOrNull()
 
-            if (weight == null){
+            if (weight == null) {
                 AlertDialog.Builder(requireActivity())
                     .setTitle("請設定體重")
                     .setNegativeButton("OK", null)

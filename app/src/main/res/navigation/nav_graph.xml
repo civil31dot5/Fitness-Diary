@@ -5,17 +5,19 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
-    <action android:id="@+id/action_global_addDietRecordFragment"
+    <action
+        android:id="@+id/action_global_addDietRecordFragment"
         app:destination="@id/addDietRecordFragment" />
 
-    <action android:id="@+id/action_global_addBodyShapeRecordFragment"
+    <action
+        android:id="@+id/action_global_addBodyShapeRecordFragment"
         app:destination="@id/addBodyShapeRecordFragment" />
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.home.HomeFragment"
         android:label="@string/home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_dayReportFragment"
             app:destination="@id/dayReportFragment" />
@@ -25,7 +27,7 @@
         android:id="@+id/dietRecordHistoryFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.record.diet.DietRecordHistoryFragment"
         android:label="@string/diet_record"
-        tools:layout="@layout/fragment_diet_record_history"/>
+        tools:layout="@layout/fragment_diet_record_history" />
 
     <fragment
         android:id="@+id/addDietRecordFragment"
@@ -57,7 +59,7 @@
         android:id="@+id/dayReportFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.report.DayRecordFragment"
         android:label="當日報表"
-        tools:layout="@layout/fragment_day_record" >
+        tools:layout="@layout/fragment_day_record">
         <argument
             android:name="date"
             app:argType="java.time.LocalDate" />

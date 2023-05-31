@@ -23,6 +23,7 @@ private const val RESPONSE_TYPE = "code"
 private const val REDIRECT_URI_STRING = "fitnessdiary://fitnessdiary.civil31dot5.com"
 private const val REQUEST_CODE = 2023
 private const val KEY_AUTH_STATE = "KEY_AUTH_STATE"
+
 @Singleton
 class StravaAccountManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -126,35 +127,35 @@ class StravaAccountManagerImpl @Inject constructor(
         return authState?.refreshToken ?: ""
     }
 
-    suspend fun refreshToken() = suspendCancellableCoroutine<Unit>{
-        authService.performTokenRequest(authState!!.createTokenRefreshRequest()){ resp, ex ->
-            if (resp != null){
+    suspend fun refreshToken() = suspendCancellableCoroutine<Unit> {
+        authService.performTokenRequest(authState!!.createTokenRefreshRequest()) { resp, ex ->
+            if (resp != null) {
                 updateAuthState(resp, ex)
                 it.resume(Unit)
-            }else{
+            } else {
                 it.resumeWithException(ex!!)
             }
 
         }
     }
 
-    private fun updateAuthState(resp:AuthorizationResponse, ex: AuthorizationException?){
+    private fun updateAuthState(resp: AuthorizationResponse, ex: AuthorizationException?) {
         authState?.update(resp, ex)
         sharedPreferences.edit(commit = true) {
             putString(KEY_AUTH_STATE, authState?.jsonSerializeString())
         }
     }
 
-    private fun updateAuthState(resp:TokenResponse, ex: AuthorizationException?){
+    private fun updateAuthState(resp: TokenResponse, ex: AuthorizationException?) {
         authState?.update(resp, ex)
         sharedPreferences.edit(commit = true) {
             putString(KEY_AUTH_STATE, authState?.jsonSerializeString())
         }
     }
 
-    private fun readAuthStateFromLocal(){
+    private fun readAuthStateFromLocal() {
         val json = sharedPreferences.getString(KEY_AUTH_STATE, "")
-        if (json != null && json.isNotEmpty()){
+        if (json != null && json.isNotEmpty()) {
             authState = AuthState.jsonDeserialize(json)
         }
     }

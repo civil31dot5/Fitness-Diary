@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 open class AddRecordViewModel @Inject constructor(
 
-): ViewModel() {
+) : ViewModel() {
 
     data class BasicRecordData(
         val name: String = "",
@@ -22,7 +22,7 @@ open class AddRecordViewModel @Inject constructor(
         val note: String = "",
         val isLoading: Boolean = false,
         val addRecordSuccess: Boolean? = null
-    ){
+    ) {
         val dateTime: LocalDateTime
             get() = LocalDateTime.of(date, time)
     }
@@ -30,7 +30,7 @@ open class AddRecordViewModel @Inject constructor(
     private val _basicRecordDataFlow = MutableStateFlow(BasicRecordData())
     val basicRecordData = _basicRecordDataFlow.asStateFlow()
 
-    fun setName(name: String){
+    fun setName(name: String) {
         _basicRecordDataFlow.update { it.copy(name = name) }
     }
 
@@ -42,20 +42,20 @@ open class AddRecordViewModel @Inject constructor(
         _basicRecordDataFlow.update { it.copy(time = newTime) }
     }
 
-    fun setNote(note: String){
+    fun setNote(note: String) {
         _basicRecordDataFlow.update { it.copy(note = note) }
     }
 
-    fun setLoading(isLoading:Boolean){
+    fun setLoading(isLoading: Boolean) {
         _basicRecordDataFlow.update { it.copy(isLoading = isLoading) }
     }
 
-    fun setAddRecordResult(success: Boolean){
+    fun setAddRecordResult(success: Boolean) {
         _basicRecordDataFlow.update { it.copy(addRecordSuccess = success, isLoading = false) }
     }
 
     fun onRecordNameChanged(newName: String) {
-        if (_basicRecordDataFlow.value.name != newName){
+        if (_basicRecordDataFlow.value.name != newName) {
             _basicRecordDataFlow.update { it.copy(name = newName) }
         }
     }

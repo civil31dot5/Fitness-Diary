@@ -3,11 +3,12 @@ package com.civil31dot5.fitnessdiary.ui.record.bodyshape
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.civil31dot5.fitnessdiary.domain.model.BodyShapeRecord
-import com.civil31dot5.fitnessdiary.domain.usecase.bodyshape.AddBodyShapeRecordUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.bodyshape.DeleteBodyShapeRecordUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.bodyshape.GetAllBodyShapeRecordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import javax.inject.Inject

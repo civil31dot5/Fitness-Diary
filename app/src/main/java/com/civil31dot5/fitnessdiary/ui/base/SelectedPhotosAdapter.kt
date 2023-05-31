@@ -1,11 +1,8 @@
 package com.civil31dot5.fitnessdiary.ui.base
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,10 +11,8 @@ import com.civil31dot5.fitnessdiary.GlideApp
 import com.civil31dot5.fitnessdiary.databinding.ItemSelectPhotoBinding
 import com.civil31dot5.fitnessdiary.domain.model.RecordImage
 import com.civil31dot5.fitnessdiary.extraFile
-import timber.log.Timber
-import java.io.File
 
-private val diffUtil = object : DiffUtil.ItemCallback<RecordImage>(){
+private val diffUtil = object : DiffUtil.ItemCallback<RecordImage>() {
     override fun areItemsTheSame(oldItem: RecordImage, newItem: RecordImage): Boolean {
         return oldItem.id == newItem.id
     }
@@ -36,7 +31,7 @@ private val diffUtil = object : DiffUtil.ItemCallback<RecordImage>(){
 class SelectedPhotosAdapter(
     private val onDeleteListener: (RecordImage) -> Unit,
     private val onNoteChangedListener: (RecordImage, String) -> Unit
-): ListAdapter<RecordImage, SelectedPhotosAdapter.ViewHolder>(diffUtil) {
+) : ListAdapter<RecordImage, SelectedPhotosAdapter.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -53,7 +48,7 @@ class SelectedPhotosAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
-        if (payloads.isEmpty()){
+        if (payloads.isEmpty()) {
             onBindViewHolder(holder, position)
             return
         }
@@ -65,7 +60,7 @@ class SelectedPhotosAdapter(
 
     inner class ViewHolder(
         private val binding: ItemSelectPhotoBinding
-    ): RecyclerView.ViewHolder(binding.root){
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.btDelete.setOnClickListener {
@@ -75,7 +70,7 @@ class SelectedPhotosAdapter(
 
             binding.etNote.doAfterTextChanged {
                 it ?: return@doAfterTextChanged
-                if (getItem(bindingAdapterPosition).note != it.toString()){
+                if (getItem(bindingAdapterPosition).note != it.toString()) {
                     onNoteChangedListener.invoke(getItem(bindingAdapterPosition), it.toString())
                 }
             }

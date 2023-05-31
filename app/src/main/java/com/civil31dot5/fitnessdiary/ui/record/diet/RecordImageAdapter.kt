@@ -8,9 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.civil31dot5.fitnessdiary.GlideApp
 import com.civil31dot5.fitnessdiary.domain.model.RecordImage
 import com.civil31dot5.fitnessdiary.extraFile
-import java.io.File
 
-private val diffUtil = object : DiffUtil.ItemCallback<RecordImage>(){
+private val diffUtil = object : DiffUtil.ItemCallback<RecordImage>() {
     override fun areItemsTheSame(oldItem: RecordImage, newItem: RecordImage): Boolean {
         return oldItem.id == newItem.id
     }
@@ -20,11 +19,14 @@ private val diffUtil = object : DiffUtil.ItemCallback<RecordImage>(){
     }
 }
 
-class RecordImageAdapter: ListAdapter<RecordImage, RecordImageAdapter.ViewHolder>(diffUtil){
+class RecordImageAdapter : ListAdapter<RecordImage, RecordImageAdapter.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val imageView = ImageView(parent.context)
-        imageView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        imageView.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         return ViewHolder(imageView)
     }
@@ -35,9 +37,9 @@ class RecordImageAdapter: ListAdapter<RecordImage, RecordImageAdapter.ViewHolder
 
     inner class ViewHolder(
         private val imageView: ImageView
-    ): RecyclerView.ViewHolder(imageView){
+    ) : RecyclerView.ViewHolder(imageView) {
 
-        fun bind(recordImage: RecordImage){
+        fun bind(recordImage: RecordImage) {
             GlideApp.with(imageView)
                 .load(recordImage.extraFile(imageView.context.applicationContext))
                 .into(imageView)

@@ -3,7 +3,6 @@ package com.civil31dot5.fitnessdiary.domain.model
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.temporal.TemporalAdjusters
 import java.time.temporal.WeekFields
 
 data class YearWeek(
@@ -12,9 +11,9 @@ data class YearWeek(
 ) : Comparable<YearWeek> {
 
     private val num: Int
-    get() {
-        return "$year$week".toInt()
-    }
+        get() {
+            return "$year$week".toInt()
+        }
 
     override fun compareTo(other: YearWeek): Int {
         return num - other.num
@@ -24,7 +23,7 @@ data class YearWeek(
         return "$year-$week"
     }
 
-    fun getFirstDate(): LocalDate{
+    fun getFirstDate(): LocalDate {
         return LocalDate.now()
             .withYear(year)
             .with(WeekFields.ISO.weekOfWeekBasedYear(), week.toLong())
@@ -32,7 +31,7 @@ data class YearWeek(
     }
 }
 
-fun LocalDateTime.toYearWeek(): YearWeek{
+fun LocalDateTime.toYearWeek(): YearWeek {
 
     val weekNum = toLocalDate().get(WeekFields.ISO.weekOfWeekBasedYear())
 

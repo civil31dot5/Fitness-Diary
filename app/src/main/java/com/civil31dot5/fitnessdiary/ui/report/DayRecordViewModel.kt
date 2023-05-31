@@ -15,7 +15,7 @@ import javax.inject.Inject
 class DayRecordViewModel @Inject constructor(
     private val getDietRecordUseCase: GetDietRecordUseCase,
     private val getStravaSportRecordUseCase: GetStravaSportRecordUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val selectedDateFlow = MutableStateFlow<LocalDate?>(null)
 
@@ -23,16 +23,15 @@ class DayRecordViewModel @Inject constructor(
         .filterNotNull()
         .flatMapLatest {
             getDietRecordUseCase.invoke(it, it)
-                .combine(getStravaSportRecordUseCase.invoke(it, it)){ dietRecords, stravaSports ->
+                .combine(getStravaSportRecordUseCase.invoke(it, it)) { dietRecords, stravaSports ->
                     dietRecords + stravaSports
-            }
+                }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
 
     fun setDate(date: LocalDate) {
         selectedDateFlow.update { return@update date }
     }
-
 
 
 }

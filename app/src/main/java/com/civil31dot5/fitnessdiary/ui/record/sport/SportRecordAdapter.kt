@@ -10,16 +10,20 @@ import com.civil31dot5.fitnessdiary.domain.model.StravaSportRecord
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-private val diffUtil = object : DiffUtil.ItemCallback<StravaSportRecord>(){
+private val diffUtil = object : DiffUtil.ItemCallback<StravaSportRecord>() {
     override fun areItemsTheSame(oldItem: StravaSportRecord, newItem: StravaSportRecord): Boolean {
         return oldItem.stravaId == newItem.stravaId
     }
 
-    override fun areContentsTheSame(oldItem: StravaSportRecord, newItem: StravaSportRecord): Boolean {
+    override fun areContentsTheSame(
+        oldItem: StravaSportRecord,
+        newItem: StravaSportRecord
+    ): Boolean {
         return oldItem == newItem
     }
 }
-class SportRecordAdapter: ListAdapter<StravaSportRecord, SportRecordAdapter.ViewHolder>(diffUtil) {
+
+class SportRecordAdapter : ListAdapter<StravaSportRecord, SportRecordAdapter.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -33,16 +37,18 @@ class SportRecordAdapter: ListAdapter<StravaSportRecord, SportRecordAdapter.View
         holder.bind(getItem(position))
     }
 
-    inner class ViewHolder(private val binding: ItemSportHistoryBinding): RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(private val binding: ItemSportHistoryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
 
         fun bind(item: StravaSportRecord) {
-            with(binding){
+            with(binding) {
                 tvDatetime.text = item.dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
                 tvName.text = item.name
                 tvCalories.text = "%.0f".format(item.calories)
                 tvTpye.text = item.type
-                tvElapsedTime.text = LocalTime.MIN.plusSeconds(item.elapsedTimeSec).format(DateTimeFormatter.ISO_LOCAL_TIME)
+                tvElapsedTime.text = LocalTime.MIN.plusSeconds(item.elapsedTimeSec)
+                    .format(DateTimeFormatter.ISO_LOCAL_TIME)
 //                tvElapsedTime.text = DateUtils.formatElapsedTime(item.elapsedTimeSec)
 
             }

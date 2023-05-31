@@ -12,7 +12,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddBodyShapeRecordViewModel @Inject constructor(
     private val addBodyShapeRecordUseCase: AddBodyShapeRecordUseCase
-): AddPhotoRecordViewModel() {
+) : AddPhotoRecordViewModel() {
 
     init {
         setName("體態紀錄")

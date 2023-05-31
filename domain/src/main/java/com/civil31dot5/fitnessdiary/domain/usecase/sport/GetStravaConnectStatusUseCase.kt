@@ -7,7 +7,7 @@ class GetStravaConnectStatusUseCase @Inject constructor(
     private val stravaAccountManager: StravaAccountManager
 ) {
 
-    operator fun invoke(): StravaConnectStatus{
+    operator fun invoke(): StravaConnectStatus {
         return stravaAccountManager.connectStatus()
     }
 }

@@ -9,7 +9,7 @@ class DeleteDietRecordUseCase @Inject constructor(
     private val recordRepository: RecordRepository
 ) {
 
-    suspend operator fun invoke(record: DietRecord){
+    suspend operator fun invoke(record: DietRecord) {
         recordRepository.deleteDietRecord(record)
     }
 }

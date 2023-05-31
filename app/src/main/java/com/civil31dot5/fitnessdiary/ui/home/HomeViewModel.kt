@@ -15,7 +15,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getMonthDietRecordUseCase: GetMonthDietRecordUseCase,
     private val getMonthStravaSportRecordUseCase: GetMonthStravaSportRecordUseCase
-): ViewModel() {
+) : ViewModel() {
 
     data class UiState(
         val isLoading: Boolean = false,
@@ -47,25 +47,28 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            monthSportHistory.combine(monthDietRecord){ sportHistory, dietRecords->
+            monthSportHistory.combine(monthDietRecord) { sportHistory, dietRecords ->
 
                 val recordStatus = _uiState.value.recordStatus.toMutableMap()
                 dietRecords.forEach {
 
-                    if (recordStatus.containsKey(it.dateTime.toLocalDate())){
-                        recordStatus[it.dateTime.toLocalDate()] =  recordStatus[it.dateTime.toLocalDate()]!!.copy(hasDietRecord = true)
-                    }else{
-                        recordStatus[it.dateTime.toLocalDate()] =  RecordStatus(hasDietRecord = true)
+                    if (recordStatus.containsKey(it.dateTime.toLocalDate())) {
+                        recordStatus[it.dateTime.toLocalDate()] =
+                            recordStatus[it.dateTime.toLocalDate()]!!.copy(hasDietRecord = true)
+                    } else {
+                        recordStatus[it.dateTime.toLocalDate()] = RecordStatus(hasDietRecord = true)
                     }
 
                 }
 
                 sportHistory.forEach {
 
-                    if (recordStatus.containsKey(it.dateTime.toLocalDate())){
-                        recordStatus[it.dateTime.toLocalDate()] =  recordStatus[it.dateTime.toLocalDate()]!!.copy(hasSportHistory = true)
-                    }else{
-                        recordStatus[it.dateTime.toLocalDate()] =  RecordStatus(hasSportHistory = true)
+                    if (recordStatus.containsKey(it.dateTime.toLocalDate())) {
+                        recordStatus[it.dateTime.toLocalDate()] =
+                            recordStatus[it.dateTime.toLocalDate()]!!.copy(hasSportHistory = true)
+                    } else {
+                        recordStatus[it.dateTime.toLocalDate()] =
+                            RecordStatus(hasSportHistory = true)
                     }
                 }
 

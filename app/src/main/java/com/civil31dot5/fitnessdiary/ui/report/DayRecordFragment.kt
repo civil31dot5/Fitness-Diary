@@ -41,7 +41,7 @@ class DayRecordFragment : Fragment() {
     }
 
     private fun initView() {
-        with(binding){
+        with(binding) {
             tvDate.text = arg.date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
             rvRecords.adapter = DayRecordAdapter()
             rvRecords.setHasFixedSize(true)
@@ -55,9 +55,9 @@ class DayRecordFragment : Fragment() {
     private fun bindViewModel() {
         viewModel.setDate(arg.date)
 
-        lifecycleScope.launch{
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.selectedDateRecords.collect{
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.selectedDateRecords.collect {
                     (binding.rvRecords.adapter as? DayRecordAdapter)?.submitList(it)
                 }
 

@@ -9,9 +9,9 @@ import javax.inject.Inject
 class GetMonthDietRecordUseCase @Inject constructor(
     private val repository: RecordRepository
 ) {
-    
+
     operator fun invoke(yearMonth: YearMonth): Flow<List<DietRecord>> {
         return repository.getMonthDietRecord(yearMonth)
     }
-    
+
 }

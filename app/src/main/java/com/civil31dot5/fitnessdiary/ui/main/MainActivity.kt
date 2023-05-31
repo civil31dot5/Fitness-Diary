@@ -14,9 +14,7 @@ import com.civil31dot5.fitnessdiary.R
 import com.civil31dot5.fitnessdiary.data.IntentHandler
 import com.civil31dot5.fitnessdiary.data.StravaAccountManagerImpl
 import com.civil31dot5.fitnessdiary.databinding.ActivityMainBinding
-import com.civil31dot5.fitnessdiary.domain.usecase.sport.StravaAccountManager
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -63,9 +61,9 @@ class MainActivity : AppCompatActivity(), IntentHandler {
         handleIntent(getIntent())
     }
 
-    private fun handleIntent(intent: Intent){
+    private fun handleIntent(intent: Intent) {
         val toRecord = intent.getStringExtra("to_record")
-        if (toRecord == "diet"){
+        if (toRecord == "diet") {
             val navHostFragment =
                 supportFragmentManager.findFragmentById(R.id.fl_container) as NavHostFragment
             val navController = navHostFragment.navController
@@ -90,7 +88,7 @@ class MainActivity : AppCompatActivity(), IntentHandler {
         requestCode: Int,
         dataCallback: (Intent) -> Unit
     ) {
-        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)){
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             intentHandlerDataCallback = dataCallback
             intentHandlerRequestCode = requestCode
             startActivityForResult(intent, requestCode)
@@ -99,7 +97,7 @@ class MainActivity : AppCompatActivity(), IntentHandler {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == intentHandlerRequestCode && data != null){
+        if (requestCode == intentHandlerRequestCode && data != null) {
             intentHandlerDataCallback?.invoke(data)
             intentHandlerDataCallback = null
             intentHandlerRequestCode = null
@@ -107,7 +105,7 @@ class MainActivity : AppCompatActivity(), IntentHandler {
 
     }
 
-    fun setLoading(isVisible: Boolean){
+    fun setLoading(isVisible: Boolean) {
         binding.ilLoading.root.isVisible = isVisible
     }
 

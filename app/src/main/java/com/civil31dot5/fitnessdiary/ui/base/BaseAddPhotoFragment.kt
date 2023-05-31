@@ -85,7 +85,6 @@ open class BaseAddPhotoFragment : Fragment() {
         }
 
 
-
     protected fun showDatePicker() {
         val calendarConstraints = CalendarConstraints.Builder()
             .setValidator(DateValidatorPointBackward.now())

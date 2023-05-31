@@ -12,10 +12,10 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.civil31dot5.fitnessdiary"
-            android:targetClass="com.civil31dot5.fitnessdiary.ui.main.MainActivity" >
+            android:targetClass="com.civil31dot5.fitnessdiary.ui.main.MainActivity">
             <extra
                 android:name="to_record"
-                android:value="diet"/>
+                android:value="diet" />
         </intent>
 
     </shortcut>

@@ -29,9 +29,10 @@ object WorkNotificationUtil {
     private fun createNotificationChannel(ctx: Context) {
         val notificationManager = NotificationManagerCompat.from(ctx)
 
-        val channel = NotificationChannelCompat.Builder(ChannelId, NotificationManagerCompat.IMPORTANCE_LOW)
-            .setName(ChannelName)
-            .build()
+        val channel =
+            NotificationChannelCompat.Builder(ChannelId, NotificationManagerCompat.IMPORTANCE_LOW)
+                .setName(ChannelName)
+                .build()
 
         notificationManager.createNotificationChannel(channel)
     }

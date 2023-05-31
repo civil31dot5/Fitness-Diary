@@ -1,16 +1,12 @@
 package com.civil31dot5.fitnessdiary.ui.record.diet
 
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -18,25 +14,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.civil31dot5.fitnessdiary.BitmapUtil
-import com.civil31dot5.fitnessdiary.FileUtil
-import com.civil31dot5.fitnessdiary.MyContentProvider
 import com.civil31dot5.fitnessdiary.databinding.FragmentAddDietRecordBinding
 import com.civil31dot5.fitnessdiary.ui.base.BaseAddPhotoFragment
 import com.civil31dot5.fitnessdiary.ui.base.SelectedPhotosAdapter
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.DateValidatorPointBackward
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
-import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.io.File
-import java.time.Instant
-import java.time.LocalTime
-import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 
@@ -56,6 +38,7 @@ class AddDietRecordFragment : BaseAddPhotoFragment() {
         initListener()
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindViewModel()

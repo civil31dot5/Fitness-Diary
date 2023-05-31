@@ -30,7 +30,7 @@
             android:layout_marginEnd="6dp"
             android:src="@drawable/ic_fastfood"
             app:tint="@color/black"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_sport"
@@ -38,7 +38,7 @@
             android:layout_height="15dp"
             android:src="@drawable/ic_sports"
             app:tint="@color/black"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </LinearLayout>
 

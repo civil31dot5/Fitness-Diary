@@ -6,7 +6,7 @@ class DisconnectStravaUseCase @Inject constructor(
     private val stravaAccountManager: StravaAccountManager
 ) {
 
-    operator fun invoke(){
+    operator fun invoke() {
         stravaAccountManager.disconnectStrava()
     }
 }

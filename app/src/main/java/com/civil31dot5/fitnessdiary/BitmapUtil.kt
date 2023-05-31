@@ -36,6 +36,7 @@ object BitmapUtil {
 
         return bitmap
     }
+
     fun inSampleSizeToFile(inputStream: InputStream, outFile: File, size: Int = 2): Boolean {
 
         val option = BitmapFactory.Options().apply {
@@ -48,14 +49,14 @@ object BitmapUtil {
 
 }
 
-fun Bitmap.writeToJPGFile(file: File): Boolean{
+fun Bitmap.writeToJPGFile(file: File): Boolean {
     return try {
         val fos = FileOutputStream(file)
         compress(Bitmap.CompressFormat.JPEG, 90, fos)
         fos.flush()
         fos.close()
         true
-    }catch (e: Exception){
+    } catch (e: Exception) {
         e.printStackTrace()
         false
     }
