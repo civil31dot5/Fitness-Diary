@@ -9,25 +9,25 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.civil31dot5.fitnessdiary.R
-import com.civil31dot5.fitnessdiary.databinding.FragmentSportHistoryBinding
+import com.civil31dot5.fitnessdiary.databinding.FragmentSportRecordBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SportHistoryFragment : Fragment(), MenuProvider {
+class SportRecordFragment : Fragment(), MenuProvider {
 
-    private var _binding: FragmentSportHistoryBinding? = null
+    private var _binding: FragmentSportRecordBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<SportHistoryViewModel>()
+    private val viewModel by viewModels<SportRecordViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSportHistoryBinding.inflate(layoutInflater)
+        _binding = FragmentSportRecordBinding.inflate(layoutInflater)
         initView()
         return binding.root
     }
@@ -39,7 +39,7 @@ class SportHistoryFragment : Fragment(), MenuProvider {
 
     private fun initView() {
         requireActivity().addMenuProvider(this, viewLifecycleOwner)
-        binding.rvSport.adapter = SportHistoryAdapter()
+        binding.rvSport.adapter = SportRecordAdapter()
     }
 
     private fun bindViewModel() {
@@ -54,7 +54,7 @@ class SportHistoryFragment : Fragment(), MenuProvider {
 
                 launch {
                     viewModel.uiState.collect{ uiState ->
-                        (binding.rvSport.adapter as? SportHistoryAdapter)?.submitList(uiState.sportHistory)
+                        (binding.rvSport.adapter as? SportRecordAdapter)?.submitList(uiState.sportHistory)
                     }
                 }
 

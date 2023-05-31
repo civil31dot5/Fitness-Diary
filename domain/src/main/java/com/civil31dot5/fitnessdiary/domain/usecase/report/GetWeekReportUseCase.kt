@@ -4,7 +4,7 @@ import com.civil31dot5.fitnessdiary.domain.model.WeekReport
 import com.civil31dot5.fitnessdiary.domain.model.YearWeek
 import com.civil31dot5.fitnessdiary.domain.model.toYearWeek
 import com.civil31dot5.fitnessdiary.domain.usecase.bodyshape.GetBodyShapeRecordUseCase
-import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetStravaSportHistoryUseCase
+import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetStravaSportRecordUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 
 class GetWeekReportUseCase @Inject constructor(
-    private val getStravaSportHistoryUseCase: GetStravaSportHistoryUseCase,
+    private val getStravaSportRecordUseCase: GetStravaSportRecordUseCase,
     private val getBodyShapeRecordUseCase: GetBodyShapeRecordUseCase
 ) {
 
@@ -34,7 +34,7 @@ class GetWeekReportUseCase @Inject constructor(
 
         val searchFromDate = currentWeekFirstDate.minusWeeks(numOfWeeks.toLong())
 
-        return getStravaSportHistoryUseCase.invoke(searchFromDate, LocalDate.now())
+        return getStravaSportRecordUseCase.invoke(searchFromDate, LocalDate.now())
             .map { it.groupBy { it.dateTime.toYearWeek() } }
             .combine(
                 getBodyShapeRecordUseCase.invoke(searchFromDate, LocalDate.now())

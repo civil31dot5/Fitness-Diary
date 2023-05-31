@@ -11,7 +11,7 @@ import com.civil31dot5.fitnessdiary.databinding.ItemDayDietBinding
 import com.civil31dot5.fitnessdiary.databinding.ItemDaySportBinding
 import com.civil31dot5.fitnessdiary.domain.model.DietRecord
 import com.civil31dot5.fitnessdiary.domain.model.Record
-import com.civil31dot5.fitnessdiary.domain.model.StravaSport
+import com.civil31dot5.fitnessdiary.domain.model.StravaSportRecord
 import java.time.format.DateTimeFormatter
 
 
@@ -30,7 +30,7 @@ class DayRecordAdapter: ListAdapter<Record, RecyclerView.ViewHolder>(DiffUtil) {
     override fun getItemViewType(position: Int): Int {
         return when(getItem(position)){
             is DietRecord -> R.layout.item_day_diet
-            is StravaSport -> R.layout.item_day_sport
+            is StravaSportRecord -> R.layout.item_day_sport
             else -> throw IllegalStateException("wrong type")
         }
     }
@@ -46,7 +46,7 @@ class DayRecordAdapter: ListAdapter<Record, RecyclerView.ViewHolder>(DiffUtil) {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
             is DayDietViewHolder -> holder.bind(getItem(position) as DietRecord)
-            is DaySportViewHolder -> holder.bind(getItem(position) as StravaSport)
+            is DaySportViewHolder -> holder.bind(getItem(position) as StravaSportRecord)
         }
     }
 
@@ -67,7 +67,7 @@ class DayRecordAdapter: ListAdapter<Record, RecyclerView.ViewHolder>(DiffUtil) {
     }
 
     inner class DaySportViewHolder(val binding: ItemDaySportBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item: StravaSport) {
+        fun bind(item: StravaSportRecord) {
             with(binding){
                 tvDateTime.text = item.dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
                 tvName.text = item.name

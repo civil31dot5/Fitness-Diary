@@ -3,7 +3,7 @@ package com.civil31dot5.fitnessdiary.ui.report
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.civil31dot5.fitnessdiary.domain.usecase.diet.GetDietRecordUseCase
-import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetStravaSportHistoryUseCase
+import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetStravaSportRecordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DayRecordViewModel @Inject constructor(
     private val getDietRecordUseCase: GetDietRecordUseCase,
-    private val getStravaSportHistoryUseCase: GetStravaSportHistoryUseCase
+    private val getStravaSportRecordUseCase: GetStravaSportRecordUseCase
 ): ViewModel() {
 
     private val selectedDateFlow = MutableStateFlow<LocalDate?>(null)
@@ -23,7 +23,7 @@ class DayRecordViewModel @Inject constructor(
         .filterNotNull()
         .flatMapLatest {
             getDietRecordUseCase.invoke(it, it)
-                .combine(getStravaSportHistoryUseCase.invoke(it, it)){ dietRecords, stravaSports ->
+                .combine(getStravaSportRecordUseCase.invoke(it, it)){ dietRecords, stravaSports ->
                     dietRecords + stravaSports
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())

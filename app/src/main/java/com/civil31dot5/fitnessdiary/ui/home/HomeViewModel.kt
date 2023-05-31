@@ -3,7 +3,7 @@ package com.civil31dot5.fitnessdiary.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.civil31dot5.fitnessdiary.domain.usecase.diet.GetMonthDietRecordUseCase
-import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetMonthStravaSportHistoryUseCase
+import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetMonthStravaSportRecordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getMonthDietRecordUseCase: GetMonthDietRecordUseCase,
-    private val getMonthStravaSportHistoryUseCase: GetMonthStravaSportHistoryUseCase
+    private val getMonthStravaSportRecordUseCase: GetMonthStravaSportRecordUseCase
 ): ViewModel() {
 
     data class UiState(
@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private val monthSportHistory = selectYearMonth.mapNotNull { it }
-        .flatMapLatest { getMonthStravaSportHistoryUseCase.invoke(it) }
+        .flatMapLatest { getMonthStravaSportRecordUseCase.invoke(it) }
 //        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     private val monthDietRecord = selectYearMonth.mapNotNull { it }

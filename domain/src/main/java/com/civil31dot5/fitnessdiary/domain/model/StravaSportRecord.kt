@@ -2,7 +2,7 @@ package com.civil31dot5.fitnessdiary.domain.model
 
 import java.time.LocalDateTime
 
-data class StravaSport(
+data class StravaSportRecord(
     val stravaId: Long,
     override val dateTime: LocalDateTime,
     override val name: String,

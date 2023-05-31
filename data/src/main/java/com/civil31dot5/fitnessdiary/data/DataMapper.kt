@@ -4,7 +4,7 @@ import com.civil31dot5.fitnessdiary.data.database.*
 import com.civil31dot5.fitnessdiary.domain.model.BodyShapeRecord
 import com.civil31dot5.fitnessdiary.domain.model.DietRecord
 import com.civil31dot5.fitnessdiary.domain.model.RecordImage
-import com.civil31dot5.fitnessdiary.domain.model.StravaSport
+import com.civil31dot5.fitnessdiary.domain.model.StravaSportRecord
 
 
 fun DietRecord.toDietRecordEntity(): DietRecordEntity {
@@ -29,12 +29,12 @@ fun RecordImageEntity.toRecordImage(): RecordImage{
     return RecordImage(id, filePath, note)
 }
 
-fun StravaSport.toStravaSportEntity(): StravaSportEntity{
+fun StravaSportRecord.toStravaSportEntity(): StravaSportEntity{
     return StravaSportEntity(stravaId, dateTime, name, distance, calories, type, elapsedTimeSec)
 }
 
-fun StravaSportEntity.toStravaSport(): StravaSport{
-    return StravaSport(id, datetime, name, distance, calories, type, elapsedTimeSec)
+fun StravaSportEntity.toStravaSport(): StravaSportRecord{
+    return StravaSportRecord(id, datetime, name, distance, calories, type, elapsedTimeSec)
 }
 
 fun BodyShapeRecord.toBodyShapeRecordEntity(): BodyShapeRecordEntity {

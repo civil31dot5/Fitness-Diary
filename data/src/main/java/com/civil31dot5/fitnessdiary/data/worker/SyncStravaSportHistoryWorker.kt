@@ -31,7 +31,7 @@ class SyncStravaSportHistoryWorker @AssistedInject constructor(
 
             val from = LocalDate.parse(inputData.getString("from"), DateTimeFormatter.ISO_LOCAL_DATE)
             val to = LocalDate.parse(inputData.getString("to"), DateTimeFormatter.ISO_LOCAL_DATE)
-            stravaRepository.syncSportHistory(from, to)
+            stravaRepository.syncSportRecord(from, to)
 
             Result.success()
         }catch (e: Exception){

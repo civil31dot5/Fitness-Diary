@@ -3,11 +3,11 @@ package com.civil31dot5.fitnessdiary.ui.record.sport
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.civil31dot5.fitnessdiary.domain.model.StravaConnectStatus
-import com.civil31dot5.fitnessdiary.domain.model.StravaSport
+import com.civil31dot5.fitnessdiary.domain.model.StravaSportRecord
 import com.civil31dot5.fitnessdiary.domain.usecase.sport.ConnectStravaUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.sport.DisconnectStravaUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetStravaConnectStatusUseCase
-import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetStravaSportHistoryUseCase
+import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetStravaSportRecordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -15,16 +15,16 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
-class SportHistoryViewModel @Inject constructor(
+class SportRecordViewModel @Inject constructor(
     private val getStravaConnectStatusUseCase: GetStravaConnectStatusUseCase,
     private val connectStravaUseCase: ConnectStravaUseCase,
     private val disconnectStravaUseCase: DisconnectStravaUseCase,
-    private val getStravaSportHistoryUseCase: GetStravaSportHistoryUseCase
+    private val getStravaSportRecordUseCase: GetStravaSportRecordUseCase
 ): ViewModel() {
 
     data class UiState(
         val hasConnectStrava: Boolean? = null,
-        val sportHistory: List<StravaSport> = emptyList()
+        val sportHistory: List<StravaSportRecord> = emptyList()
     )
 
     private val _uiState = MutableStateFlow(UiState())
@@ -40,7 +40,7 @@ class SportHistoryViewModel @Inject constructor(
                 .map {
                     val to = LocalDate.now()
                     val from = to.minusMonths(2)
-                    getStravaSportHistoryUseCase(from, to)
+                    getStravaSportRecordUseCase(from, to)
                 }
                 .first()
                 .collect{result ->

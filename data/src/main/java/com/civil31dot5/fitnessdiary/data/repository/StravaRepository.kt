@@ -7,7 +7,7 @@ import com.civil31dot5.fitnessdiary.data.network.StravaApi
 import com.civil31dot5.fitnessdiary.data.toStravaSport
 import com.civil31dot5.fitnessdiary.data.toStravaSportEntity
 import com.civil31dot5.fitnessdiary.data.worker.SyncStravaSportHistoryWorker
-import com.civil31dot5.fitnessdiary.domain.model.StravaSport
+import com.civil31dot5.fitnessdiary.domain.model.StravaSportRecord
 import com.civil31dot5.fitnessdiary.domain.repository.StravaRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -23,7 +23,7 @@ class StravaRepositoryImpl @Inject constructor(
     private val stravaSportDao: StravaSportDao
 ): StravaRepository {
 
-    override suspend fun syncSportHistory(from: LocalDate, to: LocalDate) {
+    override suspend fun syncSportRecord(from: LocalDate, to: LocalDate) {
 
         val summaryActivities = stravaApi.getSummaryActivities(from, to)
 
@@ -34,7 +34,7 @@ class StravaRepositoryImpl @Inject constructor(
             }
 
             val detailedActivity = stravaApi.getDetailActivity(summary.id)
-            val stravaSport = StravaSport(
+            val stravaSport = StravaSportRecord(
                 summary.id,
                 LocalDateTime.parse(
                     summary.startDateLocal.replace("Z", ""),
@@ -51,7 +51,7 @@ class StravaRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getSportHistory(from: LocalDate, to: LocalDate): Flow<List<StravaSport>> {
+    override fun getSportRecord(from: LocalDate, to: LocalDate): Flow<List<StravaSportRecord>> {
 
         val workRequest = OneTimeWorkRequestBuilder<SyncStravaSportHistoryWorker>()
             .setInputData(workDataOf(
