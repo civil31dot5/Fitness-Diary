@@ -4,4 +4,5 @@
     <string name="home">主頁</string>
     <string name="diet_record">飲食紀錄</string>
     <string name="sport_record">運動紀錄</string>
+    <string name="title_activity_compose">ComposeActivity</string>
 </resources>
