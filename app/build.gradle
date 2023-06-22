@@ -69,6 +69,8 @@ dependencies {
     implementation libs.ui.graphics
     implementation libs.ui.tooling.preview
     implementation libs.material3
+    implementation(libs.material.icons.extended)
+    implementation libs.lifecycle.compose.viewmodel
     androidTestImplementation platform(libs.compose.bom)
     androidTestImplementation libs.ui.test.junit4
     debugImplementation libs.ui.tooling
@@ -108,11 +110,12 @@ dependencies {
     kapt libs.glide.compiler
     implementation libs.mpandroidchart
 
-
     implementation libs.work.runtime.ktx
     androidTestImplementation libs.work.testing
     implementation libs.androidx.hilt.work
     kapt libs.androidx.hilt.compiler
+    implementation libs.hilt.navigation.compose
+
 
     implementation libs.core.ktx
     implementation libs.appcompat

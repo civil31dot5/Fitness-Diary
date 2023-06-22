@@ -42,7 +42,8 @@ class MainActivity : AppCompatActivity(), IntentHandler {
                 R.id.dietRecordHistoryFragment,
                 R.id.sportHistoryFragment,
                 R.id.bodyShapeRecordFragment,
-                R.id.reportFragment
+                R.id.reportFragment,
+                R.id.backupRestoreDataFragment
             ),
             binding.drawerLayout
         )

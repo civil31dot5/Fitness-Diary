@@ -11,8 +11,10 @@ import com.civil31dot5.fitnessdiary.data.database.RecordDatabase
 import com.civil31dot5.fitnessdiary.data.database.StravaSportDao
 import com.civil31dot5.fitnessdiary.data.network.StravaApi
 import com.civil31dot5.fitnessdiary.data.network.StravaApiImpl
+import com.civil31dot5.fitnessdiary.data.repository.BackupRestoreDataRepositoryImpl
 import com.civil31dot5.fitnessdiary.data.repository.RecordRepositoryImpl
 import com.civil31dot5.fitnessdiary.data.repository.StravaRepositoryImpl
+import com.civil31dot5.fitnessdiary.domain.repository.BackupRestoreDataRepository
 import com.civil31dot5.fitnessdiary.domain.repository.RecordRepository
 import com.civil31dot5.fitnessdiary.domain.repository.StravaRepository
 import dagger.Module
@@ -48,6 +50,11 @@ class DataModule {
     @Singleton
     @Provides
     fun provideStravaRepository(repository: StravaRepositoryImpl): StravaRepository {
+        return repository
+    }
+
+    @Provides
+    fun provideBackupRestoreDataRepository(repository: BackupRestoreDataRepositoryImpl): BackupRestoreDataRepository{
         return repository
     }
 

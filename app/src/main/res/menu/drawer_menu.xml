@@ -26,4 +26,9 @@
         android:title="報告"
         android:icon="@drawable/ic_analytics" />
 
+    <item
+        android:id="@+id/backupRestoreDataFragment"
+        android:title="匯出/匯入資料"
+        android:icon="@drawable/ic_import_export"/>
+
 </menu>

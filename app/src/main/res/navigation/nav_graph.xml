@@ -64,5 +64,9 @@
             android:name="date"
             app:argType="java.time.LocalDate" />
     </fragment>
+    <fragment
+        android:id="@+id/backupRestoreDataFragment"
+        android:name="com.civil31dot5.fitnessdiary.ui.backuprestore.BackupRestoreDataFragment"
+        android:label="匯出/匯入資料" />
 
 </navigation>

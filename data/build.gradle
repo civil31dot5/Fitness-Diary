@@ -75,6 +75,7 @@ dependencies {
     implementation libs.androidx.hilt.work
     kapt libs.androidx.hilt.compiler
 
+    implementation libs.zip
 
     implementation libs.core.ktx
     implementation libs.appcompat
