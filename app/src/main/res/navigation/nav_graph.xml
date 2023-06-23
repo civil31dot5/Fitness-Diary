@@ -16,8 +16,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.home.HomeFragment"
-        android:label="@string/home"
-        tools:layout="@layout/fragment_home">
+        android:label="@string/home">
         <action
             android:id="@+id/action_homeFragment_to_dayReportFragment"
             app:destination="@id/dayReportFragment" />

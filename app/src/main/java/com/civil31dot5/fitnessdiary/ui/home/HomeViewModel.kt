@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.civil31dot5.fitnessdiary.domain.usecase.diet.GetMonthDietRecordUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetMonthStravaSportRecordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.LocalDate
 import java.time.YearMonth
 import javax.inject.Inject
@@ -16,6 +18,7 @@ class HomeViewModel @Inject constructor(
     private val getMonthDietRecordUseCase: GetMonthDietRecordUseCase,
     private val getMonthStravaSportRecordUseCase: GetMonthStravaSportRecordUseCase
 ) : ViewModel() {
+
 
     data class UiState(
         val isLoading: Boolean = false,
@@ -33,16 +36,17 @@ class HomeViewModel @Inject constructor(
     private val selectYearMonth = MutableStateFlow<YearMonth?>(null)
 
     fun selectYearMonth(yearMonth: YearMonth) {
+        Timber.d("selectYearMonth $yearMonth")
         selectYearMonth.update { yearMonth }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val monthSportHistory = selectYearMonth.mapNotNull { it }
         .flatMapLatest { getMonthStravaSportRecordUseCase.invoke(it) }
-//        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val monthDietRecord = selectYearMonth.mapNotNull { it }
         .flatMapLatest { getMonthDietRecordUseCase.invoke(it) }
-//        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
 
     init {

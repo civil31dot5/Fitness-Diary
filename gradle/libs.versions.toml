@@ -11,7 +11,7 @@ coroutines = "1.6.4"
 timber = "5.0.1"
 desugarJdkLibs = "1.2.2"
 glide = "4.15.1"
-kizitonwose_calendar = "2.2.0"
+kizitonwose_calendar = "2.3.0"
 mpandroidchart = "v3.1.0"
 work = "2.8.0"
 androidxHilt = "1.0.0"
@@ -60,6 +60,7 @@ desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", ver
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 calendar-view = { module = "com.kizitonwose.calendar:view", version.ref = "kizitonwose_calendar" }
+calendar-compose = { module = "com.kizitonwose.calendar:compose", version.ref = "kizitonwose_calendar" }
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "work" }
 work-testing = { module = "androidx.work:work-testing", version.ref = "work" }

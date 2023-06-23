@@ -105,7 +105,7 @@ dependencies {
     implementation libs.timber
 
     coreLibraryDesugaring libs.desugar.jdk.libs
-    implementation libs.calendar.view
+    implementation libs.calendar.compose
     implementation libs.glide
     kapt libs.glide.compiler
     implementation libs.mpandroidchart
