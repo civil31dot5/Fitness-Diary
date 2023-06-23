@@ -37,8 +37,7 @@
     <fragment
         android:id="@+id/sportHistoryFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.record.sport.SportRecordFragment"
-        android:label="@string/sport_record"
-        tools:layout="@layout/fragment_sport_record" />
+        android:label="@string/sport_record"/>
     <fragment
         android:id="@+id/bodyShapeRecordFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.record.bodyshape.BodyShapeRecordFragment"

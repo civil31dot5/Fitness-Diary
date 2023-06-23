@@ -44,7 +44,7 @@ class SportRecordViewModel @Inject constructor(
                 }
                 .first()
                 .collect { result ->
-                    _uiState.update { it.copy(sportHistory = result) }
+                    _uiState.update { it.copy(sportHistory = result.sortedByDescending { it.dateTime }) }
                 }
         }
     }
