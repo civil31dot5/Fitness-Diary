@@ -52,6 +52,8 @@ import com.civil31dot5.fitnessdiary.domain.model.DietRecord
 import com.civil31dot5.fitnessdiary.domain.model.RecordImage
 import com.civil31dot5.fitnessdiary.extraFile
 import com.civil31dot5.fitnessdiary.ui.theme.FitnessDiaryTheme
+import com.civil31dot5.fitnessdiary.ui.utility.ConfirmDeleteDialog
+import com.civil31dot5.fitnessdiary.ui.utility.ImagePager
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.format.DateTimeFormatter
 
@@ -103,30 +105,6 @@ fun DietRecordScreen(
     }
 }
 
-@Composable
-fun ConfirmDeleteDialog(
-    onDeleteClick: () -> Unit,
-    onDismiss: () -> Unit
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(text = "確認刪除?") },
-        confirmButton = {
-            TextButton(
-                onClick = onDeleteClick
-            ) {
-                Text("確認")
-            }
-        },
-        dismissButton = {
-            TextButton(
-                onClick = onDismiss
-            ) {
-                Text("取消")
-            }
-        }
-    )
-}
 
 @Composable
 fun DietRecordContent(
@@ -187,60 +165,4 @@ fun DietRecordCard(
         }
     }
 }
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun ImagePager(images: List<RecordImage>) {
-    val pagerState = rememberPagerState()
-
-    Box {
-        HorizontalPager(
-            pageCount = images.size,
-            state = pagerState
-        ) { index ->
-            Box(
-                modifier = Modifier.aspectRatio(1f)
-            ) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(images[index].extraFile(LocalContext.current))
-                        .build(),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize()
-                )
-                Text(
-                    text = images[index].note,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd),
-                    style = MaterialTheme.typography.labelMedium
-                )
-            }
-        }
-
-        if (images.size > 1) {
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                repeat(images.size) { iteration ->
-                    val color =
-                        if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
-                    Box(
-                        modifier = Modifier
-                            .padding(2.dp)
-                            .clip(CircleShape)
-                            .background(color)
-                            .size(8.dp)
-                    )
-                }
-            }
-        }
-
-    }
-
-}
-
 

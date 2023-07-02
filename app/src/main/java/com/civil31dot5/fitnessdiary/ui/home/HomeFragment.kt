@@ -44,6 +44,7 @@ import androidx.navigation.fragment.findNavController
 import com.civil31dot5.fitnessdiary.NavGraphDirections
 import com.civil31dot5.fitnessdiary.R
 import com.civil31dot5.fitnessdiary.ui.theme.FitnessDiaryTheme
+import com.civil31dot5.fitnessdiary.ui.utility.AddRecordButton
 import com.kizitonwose.calendar.compose.CalendarState
 import com.kizitonwose.calendar.compose.HorizontalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
@@ -145,14 +146,13 @@ fun HomeContent(
             RecordCalendar(calendarState, recordStatus, onDayClick)
         }
 
-        FloatingActionButton(
+        AddRecordButton(
             onClick = onAddDietClick,
+            contentDescription = "add diet record",
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(16.dp)
-        ) {
-            Icon(Icons.Filled.Add, "add diet record")
-        }
+        )
     }
 
 }
