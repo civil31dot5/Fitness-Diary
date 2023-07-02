@@ -33,6 +33,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.civil31dot5.fitnessdiary.R
@@ -113,7 +114,7 @@ class SportRecordFragment : Fragment(), MenuProvider {
 
 @Composable
 fun SportRecordScreen(viewModel: SportRecordViewModel) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     SportRecordContent(uiState.sportHistory)
 }
 
