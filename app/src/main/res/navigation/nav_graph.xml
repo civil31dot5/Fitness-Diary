@@ -49,8 +49,7 @@
     <fragment
         android:id="@+id/reportFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.report.ReportFragment"
-        android:label="運動報告"
-        tools:layout="@layout/fragment_report" />
+        android:label="運動報告" />
     <fragment
         android:id="@+id/dayReportFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.report.DayRecordFragment"
