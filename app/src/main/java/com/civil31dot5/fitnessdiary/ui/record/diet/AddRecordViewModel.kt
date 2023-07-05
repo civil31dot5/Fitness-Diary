@@ -19,7 +19,7 @@ class AddDietRecordViewModel @Inject constructor(
         setName("飲食紀錄")
     }
 
-    fun submit(note: String?) = viewModelScope.launch {
+    fun submit() = viewModelScope.launch {
 
         setLoading(true)
 
@@ -27,7 +27,7 @@ class AddDietRecordViewModel @Inject constructor(
             UUID.randomUUID().toString(),
             basicRecordData.value.name,
             basicRecordData.value.dateTime,
-            note ?: "",
+            basicRecordData.value.note,
             photoRecordData.value.selectedPhotos
         )
 
