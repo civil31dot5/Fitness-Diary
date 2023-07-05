@@ -31,11 +31,12 @@ import com.civil31dot5.fitnessdiary.extraFile
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ImagePager(images: List<RecordImage>) {
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(
+        pageCount = { images.size }
+    )
 
     Box {
         HorizontalPager(
-            pageCount = images.size,
             state = pagerState
         ) { index ->
             Box(

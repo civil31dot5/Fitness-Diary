@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace 'com.civil31dot5.fitnessdiary'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.civil31dot5.fitnessdiary"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -48,7 +48,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.4.3'
+        kotlinCompilerExtensionVersion '1.4.8'
     }
     packaging {
         resources {
@@ -111,6 +111,7 @@ dependencies {
     kapt libs.glide.compiler
     implementation libs.coil.compose
     implementation libs.mpandroidchart
+    implementation libs.accompanist.permissions
 
     implementation libs.work.runtime.ktx
     androidTestImplementation libs.work.testing

@@ -11,7 +11,7 @@ coroutines = "1.6.4"
 timber = "5.0.1"
 desugarJdkLibs = "1.2.2"
 glide = "4.15.1"
-kizitonwose_calendar = "2.3.0"
+kizitonwose_calendar = "2.4.0-beta01"
 mpandroidchart = "v3.1.0"
 work = "2.8.0"
 androidxHilt = "1.0.0"
@@ -27,16 +27,17 @@ openidAppauth = "0.11.1"
 ktor = "2.2.4"
 securityCrypto = "1.0.0"
 androidGradlePlugin = "8.0.2"
-jetbrainsKotlinPlugin = "1.8.10"
+jetbrainsKotlinPlugin = "1.8.22"
 hiltAndroidPlugin = "2.44"
 googleServicesPlugin = "4.3.14"
 navigationSafeargsPlugin = "2.5.3"
 kotlinSerializationPlugin = "1.8.0"
 lifecycle = "2.6.1"
 activity-compose = "1.7.2"
-compose-bom = "2023.03.00"
+compose-bom = "2023.06.01"
 zip = "2.11.5"
 coil-compose = "2.4.0"
+accompanist-permissions = "0.31.5-beta"
 [libraries]
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
@@ -85,8 +86,8 @@ ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
-lifecycle-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle"}
-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle"}
+lifecycle-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 ui = { group = "androidx.compose.ui", name = "ui" }
@@ -95,11 +96,13 @@ ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-material3 = { group = "androidx.compose.material3", name = "material3" }
+material3 = { group = "androidx.compose.material3", name = "material3", version = "1.2.0-alpha03" }
 material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
-zip = {  module = "net.lingala.zip4j:zip4j", version.ref = "zip" }
-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHilt"}
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose"}
+zip = { module = "net.lingala.zip4j:zip4j", version.ref = "zip" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHilt" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
@@ -109,7 +112,6 @@ hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndro
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesPlugin" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigationSafeargsPlugin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerializationPlugin" }
-
 
 [bundles]
 
