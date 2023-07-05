@@ -1,129 +1,256 @@
 package com.civil31dot5.fitnessdiary.ui.record.bodyshape
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
-import androidx.core.widget.doOnTextChanged
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
-import com.civil31dot5.fitnessdiary.databinding.FragmentAddBodyShapeRecordBinding
-import com.civil31dot5.fitnessdiary.ui.base.BaseAddPhotoFragment
-import com.civil31dot5.fitnessdiary.ui.base.SelectedPhotosAdapter
+import com.civil31dot5.fitnessdiary.R
+import com.civil31dot5.fitnessdiary.ui.base.BaseAddPhotoContent
+import com.civil31dot5.fitnessdiary.ui.base.BaseAddPhotoContentState
+import com.civil31dot5.fitnessdiary.ui.base.InputFieldDate
+import com.civil31dot5.fitnessdiary.ui.base.InputFieldName
+import com.civil31dot5.fitnessdiary.ui.base.InputFieldNote
+import com.civil31dot5.fitnessdiary.ui.base.InputFieldTime
+import com.civil31dot5.fitnessdiary.ui.base.SelectedImageItem
+import com.civil31dot5.fitnessdiary.ui.theme.FitnessDiaryTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
-class AddBodyShapeRecordFragment : BaseAddPhotoFragment() {
+class AddBodyShapeRecordFragment : Fragment() {
 
     private val viewModel: AddBodyShapeRecordViewModel by viewModels()
-    private var _binding: FragmentAddBodyShapeRecordBinding? = null
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAddBodyShapeRecordBinding.inflate(layoutInflater)
-        initView()
-        initListener()
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        bindViewModel()
-    }
-
-    private fun initView() {
-        binding.rvPhotos.adapter = SelectedPhotosAdapter(
-            onDeleteListener = {
-                viewModel.deleteRecordImage(it)
-            },
-            onNoteChangedListener = { recordImage, note ->
-                viewModel.onRecordImageNoteChanged(recordImage, note)
+        return ComposeView(requireActivity()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                FitnessDiaryTheme {
+                    AddBodyShapeRecordScreen(viewModel)
+                }
             }
-        )
-        binding.rvPhotos.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                RecyclerView.VERTICAL
-            )
-        )
+        }
     }
 
-    private fun initListener() {
-        binding.flDatePicker.setOnClickListener { showDatePicker() }
-        binding.flTimePicker.setOnClickListener { showTimePicker() }
-        binding.btAddPhoto.setOnClickListener { showSelectPhotoFromDialog() }
-        binding.btCancel.setOnClickListener { findNavController().navigateUp() }
-        binding.btConfirm.setOnClickListener {
-            val note = binding.tlNote.editText?.text?.toString()
-            val weight = binding.tlWeight.editText?.text.toString().toDoubleOrNull()
-            val fatRate = binding.tlFat.editText?.text.toString().toDoubleOrNull()
+    @Composable
+    fun AddBodyShapeRecordScreen(viewModel: AddBodyShapeRecordViewModel) {
+        val state = remember { BaseAddPhotoContentState() }
+        val recordData by viewModel.basicRecordData.collectAsStateWithLifecycle()
+        val selectedPhotos by viewModel.photoRecordData.collectAsStateWithLifecycle()
 
-            if (weight == null) {
-                AlertDialog.Builder(requireActivity())
-                    .setTitle("請設定體重")
-                    .setNegativeButton("OK", null)
-                    .show()
-                return@setOnClickListener
-            }
+        val weight by viewModel.weightFlow.collectAsStateWithLifecycle()
+        val fatRate by viewModel.fatRateFlow.collectAsStateWithLifecycle()
 
-            viewModel.submit(note, weight, fatRate)
+        val context = LocalContext.current
+
+        if (recordData.addRecordSuccess == true) {
+            Toast.makeText(LocalContext.current, "新增成功", Toast.LENGTH_LONG).show()
+            findNavController().navigateUp()
         }
 
-        binding.tlName.editText?.doOnTextChanged { text, start, before, count ->
-            val text = binding.tlName.editText?.editableText?.toString() ?: return@doOnTextChanged
-            viewModel.onRecordNameChanged(text)
-        }
+        BaseAddPhotoContent(
+            state = state,
+            onAddPhoto = { viewModel.addPhoto(it) },
+            onDateSelected = { viewModel.setDate(it) },
+            onTimeSelected = { viewModel.setTime(it) }
+        ) {
 
-    }
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                contentPadding = PaddingValues(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
 
-    private fun bindViewModel() {
-        this.addPhotoRecordViewModel = viewModel
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.basicRecordData.collect {
-                        with(binding) {
-                            tlName.editText?.setText(it.name)
-                            tlName.editText?.setSelection(it.name.length)
-                            tlDate.editText?.setText(it.date.format(DateTimeFormatter.ISO_LOCAL_DATE))
-                            tlTime.editText?.setText(it.time.format(DateTimeFormatter.ofPattern("HH:mm")))
-                            ilLoading.root.isVisible = it.isLoading
-                            if (it.addRecordSuccess == true) {
-                                Toast.makeText(requireContext(), "新增成功", Toast.LENGTH_SHORT).show()
-                                findNavController().navigateUp()
-                            }
+                item {
+                    Text(
+                        text = "新增體態紀錄",
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
+                item {
+                    InputFieldName(
+                        modifier = Modifier.fillMaxWidth(),
+                        name = recordData.name,
+                        onNameUpdate = { viewModel.setName(it) }
+                    )
+                }
+                item {
+                    InputFieldDate(
+                        modifier = Modifier.fillMaxWidth(),
+                        dateString = recordData.date.toString(),
+                        onClick = { state.showDatePicker() }
+                    )
+                }
+                item {
+                    InputFieldTime(
+                        modifier = Modifier.fillMaxWidth(),
+                        timeString = {
+                            recordData.time.format(DateTimeFormatter.ofPattern("HH:mm"))
+                        },
+                        onClick = { state.showTimePicker() }
+                    )
+                }
+
+                item {
+                    InputFieldWeight(
+                        modifier = Modifier.fillMaxWidth(),
+                        weight = { weight },
+                        onWeightUpdate = { viewModel.updateWeight(it) }
+                    )
+                }
+
+                item {
+                    InputFieldFatRate(
+                        modifier = Modifier.fillMaxWidth(),
+                        fatRate = { fatRate },
+                        onFatRateUpdate = { viewModel.updateFatRate(it) }
+                    )
+                }
+
+                item {
+                    InputFieldNote(
+                        modifier = Modifier.fillMaxWidth(),
+                        note = recordData.note,
+                        onNoteUpdate = { viewModel.setNote(it) }
+                    )
+                }
+
+                items(selectedPhotos.selectedPhotos.size) { index ->
+                    val photo = selectedPhotos.selectedPhotos[index]
+                    SelectedImageItem(
+                        photo = photo,
+                        onImageNoteChanged = { image, note ->
+                            viewModel.onRecordImageNoteChanged(image, note)
+                        },
+                        onDeleteClicked = { viewModel.deleteRecordImage(it) }
+                    )
+                }
+
+                if (selectedPhotos.isAddButtonVisible) {
+                    item {
+                        TextButton(onClick = { state.showSelectPhotoFromDialog() }) {
+                            Text(text = "新增照片")
                         }
                     }
                 }
 
+                item {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        Button(
+                            onClick = { findNavController().navigateUp() },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(text = "取消")
+                        }
 
-                launch {
-                    viewModel.photoRecordData.collect {
-                        (binding.rvPhotos.adapter as? SelectedPhotosAdapter)?.submitList(it.selectedPhotos)
-                        binding.btAddPhoto.isVisible = it.isAddButtonVisible
-
+                        Button(
+                            onClick = {
+                                if (TextUtils.isEmpty(weight)) {
+                                    Toast.makeText(context, "請輸入體重", Toast.LENGTH_LONG).show()
+                                    return@Button
+                                }
+                                viewModel.submit()
+                            },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(text = "確認")
+                        }
                     }
                 }
+
             }
         }
-
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+
+    @Composable
+    fun InputFieldWeight(
+        modifier: Modifier = Modifier,
+        weight: () -> String = { "" },
+        onWeightUpdate: (String) -> Unit = {}
+    ) {
+        OutlinedTextField(
+            value = weight(),
+            onValueChange = { s ->
+                s.toDoubleOrNull()?.let {
+                    onWeightUpdate(s.trim())
+                }
+            },
+            label = { Text(text = "體重") },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_monitor_weight),
+                    contentDescription = null
+                )
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            modifier = modifier,
+            maxLines = 1
+        )
     }
+
+    @Composable
+    fun InputFieldFatRate(
+        modifier: Modifier = Modifier,
+        fatRate: () -> String = { "" },
+        onFatRateUpdate: (String) -> Unit = {}
+    ) {
+        OutlinedTextField(
+            value = fatRate(),
+            onValueChange = { s ->
+                s.toDoubleOrNull()?.let {
+                    onFatRateUpdate(s.trim())
+                }
+            },
+            label = { Text(text = "體脂率") },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_monitor_weight),
+                    contentDescription = null
+                )
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            modifier = modifier,
+            maxLines = 1
+        )
+    }
+
+
 }

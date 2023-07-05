@@ -47,6 +47,11 @@ import com.civil31dot5.fitnessdiary.domain.model.RecordImage
 import com.civil31dot5.fitnessdiary.extraFile
 import com.civil31dot5.fitnessdiary.ui.base.BaseAddPhotoContent
 import com.civil31dot5.fitnessdiary.ui.base.BaseAddPhotoContentState
+import com.civil31dot5.fitnessdiary.ui.base.InputFieldDate
+import com.civil31dot5.fitnessdiary.ui.base.InputFieldName
+import com.civil31dot5.fitnessdiary.ui.base.InputFieldNote
+import com.civil31dot5.fitnessdiary.ui.base.InputFieldTime
+import com.civil31dot5.fitnessdiary.ui.base.SelectedImageItem
 import com.civil31dot5.fitnessdiary.ui.theme.FitnessDiaryTheme
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.format.DateTimeFormatter
@@ -138,7 +143,13 @@ class AddDietRecordFragment : Fragment() {
 
                 items(selectedPhotos.selectedPhotos.size) { index ->
                     val photo = selectedPhotos.selectedPhotos[index]
-                    SelectedImageItem(photo)
+                    SelectedImageItem(
+                        photo = photo,
+                        onImageNoteChanged = { image, note ->
+                            viewModel.onRecordImageNoteChanged(image, note)
+                        },
+                        onDeleteClicked = { viewModel.deleteRecordImage(it) }
+                    )
                 }
 
                 if (selectedPhotos.isAddButtonVisible) {
@@ -173,123 +184,6 @@ class AddDietRecordFragment : Fragment() {
             }
         }
 
-    }
-
-
-    @Composable
-    fun InputFieldName(
-        modifier: Modifier = Modifier,
-        name: String = "name",
-        onNameUpdate: (String) -> Unit = {}
-    ) {
-        OutlinedTextField(
-            value = name,
-            onValueChange = onNameUpdate,
-            label = { Text(text = "名稱") },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_food_bank),
-                    contentDescription = null
-                )
-            },
-            modifier = modifier
-        )
-    }
-
-
-    @Composable
-    fun InputFieldDate(
-        modifier: Modifier = Modifier,
-        dateString: String = "",
-        onClick: () -> Unit = {}
-    ) {
-        OutlinedTextField(
-            value = dateString,
-            onValueChange = {},
-            enabled = false,
-            label = { Text(text = "日期") },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_edit_calendar),
-                    contentDescription = null
-                )
-            },
-            modifier = Modifier
-                .clickable { onClick() }
-                .then(modifier)
-        )
-    }
-
-    @Composable
-    fun InputFieldTime(
-        modifier: Modifier = Modifier,
-        timeString: () -> String = {""},
-        onClick: () -> Unit = {}
-    ) {
-        OutlinedTextField(
-            value = timeString(),
-            onValueChange = {},
-            enabled = false,
-            label = { Text(text = "時間") },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_time),
-                    contentDescription = null
-                )
-            },
-            modifier = Modifier
-                .clickable { onClick() }
-                .then(modifier)
-        )
-    }
-
-    @Composable
-    fun InputFieldNote(
-        modifier: Modifier = Modifier,
-        note: String = "",
-        onNoteUpdate: (String) -> Unit = {}
-    ) {
-        OutlinedTextField(
-            value = note,
-            onValueChange = onNoteUpdate,
-            label = { Text(text = "備註") },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_note),
-                    contentDescription = null
-                )
-            },
-            modifier = modifier
-        )
-    }
-
-    @Composable
-    fun SelectedImageItem(photo: RecordImage) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(photo.extraFile(LocalContext.current))
-                    .build(),
-                contentScale = ContentScale.Crop,
-                contentDescription = null,
-                modifier = Modifier.size(50.dp)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            TextField(
-                value = photo.note,
-                onValueChange = { note ->
-                    viewModel.onRecordImageNoteChanged(photo, note)
-                },
-                modifier = Modifier.weight(1f)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            IconButton(onClick = { viewModel.deleteRecordImage(photo) }) {
-                Icon(imageVector = Icons.Filled.Delete, contentDescription = null)
-            }
-
-        }
     }
 
 }

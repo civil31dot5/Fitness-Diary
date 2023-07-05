@@ -30,8 +30,7 @@
     <fragment
         android:id="@+id/addDietRecordFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.record.diet.AddDietRecordFragment"
-        android:label="新增飲食紀錄"
-        tools:layout="@layout/fragment_add_diet_record" />
+        android:label="新增飲食紀錄" />
 
     <fragment
         android:id="@+id/sportHistoryFragment"
@@ -44,8 +43,7 @@
     <fragment
         android:id="@+id/addBodyShapeRecordFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.record.bodyshape.AddBodyShapeRecordFragment"
-        android:label="新增體態紀錄"
-        tools:layout="@layout/fragment_add_body_shape_record" />
+        android:label="新增體態紀錄"/>
     <fragment
         android:id="@+id/reportFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.report.ReportFragment"
