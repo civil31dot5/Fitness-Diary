@@ -51,8 +51,7 @@
     <fragment
         android:id="@+id/dayReportFragment"
         android:name="com.civil31dot5.fitnessdiary.ui.report.DayRecordFragment"
-        android:label="當日報表"
-        tools:layout="@layout/fragment_day_record">
+        android:label="日報表">
         <argument
             android:name="date"
             app:argType="java.time.LocalDate" />

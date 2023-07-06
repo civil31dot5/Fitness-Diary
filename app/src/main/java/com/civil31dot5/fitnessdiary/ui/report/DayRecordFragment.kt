@@ -4,23 +4,36 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.navArgs
-import com.civil31dot5.fitnessdiary.databinding.FragmentDayRecordBinding
+import com.civil31dot5.fitnessdiary.domain.model.BodyShapeRecord
+import com.civil31dot5.fitnessdiary.domain.model.DietRecord
+import com.civil31dot5.fitnessdiary.domain.model.StravaSportRecord
+import com.civil31dot5.fitnessdiary.ui.record.bodyshape.BodyShapeRecordCard
+import com.civil31dot5.fitnessdiary.ui.record.diet.DietRecordCard
+import com.civil31dot5.fitnessdiary.ui.record.sport.SportRecordCard
+import com.civil31dot5.fitnessdiary.ui.theme.FitnessDiaryTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 
 
 @AndroidEntryPoint
 class DayRecordFragment : Fragment() {
 
-    private var _binding: FragmentDayRecordBinding? = null
-    private val binding get() = _binding!!
     private val viewModel: DayRecordViewModel by viewModels()
 
     private val arg: DayRecordFragmentArgs by navArgs()
@@ -29,44 +42,65 @@ class DayRecordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDayRecordBinding.inflate(layoutInflater)
-        initView()
-        initListener()
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        bindViewModel()
-    }
-
-    private fun initView() {
-        with(binding) {
-            tvDate.text = arg.date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
-            rvRecords.adapter = DayRecordAdapter()
-            rvRecords.setHasFixedSize(true)
-        }
-    }
-
-    private fun initListener() {
-
-    }
-
-    private fun bindViewModel() {
-        viewModel.setDate(arg.date)
-
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.selectedDateRecords.collect {
-                    (binding.rvRecords.adapter as? DayRecordAdapter)?.submitList(it)
+        return ComposeView(requireActivity()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                FitnessDiaryTheme {
+                    DayRecordScreen(viewModel)
                 }
-
             }
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.setDate(arg.date)
     }
+
+    @Composable
+    fun DayRecordScreen(viewModel: DayRecordViewModel) {
+        val dayRecords by viewModel.selectedDateRecords.collectAsStateWithLifecycle()
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+
+            item {
+                Text(
+                    text = arg.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+
+            items(
+                count = dayRecords.size,
+                key = { index -> dayRecords[index].id },
+                contentType = { index -> dayRecords[index].javaClass }
+            ) { index ->
+                val record = dayRecords[index]
+                when (record) {
+                    is DietRecord -> {
+                        DietRecordCard(record = record)
+                    }
+
+                    is StravaSportRecord -> {
+                        SportRecordCard(
+                            record.dateTime,
+                            record.type,
+                            record.calories,
+                            record.elapsedTimeSec
+                        )
+                    }
+
+                    is BodyShapeRecord -> {
+                        BodyShapeRecordCard(record = record)
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+    }
+
 }

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -130,8 +131,8 @@ fun DietRecordContent(
 @Composable
 fun DietRecordCard(
     record: DietRecord,
-    onEditClick: (DietRecord) -> Unit,
-    onDeleteClick: (DietRecord) -> Unit,
+    onEditClick: ((DietRecord) -> Unit)? = null,
+    onDeleteClick: ((DietRecord) -> Unit)? = null,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth()
@@ -147,22 +148,26 @@ fun DietRecordCard(
             modifier = Modifier.padding(start = 16.dp, top = 8.dp)
         )
 
-        Row(
-            modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 16.dp)
-        ) {
-            Button(
-                enabled = false,
-                onClick = { onEditClick(record) }
+        if (onEditClick != null && onDeleteClick != null){
+            Row(
+                modifier = Modifier.padding(start = 16.dp, top = 8.dp)
             ) {
-                Text(text = "Edit")
-            }
+                Button(
+                    enabled = false,
+                    onClick = { onEditClick(record) }
+                ) {
+                    Text(text = "Edit")
+                }
 
-            Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
-            Button(onClick = { onDeleteClick(record) }) {
-                Text(text = "Delete")
+                Button(onClick = { onDeleteClick(record) }) {
+                    Text(text = "Delete")
+                }
             }
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 

@@ -151,58 +151,6 @@ class BodyShapeRecordFragment : Fragment() {
 
     }
 
-    @Composable
-    fun BodyShapeRecordCard(
-        record: BodyShapeRecord,
-        onEditRecordClick: (BodyShapeRecord) -> Unit = {},
-        onDeleteRecordClick: (BodyShapeRecord) -> Unit = {},
-    ) {
-        Card(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            ImagePager(record.images)
-            Text(
-                text = record.name, style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(start = 16.dp, top = 16.dp)
-            )
-            Text(
-                text = record.dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(start = 16.dp, top = 8.dp)
-            )
-
-            Text(
-                text = "體重:%.1f".format(record.weight), style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(start = 16.dp, top = 8.dp)
-            )
-
-            if (record.bodyFatPercentage != null){
-                Text(
-                    text = "體脂率:%.1f%%".format(record.bodyFatPercentage), style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(start = 16.dp, top = 8.dp)
-                )
-            }
-
-            Row(
-                modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 16.dp)
-            ) {
-                Button(
-                    enabled = false,
-                    onClick = { onEditRecordClick(record) }
-                ) {
-                    Text(text = "Edit")
-                }
-
-                Spacer(modifier = Modifier.width(16.dp))
-
-                Button(onClick = { onDeleteRecordClick(record) }) {
-                    Text(text = "Delete")
-                }
-            }
-        }
-
-    }
-
     private fun initChart(lineChart: LineChart) {
         lineChart.apply {
 
@@ -276,6 +224,62 @@ class BodyShapeRecordFragment : Fragment() {
 
         lineChart.data = lineData
         lineChart.invalidate()
+    }
+
+}
+
+@Composable
+fun BodyShapeRecordCard(
+    record: BodyShapeRecord,
+    onEditRecordClick: ((BodyShapeRecord) -> Unit)? = null,
+    onDeleteRecordClick: ((BodyShapeRecord) -> Unit)? = null,
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        ImagePager(record.images)
+        Text(
+            text = record.name, style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+        )
+        Text(
+            text = record.dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+        )
+
+        Text(
+            text = "體重:%.1f".format(record.weight), style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+        )
+
+        if (record.bodyFatPercentage != null){
+            Text(
+                text = "體脂率:%.1f%%".format(record.bodyFatPercentage), style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+            )
+        }
+
+        if (onEditRecordClick != null && onDeleteRecordClick != null){
+            Row(
+                modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+            ) {
+                Button(
+                    enabled = false,
+                    onClick = { onEditRecordClick(record) }
+                ) {
+                    Text(text = "Edit")
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = { onDeleteRecordClick(record) }) {
+                    Text(text = "Delete")
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
 
 }
