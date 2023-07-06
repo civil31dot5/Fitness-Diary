@@ -176,7 +176,7 @@ fun SportRecordCard(dateTime: LocalDateTime, type: String, calories: Double, ela
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE))
+                Text(text = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 Text(text = type.uppercase(), style = MaterialTheme.typography.headlineLarge)
                 Text(
                     text = "%.0f卡路里".format(calories),
