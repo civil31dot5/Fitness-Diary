@@ -167,9 +167,21 @@ class BodyShapeRecordFragment : Fragment() {
             )
             Text(
                 text = record.dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(start = 16.dp, top = 8.dp)
             )
+
+            Text(
+                text = "體重:%.1f".format(record.weight), style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+            )
+
+            if (record.bodyFatPercentage != null){
+                Text(
+                    text = "體脂率:%.1f%%".format(record.bodyFatPercentage), style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+                )
+            }
 
             Row(
                 modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 16.dp)
