@@ -120,6 +120,7 @@ dependencies {
     kapt libs.androidx.hilt.compiler
     implementation libs.hilt.navigation.compose
 
+    implementation libs.splashscreen
 
     implementation libs.core.ktx
     implementation libs.appcompat

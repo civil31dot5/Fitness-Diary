@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.net.toUri
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import com.civil31dot5.fitnessdiary.data.IntentHandler
 import com.civil31dot5.fitnessdiary.data.StravaAccountManagerImpl
@@ -18,6 +19,7 @@ class MainActivity : ComponentActivity(), IntentHandler {
     @Inject
     lateinit var stravaAccountManager: StravaAccountManagerImpl
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
         setContent {
