@@ -38,6 +38,7 @@ compose-bom = "2023.06.01"
 zip = "2.11.5"
 coil-compose = "2.4.0"
 accompanist-permissions = "0.31.5-beta"
+navigation-compose = "2.6.0"
 [libraries]
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
@@ -102,6 +103,7 @@ zip = { module = "net.lingala.zip4j:zip4j", version.ref = "zip" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHilt" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

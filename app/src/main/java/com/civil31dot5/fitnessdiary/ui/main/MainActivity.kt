@@ -2,58 +2,31 @@ package com.civil31dot5.fitnessdiary.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
-import com.civil31dot5.fitnessdiary.NavGraphDirections
-import com.civil31dot5.fitnessdiary.R
 import com.civil31dot5.fitnessdiary.data.IntentHandler
 import com.civil31dot5.fitnessdiary.data.StravaAccountManagerImpl
-import com.civil31dot5.fitnessdiary.databinding.ActivityMainBinding
+import com.civil31dot5.fitnessdiary.ui.theme.FitnessDiaryTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), IntentHandler {
-
-    private val viewModel: MainViewModel by viewModels()
-
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : ComponentActivity(), IntentHandler {
 
     @Inject
     lateinit var stravaAccountManager: StravaAccountManagerImpl
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
+        setContent {
+            FitnessDiaryTheme {
+                FitnessDiaryAPP()
+            }
+        }
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fl_container) as NavHostFragment
-        val navController = navHostFragment.navController
-        val appBarConfiguration = AppBarConfiguration(
-            topLevelDestinationIds = setOf(
-                R.id.homeFragment,
-                R.id.dietRecordHistoryFragment,
-                R.id.sportHistoryFragment,
-                R.id.bodyShapeRecordFragment,
-                R.id.reportFragment,
-                R.id.backupRestoreDataFragment
-            ),
-            binding.drawerLayout
-        )
-
-        setSupportActionBar(binding.toolbar)
-
-        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
-        binding.navView.setupWithNavController(navController)
         handleIntent(intent)
-
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -65,10 +38,13 @@ class MainActivity : AppCompatActivity(), IntentHandler {
     private fun handleIntent(intent: Intent) {
         val toRecord = intent.getStringExtra("to_record")
         if (toRecord == "diet") {
-            val navHostFragment =
-                supportFragmentManager.findFragmentById(R.id.fl_container) as NavHostFragment
-            val navController = navHostFragment.navController
-            navController.navigate(NavGraphDirections.actionGlobalAddDietRecordFragment())
+            val deepLinkIntent = Intent(
+                Intent.ACTION_VIEW,
+                "fitnessdiary://add_diet_record".toUri(),
+                this,
+                MainActivity::class.java
+            )
+            startActivity(deepLinkIntent)
         }
     }
 
@@ -104,10 +80,6 @@ class MainActivity : AppCompatActivity(), IntentHandler {
             intentHandlerRequestCode = null
         }
 
-    }
-
-    fun setLoading(isVisible: Boolean) {
-        binding.ilLoading.root.isVisible = isVisible
     }
 
     override fun onDestroy() {

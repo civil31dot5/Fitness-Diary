@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.material.icons.extended)
     implementation libs.lifecycle.compose.viewmodel
     implementation libs.lifecycle.runtime.compose
+    implementation libs.navigation.compose
     androidTestImplementation platform(libs.compose.bom)
     androidTestImplementation libs.ui.test.junit4
     debugImplementation libs.ui.tooling

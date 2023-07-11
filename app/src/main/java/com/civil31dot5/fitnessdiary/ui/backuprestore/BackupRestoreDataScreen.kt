@@ -1,9 +1,5 @@
 package com.civil31dot5.fitnessdiary.ui.backuprestore
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,37 +18,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.civil31dot5.fitnessdiary.ui.theme.FitnessDiaryTheme
-import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@AndroidEntryPoint
-class BackupRestoreDataFragment : Fragment() {
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireActivity()).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                FitnessDiaryTheme {
-                    BackupRestoreScreen()
-                }
-            }
-        }
-    }
-}
 
 @Composable
-private fun BackupRestoreScreen(
-    viewModel: BackupRestoreViewModel = viewModel()
+fun BackupRestoreDataRoute(
+    viewModel: BackupRestoreViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val selectBackupFilePositionLauncher = rememberLauncherForActivityResult(

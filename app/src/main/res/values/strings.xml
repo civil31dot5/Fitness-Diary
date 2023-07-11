@@ -4,5 +4,12 @@
     <string name="home">主頁</string>
     <string name="diet_record">飲食紀錄</string>
     <string name="sport_record">運動紀錄</string>
-    <string name="title_activity_compose">ComposeActivity</string>
+    <string name="body_shape_record">體態紀錄</string>
+    <string name="report">報告</string>
+    <string name="backup_restore">資料備份還原</string>
+    <string name="add_diet_record">新增飲食紀錄</string>
+    <string name="add_body_shape_record">新增體態紀錄</string>
+    <string name="day_report">日報表</string>
+    <string name="connect_strava">連結STRAVA</string>
+    <string name="disconnect_strava">取消連結STRAVA</string>
 </resources>

@@ -1,9 +1,5 @@
 package com.civil31dot5.fitnessdiary.ui.home
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -15,15 +11,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
@@ -31,17 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.fragment.findNavController
-import com.civil31dot5.fitnessdiary.NavGraphDirections
 import com.civil31dot5.fitnessdiary.R
 import com.civil31dot5.fitnessdiary.ui.theme.FitnessDiaryTheme
 import com.civil31dot5.fitnessdiary.ui.utility.AddRecordButton
@@ -52,7 +38,6 @@ import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.DayPosition
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -60,43 +45,11 @@ import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
 
-@AndroidEntryPoint
-class HomeFragment : Fragment() {
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireActivity()).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                FitnessDiaryTheme {
-                    HomeScreen(
-                        onDayClick = ::onDayClick,
-                        onAddDietClick = ::onAddDietClick
-                    )
-                }
-            }
-        }
-    }
-
-    private fun onDayClick(day: CalendarDay) {
-        findNavController().navigate(
-            HomeFragmentDirections.actionHomeFragmentToDayReportFragment(
-                day.date
-            )
-        )
-    }
-
-    private fun onAddDietClick() {
-        findNavController().navigate(NavGraphDirections.actionGlobalAddDietRecordFragment())
-    }
-}
 
 @Composable
-fun HomeScreen(
-    viewModel: HomeViewModel = viewModel(),
-    onDayClick: (CalendarDay) -> Unit = {},
+fun HomeRoute(
+    viewModel: HomeViewModel = hiltViewModel(),
+    onDayClick: (LocalDate) -> Unit = {},
     onAddDietClick: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -132,7 +85,7 @@ fun HomeScreen(
 fun HomeContent(
     calendarState: CalendarState = rememberCalendarState(),
     recordStatus: Map<LocalDate, HomeViewModel.RecordStatus> = emptyMap(),
-    onDayClick: (CalendarDay) -> Unit = {},
+    onDayClick: (LocalDate) -> Unit = {},
     onAddDietClick: () -> Unit = {}
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -169,7 +122,7 @@ fun PreviewHomeContent() {
 fun RecordCalendar(
     calendarState: CalendarState = rememberCalendarState(),
     recordStatus: Map<LocalDate, HomeViewModel.RecordStatus> = emptyMap(),
-    onDayClick: (CalendarDay) -> Unit = {}
+    onDayClick: (LocalDate) -> Unit = {}
 ) {
     val dayOfWeek = remember { daysOfWeek() }
 
@@ -214,14 +167,14 @@ fun Day(
     day: CalendarDay = CalendarDay(LocalDate.now(), DayPosition.MonthDate),
     hasDietRecord: Boolean = false,
     hasSportHistory: Boolean = false,
-    onDayClick: (CalendarDay) -> Unit = {}
+    onDayClick: (LocalDate) -> Unit = {}
 ) {
     Box(
         modifier = Modifier
             .aspectRatio(1f)// This is important for square sizing!
             .clickable(
                 enabled = day.position == DayPosition.MonthDate,
-                onClick = { onDayClick(day) }
+                onClick = { onDayClick(day.date) }
             )
             .border(width = 0.5.dp, color = Color.Black),
         contentAlignment = Alignment.Center
