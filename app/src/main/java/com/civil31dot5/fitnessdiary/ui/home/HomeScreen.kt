@@ -1,6 +1,8 @@
 package com.civil31dot5.fitnessdiary.ui.home
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -88,13 +90,18 @@ fun HomeContent(
     onDayClick: (LocalDate) -> Unit = {},
     onAddDietClick: () -> Unit = {}
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+    ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = calendarState.firstVisibleMonth.yearMonth.toString(),
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.primary
             )
             RecordCalendar(calendarState, recordStatus, onDayClick)
         }
@@ -110,7 +117,8 @@ fun HomeContent(
 
 }
 
-@Preview(showBackground = true)
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewHomeContent() {
     FitnessDiaryTheme {
@@ -149,6 +157,7 @@ fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center,
                 text = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
     }
@@ -176,12 +185,15 @@ fun Day(
                 enabled = day.position == DayPosition.MonthDate,
                 onClick = { onDayClick(day.date) }
             )
-            .border(width = 0.5.dp, color = Color.Black),
+            .border(width = 0.5.dp, color = MaterialTheme.colorScheme.onSurface),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = day.date.dayOfMonth.toString(),
-            color = if (day.position == DayPosition.MonthDate) Color.Black else Color.LightGray
+            color = if (day.position == DayPosition.MonthDate)
+                MaterialTheme.colorScheme.onSurface
+            else
+                MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
         if (day.position == DayPosition.MonthDate) {
@@ -194,7 +206,7 @@ fun Day(
                     Image(
                         painter = painterResource(id = R.drawable.ic_fastfood),
                         contentDescription = null,
-                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
                         modifier = Modifier.size(15.dp)
                     )
                 }
@@ -202,19 +214,11 @@ fun Day(
                     Image(
                         painter = painterResource(id = R.drawable.ic_sports),
                         contentDescription = null,
-                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
                         modifier = Modifier.size(15.dp)
                     )
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun PreviewDay() {
-    FitnessDiaryTheme {
-        Day()
     }
 }

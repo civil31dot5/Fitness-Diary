@@ -1,5 +1,6 @@
 package com.civil31dot5.fitnessdiary.ui.record.sport
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.civil31dot5.fitnessdiary.domain.model.StravaSportRecord
+import com.civil31dot5.fitnessdiary.ui.theme.FitnessDiaryTheme
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -54,30 +56,33 @@ fun SportRecordContent(sportHistory: List<StravaSportRecord>) {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewSportRecordContent() {
-    SportRecordContent(
-        listOf(
-            StravaSportRecord(
-                0,
-                LocalDateTime.now(),
-                "running name",
-                13.0,
-                800.0,
-                "running",
-                3600
-            ),
-            StravaSportRecord(
-                1,
-                LocalDateTime.now(),
-                "evening bike",
-                45.0,
-                800.0,
-                "bike",
-                7200
-            ),
+    FitnessDiaryTheme {
+        SportRecordContent(
+            listOf(
+                StravaSportRecord(
+                    0,
+                    LocalDateTime.now(),
+                    "running name",
+                    13.0,
+                    800.0,
+                    "running",
+                    3600
+                ),
+                StravaSportRecord(
+                    1,
+                    LocalDateTime.now(),
+                    "evening bike",
+                    45.0,
+                    800.0,
+                    "bike",
+                    7200
+                ),
+            )
         )
-    )
+    }
 }
 
 @Composable
@@ -114,12 +119,15 @@ fun SportRecordCard(dateTime: LocalDateTime, type: String, calories: Double, ela
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewSportRecordCard() {
-    SportRecordCard(
-        LocalDateTime.now(),
-        "running",
-        800.0,
-        3600
-    )
+    FitnessDiaryTheme {
+        SportRecordCard(
+            LocalDateTime.now(),
+            "running",
+            800.0,
+            3600
+        )
+    }
 }

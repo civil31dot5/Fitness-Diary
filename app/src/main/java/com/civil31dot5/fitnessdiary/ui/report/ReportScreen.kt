@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -44,6 +46,7 @@ fun ReportRoute(
 fun ReportContent(
     chartData: List<WeekReport> = emptyList()
 ) {
+    val chartColor = MaterialTheme.colorScheme.onSurface
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -56,8 +59,8 @@ fun ReportContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp),
-            factory = { context -> CombinedChart(context).apply { initWeightCaloriesChart(this) } },
-            update = { chart -> setWeightCaloriesChart(chart, chartData) }
+            factory = { context -> CombinedChart(context).apply { initWeightCaloriesChart(this, chartColor) } },
+            update = { chart -> setWeightCaloriesChart(chart, chartData, chartColor) }
         )
 
         Text(
@@ -68,25 +71,32 @@ fun ReportContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp),
-            factory = { context -> CombinedChart(context).apply { initFatRateCaloriesChart(this) } },
-            update = { chart -> setFatRateCaloriesChart(chart, chartData) }
+            factory = { context -> CombinedChart(context).apply { initFatRateCaloriesChart(this, chartColor) } },
+            update = { chart -> setFatRateCaloriesChart(chart, chartData, chartColor) }
         )
 
     }
 }
 
-private fun initWeightCaloriesChart(chart: CombinedChart) {
+private fun initWeightCaloriesChart(
+    chart: CombinedChart,
+    chartColor: androidx.compose.ui.graphics.Color
+) {
     chart.apply {
         description = null
         axisRight.apply {
             setDrawGridLines(false)
             axisMinimum = 0f
+            axisLineColor = chartColor.toArgb()
+            textColor = chartColor.toArgb()
         }
 
         axisLeft.apply {
             setDrawGridLines(false)
             axisMinimum = 20f
             axisMaximum = 130f
+            axisLineColor = chartColor.toArgb()
+            textColor = chartColor.toArgb()
         }
 
         xAxis.apply {
@@ -94,28 +104,39 @@ private fun initWeightCaloriesChart(chart: CombinedChart) {
             position = XAxis.XAxisPosition.BOTTOM
             labelRotationAngle = 90f
             axisMinimum = -0.5f
+            axisLineColor = chartColor.toArgb()
+            textColor = chartColor.toArgb()
         }
         setDrawBorders(true)
         extraBottomOffset = 60f
         isHighlightPerTapEnabled = false
         isHighlightPerDragEnabled = false
+        setBorderColor(chartColor.toArgb())
+        legend.textColor = chartColor.toArgb()
     }
 
 }
 
-private fun initFatRateCaloriesChart(chart: CombinedChart) {
+private fun initFatRateCaloriesChart(
+    chart: CombinedChart,
+    chartColor: androidx.compose.ui.graphics.Color
+) {
     chart.apply {
         description = null
 
         axisRight.apply {
             setDrawGridLines(false)
             axisMinimum = 0f
+            axisLineColor = chartColor.toArgb()
+            textColor = chartColor.toArgb()
         }
 
         axisLeft.apply {
             setDrawGridLines(false)
             axisMinimum = 5f
             axisMaximum = 40f
+            axisLineColor = chartColor.toArgb()
+            textColor = chartColor.toArgb()
         }
 
         xAxis.apply {
@@ -123,15 +144,23 @@ private fun initFatRateCaloriesChart(chart: CombinedChart) {
             position = XAxis.XAxisPosition.BOTTOM
             labelRotationAngle = 90f
             axisMinimum = -0.5f
+            axisLineColor = chartColor.toArgb()
+            textColor = chartColor.toArgb()
         }
         setDrawBorders(true)
         extraBottomOffset = 60f
         isHighlightPerTapEnabled = false
         isHighlightPerDragEnabled = false
+        setBorderColor(chartColor.toArgb())
+        legend.textColor = chartColor.toArgb()
     }
 }
 
-private fun setWeightCaloriesChart(chart: CombinedChart, weekReposts: List<WeekReport>) {
+private fun setWeightCaloriesChart(
+    chart: CombinedChart,
+    weekReposts: List<WeekReport>,
+    chartColor: androidx.compose.ui.graphics.Color
+) {
 
     val xLabelMap = mutableMapOf<Float, WeekReport>()
 
@@ -157,6 +186,7 @@ private fun setWeightCaloriesChart(chart: CombinedChart, weekReposts: List<WeekR
                 return "%.0f".format(value)
             }
         }
+        valueTextColor = chartColor.toArgb()
     }
 
     val weightDataSet = LineDataSet(weightEntry, "體重").apply {
@@ -170,6 +200,7 @@ private fun setWeightCaloriesChart(chart: CombinedChart, weekReposts: List<WeekR
                 return "%.2f".format(value)
             }
         }
+        valueTextColor = chartColor.toArgb()
     }
 
     val caloriesDataForWeight = BarData(caloriesDataSetForWeight)
@@ -204,7 +235,11 @@ private fun setWeightCaloriesChart(chart: CombinedChart, weekReposts: List<WeekR
     }
 }
 
-private fun setFatRateCaloriesChart(chart: CombinedChart, weekReposts: List<WeekReport>) {
+private fun setFatRateCaloriesChart(
+    chart: CombinedChart,
+    weekReposts: List<WeekReport>,
+    chartColor: androidx.compose.ui.graphics.Color
+) {
 
     val xLabelMap = mutableMapOf<Float, WeekReport>()
 
@@ -243,6 +278,7 @@ private fun setFatRateCaloriesChart(chart: CombinedChart, weekReposts: List<Week
                 return "%.2f%%".format(value)
             }
         }
+        valueTextColor = chartColor.toArgb()
     }
 
     val caloriesDataForFatRate = BarData(caloriesDataSetForWeight)

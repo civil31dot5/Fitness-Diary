@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -84,6 +85,7 @@ fun BodyShapeRecordContent(
     onEditRecordClick: (BodyShapeRecord) -> Unit = {},
     onDeleteRecordClick: (BodyShapeRecord) -> Unit = {},
 ) {
+    val chartColor = MaterialTheme.colorScheme.onSurface
     Box(Modifier.fillMaxSize()) {
         LazyColumn(
             contentPadding = PaddingValues(16.dp),
@@ -95,8 +97,8 @@ fun BodyShapeRecordContent(
                     modifier = Modifier
                         .height(250.dp)
                         .fillMaxWidth(),
-                    factory = { context -> LineChart(context).apply { initChart(this) } },
-                    update = { lineChart -> setChartData(lineChart, chartData) }
+                    factory = { context -> LineChart(context).apply { initChart(this, chartColor) } },
+                    update = { lineChart -> setChartData(lineChart, chartData, chartColor) }
                 )
             }
 
@@ -120,7 +122,7 @@ fun BodyShapeRecordContent(
 
 }
 
-fun initChart(lineChart: LineChart) {
+fun initChart(lineChart: LineChart, chartColor: androidx.compose.ui.graphics.Color) {
     lineChart.apply {
 
         description = null
@@ -129,21 +131,33 @@ fun initChart(lineChart: LineChart) {
             axisMinimum = 5f
             axisMaximum = 40f
             setDrawGridLines(false)
+            axisLineColor = chartColor.toArgb()
+            textColor = chartColor.toArgb()
         }
         axisLeft.apply {
             setDrawGridLines(false)
+            axisLineColor = chartColor.toArgb()
+            textColor = chartColor.toArgb()
         }
 
         xAxis.apply {
             setDrawGridLines(false)
             position = XAxis.XAxisPosition.BOTTOM
+            axisLineColor = chartColor.toArgb()
+            textColor = chartColor.toArgb()
         }
 
         setDrawBorders(true)
+        setBorderColor(chartColor.toArgb())
+        legend.textColor = chartColor.toArgb()
     }
 }
 
-fun setChartData(lineChart: LineChart, chartData: List<BodyShapeRecordViewModel.BodyShapeChartData>) {
+fun setChartData(
+    lineChart: LineChart,
+    chartData: List<BodyShapeRecordViewModel.BodyShapeChartData>,
+    chartColor: androidx.compose.ui.graphics.Color
+) {
     if (chartData.isEmpty()) return
 
     val dateTimeIndex = mutableMapOf<Float, LocalDateTime>()
@@ -165,6 +179,7 @@ fun setChartData(lineChart: LineChart, chartData: List<BodyShapeRecordViewModel.
         setDrawCircleHole(false)
         setDrawCircles(true)
         isHighlightEnabled = false
+        valueTextColor = chartColor.toArgb()
     }
 
     val fatRateDataSet = LineDataSet(fateRateEntry, "FatRate").apply {
@@ -174,6 +189,7 @@ fun setChartData(lineChart: LineChart, chartData: List<BodyShapeRecordViewModel.
         setDrawCircleHole(false)
         setDrawCircles(true)
         isHighlightEnabled = false
+        valueTextColor = chartColor.toArgb()
     }
 
     val lineData = LineData(weightDataSet, fatRateDataSet)
