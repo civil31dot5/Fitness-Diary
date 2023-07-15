@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,6 +42,7 @@ import com.kizitonwose.calendar.core.DayPosition
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import kotlinx.coroutines.flow.distinctUntilChanged
+import timber.log.Timber
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
@@ -67,7 +69,7 @@ fun HomeRoute(
         firstDayOfWeek = firstDayOfWeek,
     )
 
-    LaunchedEffect(calendarState) {
+    LaunchedEffect(Unit) {
         snapshotFlow { calendarState.firstVisibleMonth.yearMonth }
             .distinctUntilChanged()
             .collect {
@@ -103,7 +105,12 @@ fun HomeContent(
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.primary
             )
-            RecordCalendar(calendarState, recordStatus, onDayClick)
+            RecordCalendar(
+                modifier = Modifier.padding(8.dp),
+                calendarState = calendarState,
+                recordStatus = recordStatus,
+                onDayClick = onDayClick
+            )
         }
 
         AddRecordButton(
@@ -128,25 +135,32 @@ fun PreviewHomeContent() {
 
 @Composable
 fun RecordCalendar(
+    modifier: Modifier = Modifier,
     calendarState: CalendarState = rememberCalendarState(),
     recordStatus: Map<LocalDate, HomeViewModel.RecordStatus> = emptyMap(),
     onDayClick: (LocalDate) -> Unit = {}
 ) {
     val dayOfWeek = remember { daysOfWeek() }
 
-    HorizontalCalendar(
-        state = calendarState,
-        dayContent = {
-            val record = recordStatus[it.date]
-            Day(
-                day = it,
-                onDayClick = onDayClick,
-                hasDietRecord = record?.hasDietRecord == true,
-                hasSportHistory = record?.hasSportHistory == true
-            )
-        },
-        monthHeader = { DaysOfWeekTitle(daysOfWeek = dayOfWeek) }
-    )
+    Card(
+        modifier = modifier
+    ) {
+        HorizontalCalendar(
+            modifier = Modifier.padding(8.dp),
+            state = calendarState,
+            dayContent = {
+                val record = recordStatus[it.date]
+                Day(
+                    day = it,
+                    onDayClick = onDayClick,
+                    hasDietRecord = record?.hasDietRecord == true,
+                    hasSportHistory = record?.hasSportHistory == true
+                )
+            },
+            monthHeader = { DaysOfWeekTitle(daysOfWeek = dayOfWeek) }
+        )
+    }
+
 }
 
 @Composable
