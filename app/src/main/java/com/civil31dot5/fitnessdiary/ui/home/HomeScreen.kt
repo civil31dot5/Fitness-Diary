@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -57,7 +58,7 @@ fun HomeRoute(
     onDayClick: (LocalDate) -> Unit = {},
     onAddDietClick: () -> Unit = {}
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val recordStatus by viewModel.recordStatus.collectAsStateWithLifecycle()
 
     val currentMonth = remember { YearMonth.now() }
     val startMonth = remember { currentMonth.minusMonths(100) }
@@ -80,7 +81,7 @@ fun HomeRoute(
 
     HomeContent(
         calendarState,
-        uiState.recordStatus,
+        recordStatus,
         onDayClick,
         onAddDietClick
     )
@@ -155,7 +156,8 @@ fun RecordCalendar(
                     day = it,
                     onDayClick = onDayClick,
                     hasDietRecord = record?.hasDietRecord == true,
-                    hasSportHistory = record?.hasSportHistory == true
+                    hasSportHistory = record?.hasSportHistory == true,
+                    hasBodyShapeRecord = record?.hasBodyShapeRecord == true
                 )
             },
             monthHeader = { DaysOfWeekTitle(daysOfWeek = dayOfWeek) }
@@ -191,6 +193,7 @@ fun Day(
     day: CalendarDay = CalendarDay(LocalDate.now(), DayPosition.MonthDate),
     hasDietRecord: Boolean = false,
     hasSportHistory: Boolean = false,
+    hasBodyShapeRecord: Boolean = false,
     onDayClick: (LocalDate) -> Unit = {}
 ) {
     Box(
@@ -215,7 +218,8 @@ fun Day(
             Row(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 4.dp)
+                    .padding(bottom = 4.dp),
+                horizontalArrangement = Arrangement.spacedBy(2.dp)
             ) {
                 if (hasDietRecord) {
                     Image(
@@ -228,6 +232,14 @@ fun Day(
                 if (hasSportHistory) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_sports),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
+                        modifier = Modifier.size(15.dp)
+                    )
+                }
+                if (hasBodyShapeRecord){
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_monitor_weight),
                         contentDescription = null,
                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
                         modifier = Modifier.size(15.dp)

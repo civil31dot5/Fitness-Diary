@@ -1,5 +1,6 @@
 package com.civil31dot5.fitnessdiary.domain.usecase
 
+import com.civil31dot5.fitnessdiary.domain.usecase.bodyshape.GetMonthBodyShapeRecordUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.diet.GetMonthDietRecordUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetMonthStravaSportRecordUseCase
 import kotlinx.coroutines.flow.Flow
@@ -10,15 +11,17 @@ import javax.inject.Inject
 
 class GetMonthRecordStatusUseCase @Inject constructor(
     private val getMonthDietRecordUseCase: GetMonthDietRecordUseCase,
-    private val getMonthStravaSportRecordUseCase: GetMonthStravaSportRecordUseCase
+    private val getMonthStravaSportRecordUseCase: GetMonthStravaSportRecordUseCase,
+    private val getMonthBodyShapeRecordUseCase: GetMonthBodyShapeRecordUseCase
 ) {
 
     operator fun invoke(month: YearMonth): Flow<Map<LocalDate, RecordStatus>> {
 
         return combine(
             getMonthDietRecordUseCase.invoke(month),
-            getMonthStravaSportRecordUseCase.invoke(month)
-        ){ dietRecords, sportHistory ->
+            getMonthStravaSportRecordUseCase.invoke(month),
+            getMonthBodyShapeRecordUseCase.invoke(month)
+        ){ dietRecords, sportHistory, bodyShapeRecord ->
 
             val recordStatus = mutableMapOf<LocalDate, RecordStatus>()
 
@@ -30,7 +33,6 @@ class GetMonthRecordStatusUseCase @Inject constructor(
                 } else {
                     recordStatus[it.dateTime.toLocalDate()] = RecordStatus(hasDietRecord = true)
                 }
-
             }
 
             sportHistory.forEach {
@@ -44,6 +46,16 @@ class GetMonthRecordStatusUseCase @Inject constructor(
                 }
             }
 
+            bodyShapeRecord.forEach{
+                if (recordStatus.containsKey(it.dateTime.toLocalDate())) {
+                    recordStatus[it.dateTime.toLocalDate()] =
+                        recordStatus[it.dateTime.toLocalDate()]!!.copy(hasBodyShapeRecord = true)
+                } else {
+                    recordStatus[it.dateTime.toLocalDate()] =
+                        RecordStatus(hasBodyShapeRecord = true)
+                }
+            }
+
             return@combine recordStatus
         }
 
@@ -53,5 +65,6 @@ class GetMonthRecordStatusUseCase @Inject constructor(
 
 data class RecordStatus(
     val hasDietRecord: Boolean = false,
-    val hasSportHistory: Boolean = false
+    val hasSportHistory: Boolean = false,
+    val hasBodyShapeRecord: Boolean = false
 )

@@ -1,9 +1,12 @@
 package com.civil31dot5.fitnessdiary.ui.home
 
+import com.civil31dot5.fitnessdiary.domain.model.BodyShapeRecord
 import com.civil31dot5.fitnessdiary.domain.model.DietRecord
 import com.civil31dot5.fitnessdiary.domain.model.RecordImage
 import com.civil31dot5.fitnessdiary.domain.model.StravaSportRecord
 import com.civil31dot5.fitnessdiary.domain.usecase.GetMonthRecordStatusUseCase
+import com.civil31dot5.fitnessdiary.domain.usecase.bodyshape.GetBodyShapeRecordUseCase
+import com.civil31dot5.fitnessdiary.domain.usecase.bodyshape.GetMonthBodyShapeRecordUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.diet.GetMonthDietRecordUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetMonthStravaSportRecordUseCase
 import com.civil31dot5.fitnessdiary.testing.repository.TestRecordRepository
@@ -31,14 +34,19 @@ class HomeViewModelTest {
     private val testRecordRepository = TestRecordRepository()
     private val testStravaRepository = TestStravaRepository()
 
+
     private val getMonthDietRecordUseCase = GetMonthDietRecordUseCase(testRecordRepository)
     private val getMonthStravaSportRecordUseCase =
         GetMonthStravaSportRecordUseCase(testStravaRepository)
+    private val getMonthBodyShapeRecordUseCase = GetMonthBodyShapeRecordUseCase(
+        GetBodyShapeRecordUseCase(testRecordRepository)
+    )
 
     private val getMonthRecordStatusUseCase =
         GetMonthRecordStatusUseCase(
             getMonthDietRecordUseCase,
-            getMonthStravaSportRecordUseCase
+            getMonthStravaSportRecordUseCase,
+            getMonthBodyShapeRecordUseCase
         )
 
     private lateinit var viewModel: HomeViewModel
@@ -49,11 +57,11 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun uiState_dietAndSportRecordAtSameDate() = runTest {
+    fun uiState_recordAtSameDate() = runTest {
 
-        val collectJob = launch(UnconfinedTestDispatcher()) { viewModel.uiState.collect{} }
+        val collectJob = launch(UnconfinedTestDispatcher()) { viewModel.recordStatus.collect{} }
 
-        val targetDate = LocalDate.of(2023,7,16)
+        val targetDate = LocalDate.of(2023, 7, 16)
 
         testRecordRepository.setDietRecordTestData(
             listOf(
@@ -72,6 +80,23 @@ class HomeViewModelTest {
                             note = "備註(DietImage)"
                         )
                     )
+                )
+            )
+        )
+
+        testRecordRepository.setBodyShapeRecordTestData(
+            listOf(
+                BodyShapeRecord(
+                    id = "id1",
+                    name = "",
+                    dateTime = LocalDateTime.of(
+                        targetDate,
+                        LocalTime.of(0,0)
+                    ),
+                    images = emptyList(),
+                    weight = 80.0,
+                    bodyFatPercentage = 20.0,
+                    note = ""
                 )
             )
         )
@@ -95,14 +120,15 @@ class HomeViewModelTest {
 
         viewModel.selectYearMonth(YearMonth.now())
 
-        val uiState = viewModel.uiState.value
+        val recordStatus = viewModel.recordStatus.value
 
-        assertTrue(uiState.recordStatus.containsKey(targetDate))
+        assertTrue(recordStatus.containsKey(targetDate))
 
-        val recordStatue = uiState.recordStatus[targetDate]
+        val recordStatue = recordStatus[targetDate]
 
         assertTrue(recordStatue!!.hasSportHistory)
         assertTrue(recordStatue.hasDietRecord)
+        assertTrue(recordStatue.hasBodyShapeRecord)
 
         collectJob.cancel()
     }
