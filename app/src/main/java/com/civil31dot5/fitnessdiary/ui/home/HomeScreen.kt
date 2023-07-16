@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.civil31dot5.fitnessdiary.R
+import com.civil31dot5.fitnessdiary.domain.usecase.RecordStatus
 import com.civil31dot5.fitnessdiary.ui.theme.FitnessDiaryTheme
 import com.civil31dot5.fitnessdiary.ui.utility.AddRecordButton
 import com.kizitonwose.calendar.compose.CalendarState
@@ -88,7 +89,7 @@ fun HomeRoute(
 @Composable
 fun HomeContent(
     calendarState: CalendarState = rememberCalendarState(),
-    recordStatus: Map<LocalDate, HomeViewModel.RecordStatus> = emptyMap(),
+    recordStatus: Map<LocalDate, RecordStatus> = emptyMap(),
     onDayClick: (LocalDate) -> Unit = {},
     onAddDietClick: () -> Unit = {}
 ) {
@@ -137,7 +138,7 @@ fun PreviewHomeContent() {
 fun RecordCalendar(
     modifier: Modifier = Modifier,
     calendarState: CalendarState = rememberCalendarState(),
-    recordStatus: Map<LocalDate, HomeViewModel.RecordStatus> = emptyMap(),
+    recordStatus: Map<LocalDate, RecordStatus> = emptyMap(),
     onDayClick: (LocalDate) -> Unit = {}
 ) {
     val dayOfWeek = remember { daysOfWeek() }

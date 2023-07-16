@@ -3,6 +3,7 @@ package com.civil31dot5.fitnessdiary.ui.home
 import com.civil31dot5.fitnessdiary.domain.model.DietRecord
 import com.civil31dot5.fitnessdiary.domain.model.RecordImage
 import com.civil31dot5.fitnessdiary.domain.model.StravaSportRecord
+import com.civil31dot5.fitnessdiary.domain.usecase.GetMonthRecordStatusUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.diet.GetMonthDietRecordUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetMonthStravaSportRecordUseCase
 import com.civil31dot5.fitnessdiary.testing.repository.TestRecordRepository
@@ -34,14 +35,17 @@ class HomeViewModelTest {
     private val getMonthStravaSportRecordUseCase =
         GetMonthStravaSportRecordUseCase(testStravaRepository)
 
+    private val getMonthRecordStatusUseCase =
+        GetMonthRecordStatusUseCase(
+            getMonthDietRecordUseCase,
+            getMonthStravaSportRecordUseCase
+        )
+
     private lateinit var viewModel: HomeViewModel
 
     @Before
     fun setUp() {
-        viewModel = HomeViewModel(
-            getMonthDietRecordUseCase,
-            getMonthStravaSportRecordUseCase
-        )
+        viewModel = HomeViewModel(getMonthRecordStatusUseCase)
     }
 
     @Test
