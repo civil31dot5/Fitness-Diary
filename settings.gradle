@@ -17,3 +17,4 @@ rootProject.name = "FitnessDiary"
 include ':app'
 include ':domain'
 include ':data'
+include ':testing'

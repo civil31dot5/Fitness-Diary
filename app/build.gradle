@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         applicationId "com.civil31dot5.fitnessdiary"
-        minSdk 24
+        minSdk 26
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -73,6 +73,8 @@ android {
 dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':data')
+    testImplementation project(path: ':testing')
+    androidTestImplementation project(path: ':testing')
 
     implementation libs.lifecycle.runtime.ktx
     implementation libs.activity.compose
@@ -85,8 +87,7 @@ dependencies {
     implementation libs.lifecycle.compose.viewmodel
     implementation libs.lifecycle.runtime.compose
     implementation libs.navigation.compose
-    androidTestImplementation platform(libs.compose.bom)
-    androidTestImplementation libs.ui.test.junit4
+
     debugImplementation libs.ui.tooling
     debugImplementation libs.ui.test.manifest
 
@@ -103,7 +104,6 @@ dependencies {
 
     implementation libs.navigation.fragment.ktx
     implementation libs.navigation.ui.ktx
-    androidTestImplementation libs.navigation.testing
 
     implementation platform(libs.firebase.bom)
     implementation libs.firebase.analytics.ktx
@@ -112,7 +112,6 @@ dependencies {
     implementation libs.room.runtime
     kapt libs.room.compiler
     implementation libs.room.ktx
-    testImplementation libs.room.testing
 
     implementation libs.kotlinx.coroutines.android
 
@@ -127,7 +126,6 @@ dependencies {
     implementation libs.accompanist.permissions
 
     implementation libs.work.runtime.ktx
-    androidTestImplementation libs.work.testing
     implementation libs.androidx.hilt.work
     kapt libs.androidx.hilt.compiler
     implementation libs.hilt.navigation.compose
@@ -138,9 +136,7 @@ dependencies {
     implementation libs.appcompat
     implementation libs.material
     implementation libs.constraintlayout
-    testImplementation libs.junit
-    androidTestImplementation libs.androidx.junit
-    androidTestImplementation libs.espresso
+
 }
 
 kapt {

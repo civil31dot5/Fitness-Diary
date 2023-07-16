@@ -40,9 +40,15 @@ coil-compose = "2.4.0"
 accompanist-permissions = "0.31.5-beta"
 navigation-compose = "2.6.0"
 splashscreen = "1.0.0-beta02"
+androidxTestRules = "1.5.0"
+androidxTestRunner = "1.5.1"
+turbine = "0.12.1"
+androidxTestCore = "1.5.0"
+
 [libraries]
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity" }
 fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment" }
 fragment-testing = { group = "androidx.fragment", name = "fragment-testing", version.ref = "fragment" }
@@ -76,9 +82,12 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 junit = { module = "junit:junit", version.ref = "junit" }
 androidx-junit = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
+androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidxTestCore" }
 espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
 javax-inject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
 openid-appauth = { module = "net.openid:appauth", version.ref = "openidAppauth" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTestRules" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
@@ -106,6 +115,10 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose"}
 splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test"}
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
