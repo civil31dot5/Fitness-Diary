@@ -35,7 +35,9 @@ class TestRecordRepository: RecordRepository {
         return dietRecordTestData
     }
 
+    var recentDeleteDietRecord:DietRecord? = null
     override suspend fun deleteDietRecord(record: DietRecord) {
+        recentDeleteDietRecord = record
         dietRecordTestData.update { it.toMutableList().also { it.remove(record) } }
     }
 
