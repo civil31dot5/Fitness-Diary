@@ -9,20 +9,22 @@ import kotlinx.coroutines.flow.update
 import java.time.LocalDate
 import java.time.YearMonth
 
-class TestRecordRepository: RecordRepository {
+class TestRecordRepository : RecordRepository {
 
     private val dietRecordTestData = MutableStateFlow<List<DietRecord>>(emptyList())
     private val bodyShapeRecordTestData = MutableStateFlow<List<BodyShapeRecord>>(emptyList())
 
-    fun setDietRecordTestData(data: List<DietRecord>){
+    fun setDietRecordTestData(data: List<DietRecord>) {
         dietRecordTestData.update { data }
     }
 
-    fun setBodyShapeRecordTestData(data: List<BodyShapeRecord>){
+    fun setBodyShapeRecordTestData(data: List<BodyShapeRecord>) {
         bodyShapeRecordTestData.update { data }
     }
 
+    var recentAddDietRecord: DietRecord? = null
     override suspend fun addDietRecord(record: DietRecord): Result<Unit> {
+        recentAddDietRecord = record
         dietRecordTestData.update { it + record }
         return Result.success(Unit)
     }
@@ -35,7 +37,7 @@ class TestRecordRepository: RecordRepository {
         return dietRecordTestData
     }
 
-    var recentDeleteDietRecord:DietRecord? = null
+    var recentDeleteDietRecord: DietRecord? = null
     override suspend fun deleteDietRecord(record: DietRecord) {
         recentDeleteDietRecord = record
         dietRecordTestData.update { it.toMutableList().also { it.remove(record) } }
@@ -46,7 +48,7 @@ class TestRecordRepository: RecordRepository {
     }
 
 
-    var recentAddBodyShapeRecord:BodyShapeRecord? = null
+    var recentAddBodyShapeRecord: BodyShapeRecord? = null
     override suspend fun addBodyShapeRecord(record: BodyShapeRecord): Result<Unit> {
         recentAddBodyShapeRecord = record
         bodyShapeRecordTestData.update { it + record }
@@ -57,7 +59,7 @@ class TestRecordRepository: RecordRepository {
         return bodyShapeRecordTestData
     }
 
-    var recentDeleteBodyShapeRecord:BodyShapeRecord? = null
+    var recentDeleteBodyShapeRecord: BodyShapeRecord? = null
     override suspend fun deleteBodyShapeRecord(record: BodyShapeRecord) {
         recentDeleteBodyShapeRecord = record
         bodyShapeRecordTestData.update { it.toMutableList().also { it.remove(record) } }
