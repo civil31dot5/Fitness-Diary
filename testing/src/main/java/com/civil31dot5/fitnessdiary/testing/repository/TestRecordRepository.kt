@@ -52,7 +52,9 @@ class TestRecordRepository: RecordRepository {
         return bodyShapeRecordTestData
     }
 
+    var recentDeleteBodyShapeRecord:BodyShapeRecord? = null
     override suspend fun deleteBodyShapeRecord(record: BodyShapeRecord) {
+        recentDeleteBodyShapeRecord = record
         bodyShapeRecordTestData.update { it.toMutableList().also { it.remove(record) } }
 
     }
