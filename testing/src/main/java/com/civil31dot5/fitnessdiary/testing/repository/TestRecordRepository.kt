@@ -43,7 +43,10 @@ class TestRecordRepository: RecordRepository {
         return dietRecordTestData
     }
 
+
+    var recentAddBodyShapeRecord:BodyShapeRecord? = null
     override suspend fun addBodyShapeRecord(record: BodyShapeRecord): Result<Unit> {
+        recentAddBodyShapeRecord = record
         bodyShapeRecordTestData.update { it + record }
         return Result.success(Unit)
     }
