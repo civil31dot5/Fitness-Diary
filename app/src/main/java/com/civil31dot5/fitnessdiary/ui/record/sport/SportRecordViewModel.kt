@@ -1,5 +1,6 @@
 package com.civil31dot5.fitnessdiary.ui.record.sport
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.civil31dot5.fitnessdiary.domain.model.StravaConnectStatus
@@ -59,7 +60,8 @@ class SportRecordViewModel @Inject constructor(
         refreshConnectStatus()
     }
 
-    private fun refreshConnectStatus() = viewModelScope.launch {
+    @VisibleForTesting
+    fun refreshConnectStatus() = viewModelScope.launch {
         _uiState.update { it.copy(hasConnectStrava = getStravaConnectStatusUseCase() == StravaConnectStatus.Connected) }
     }
 }
