@@ -119,8 +119,6 @@ dependencies {
 
     coreLibraryDesugaring libs.desugar.jdk.libs
     implementation libs.calendar.compose
-    implementation libs.glide
-    kapt libs.glide.compiler
     implementation libs.coil.compose
     implementation libs.mpandroidchart
     implementation libs.accompanist.permissions
