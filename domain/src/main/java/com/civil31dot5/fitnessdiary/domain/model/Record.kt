@@ -1,5 +1,6 @@
 package com.civil31dot5.fitnessdiary.domain.model
 
+import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDateTime
 import java.util.*
 
@@ -32,7 +33,7 @@ data class DietRecord(
     override val name: String,
     override val dateTime: LocalDateTime,
     override val note: String,
-    val images: List<RecordImage>
+    val images: ImmutableList<RecordImage>
 ) : Record(id, name, dateTime, note)
 
 /**
@@ -49,7 +50,7 @@ data class FeelingRecord(
     override val name: String,
     override val dateTime: LocalDateTime,
     override val note: String,
-    val images: List<RecordImage>,
+    val images: ImmutableList<RecordImage>,
 ) : Record(id, name, dateTime, note)
 
 /**
@@ -68,7 +69,7 @@ data class BodyShapeRecord(
     override val name: String,
     override val dateTime: LocalDateTime,
     override val note: String,
-    val images: List<RecordImage>,
+    val images: ImmutableList<RecordImage>,
     val weight: Double,
     val bodyFatPercentage: Double? = null,
 ) : Record(id, name, dateTime, note)

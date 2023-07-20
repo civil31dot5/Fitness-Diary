@@ -5,6 +5,8 @@ import com.civil31dot5.fitnessdiary.domain.model.YearWeek
 import com.civil31dot5.fitnessdiary.domain.model.toYearWeek
 import com.civil31dot5.fitnessdiary.domain.usecase.bodyshape.GetBodyShapeRecordUseCase
 import com.civil31dot5.fitnessdiary.domain.usecase.sport.GetStravaSportRecordUseCase
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -19,7 +21,7 @@ class GetWeekReportUseCase @Inject constructor(
     private val getBodyShapeRecordUseCase: GetBodyShapeRecordUseCase
 ) {
 
-    operator fun invoke(numOfWeeks: Int): Flow<List<WeekReport>> {
+    operator fun invoke(numOfWeeks: Int): Flow<ImmutableList<WeekReport>> {
         val currentWeekFirstDate =
             LocalDate.now().with(WeekFields.ISO.dayOfWeek(), DayOfWeek.MONDAY.value.toLong())
 
@@ -54,7 +56,7 @@ class GetWeekReportUseCase @Inject constructor(
                         weekLastWeightRecord?.bodyFatPercentage,
                         weekSportCalories
                     )
-                }
+                }.toPersistentList()
 
             }
     }

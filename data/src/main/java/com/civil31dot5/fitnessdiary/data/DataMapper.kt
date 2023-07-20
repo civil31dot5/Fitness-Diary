@@ -5,6 +5,7 @@ import com.civil31dot5.fitnessdiary.domain.model.BodyShapeRecord
 import com.civil31dot5.fitnessdiary.domain.model.DietRecord
 import com.civil31dot5.fitnessdiary.domain.model.RecordImage
 import com.civil31dot5.fitnessdiary.domain.model.StravaSportRecord
+import kotlinx.collections.immutable.toPersistentList
 
 
 fun DietRecord.toDietRecordEntity(): DietRecordEntity {
@@ -21,7 +22,7 @@ fun DietRecordWithImages.toDietRecord(): DietRecord {
         dietRecord.name,
         dietRecord.dateTime,
         dietRecord.note,
-        images.map { it.toRecordImage() }
+        images.map { it.toRecordImage() }.toPersistentList()
     )
 }
 
@@ -47,7 +48,7 @@ fun BodyShapeRecordWithImages.toBodyShapeRecord(): BodyShapeRecord {
         bodyShapeRecord.name,
         bodyShapeRecord.dateTime,
         bodyShapeRecord.note,
-        images.map { it.toRecordImage() },
+        images.map { it.toRecordImage() }.toPersistentList(),
         bodyShapeRecord.weight,
         bodyShapeRecord.bodyFatPercentage
     )

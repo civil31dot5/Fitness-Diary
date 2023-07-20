@@ -74,6 +74,7 @@ dependencies {
     androidTestImplementation libs.work.testing
     implementation libs.androidx.hilt.work
     kapt libs.androidx.hilt.compiler
+    implementation libs.kotlinx.collections.immutable
 
     implementation libs.zip
 

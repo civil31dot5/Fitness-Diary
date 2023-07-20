@@ -5,6 +5,7 @@ import com.civil31dot5.fitnessdiary.domain.model.BodyShapeRecord
 import com.civil31dot5.fitnessdiary.domain.usecase.bodyshape.AddBodyShapeRecordUseCase
 import com.civil31dot5.fitnessdiary.ui.base.AddPhotoRecordViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -44,7 +45,7 @@ class AddBodyShapeRecordViewModel @Inject constructor(
             basicRecordData.value.name,
             basicRecordData.value.dateTime,
             basicRecordData.value.note,
-            photoRecordData.value.selectedPhotos,
+            photoRecordData.value.selectedPhotos.toPersistentList(),
             _weightFlow.value.toDouble(),
             _fatRateFlow.value.toDoubleOrNull()
         )
