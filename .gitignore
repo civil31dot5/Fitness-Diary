@@ -55,3 +55,4 @@ app/release/output.json
 .idea/codeStyles/
 local.properties
 keystore.properties
+google-services.json
