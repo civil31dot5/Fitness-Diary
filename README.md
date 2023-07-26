@@ -29,6 +29,8 @@ Fitness Diary是一個減重紀錄APP
 - [Gradle version catalogs](https://developer.android.com/build/migrate-to-catalogs)
 
 ## Screenshot
-![home](/images/home.png)
-![drawer](/images/drawer.png)
-![sport](/images/sport_record.png)
+<p>
+  <img src="/images/home.png" width="250" />
+  <img src="/images/drawer.png" width="250" />
+  <img src="/images/sport_record.png" width="250" />
+</p>
