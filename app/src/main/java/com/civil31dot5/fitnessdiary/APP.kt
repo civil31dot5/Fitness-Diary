@@ -17,6 +17,9 @@ class APP : Application(), Configuration.Provider {
         super.onCreate()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+        } else {
+            Timber.plant(TimberReleaseTree())
+            Thread.setDefaultUncaughtExceptionHandler { t, e -> Timber.e(e) }
         }
     }
 
