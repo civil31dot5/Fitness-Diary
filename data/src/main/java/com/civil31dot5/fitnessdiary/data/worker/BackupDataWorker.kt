@@ -1,7 +1,9 @@
 package com.civil31dot5.fitnessdiary.data.worker
 
 import android.content.Context
+import android.content.pm.ServiceInfo
 import android.net.Uri
+import android.os.Build
 import androidx.hilt.work.HiltWorker
 import androidx.lifecycle.Observer
 import androidx.work.CoroutineWorker
@@ -88,10 +90,18 @@ class BackupDataWorker @AssistedInject constructor(
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
-        return ForegroundInfo(
-            notificationId,
-            WorkNotificationUtil.createNotification(applicationContext, "備份資料中...")
-        )
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ForegroundInfo(
+                notificationId,
+                WorkNotificationUtil.createNotification(applicationContext, "備份資料中..."),
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+            )
+        } else {
+            ForegroundInfo(
+                notificationId,
+                WorkNotificationUtil.createNotification(applicationContext, "備份資料中...")
+            )
+        }
     }
 
     override suspend fun doWork(): Result {

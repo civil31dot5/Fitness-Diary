@@ -1,6 +1,8 @@
 package com.civil31dot5.fitnessdiary.data.worker
 
 import android.content.Context
+import android.content.pm.ServiceInfo
+import android.os.Build
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
@@ -22,10 +24,18 @@ class SyncStravaSportHistoryWorker @AssistedInject constructor(
     private val notificationId = 1001
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
-        return ForegroundInfo(
-            notificationId,
-            WorkNotificationUtil.createNotification(applicationContext, "同步Strava中...")
-        )
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ForegroundInfo(
+                notificationId,
+                WorkNotificationUtil.createNotification(applicationContext, "同步Strava中..."),
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+            )
+        } else {
+            ForegroundInfo(
+                notificationId,
+                WorkNotificationUtil.createNotification(applicationContext, "同步Strava中...")
+            )
+        }
     }
 
     override suspend fun doWork(): Result {
