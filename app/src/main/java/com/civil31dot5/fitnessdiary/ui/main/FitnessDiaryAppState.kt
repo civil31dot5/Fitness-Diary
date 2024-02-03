@@ -18,11 +18,11 @@ import com.civil31dot5.fitnessdiary.ui.record.bodyshape.bodyShapeScreenRoute
 import com.civil31dot5.fitnessdiary.ui.record.diet.addDietRecordRoute
 import com.civil31dot5.fitnessdiary.ui.record.diet.dietRecordHistoryRoute
 import com.civil31dot5.fitnessdiary.ui.record.sport.sportRecordRoute
+import com.civil31dot5.fitnessdiary.ui.record.weekdiet.weekDietRoute
 import com.civil31dot5.fitnessdiary.ui.report.dayRecordRoute
 import com.civil31dot5.fitnessdiary.ui.report.reportRoute
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @Composable
 fun rememberFitnessDiaryAppState(
@@ -70,6 +70,7 @@ class FitnessDiaryAppState(
             addDietRecordRoute -> ScreenConfig.ADD_DIET_RECORD
             addBodyShapeRecordRoute -> ScreenConfig.ADD_BODY_SHAPE
             dayRecordRoute -> ScreenConfig.DAY_REPORT
+            weekDietRoute -> ScreenConfig.WEEK_DIET
             else -> null
         }
 

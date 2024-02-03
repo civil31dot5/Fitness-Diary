@@ -19,4 +19,5 @@
     <string name="backup_data_success">備份資料成功</string>
     <string name="restore_data_success">還原資料成功，請重啟APP</string>
     <string name="task_fail_try_again">操作失敗，請再試一次</string>
+    <string name="week_diet">週飲食</string>
 </resources>

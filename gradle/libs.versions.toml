@@ -45,6 +45,7 @@ androidxTestRunner = "1.5.1"
 turbine = "0.12.1"
 androidxTestCore = "1.5.0"
 crashlyticsPlugin = "2.9.9"
+jvziyaoyao-imageviewer = "1.0.2-alpha.8"
 
 [libraries]
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
@@ -60,7 +61,7 @@ navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx",
 navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigation" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBOM" }
 firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx"}
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
@@ -115,11 +116,12 @@ zip = { module = "net.lingala.zip4j:zip4j", version.ref = "zip" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHilt" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose"}
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test"}
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
+jvziyaoyao-imageviewer = { module = "com.github.jvziyaoyao:ImageViewer", version.ref = "jvziyaoyao-imageviewer" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -130,7 +132,7 @@ hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndro
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesPlugin" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigationSafeargsPlugin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerializationPlugin" }
-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlyticsPlugin"}
+crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlyticsPlugin" }
 
 [bundles]
 

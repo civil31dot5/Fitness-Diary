@@ -13,6 +13,7 @@ import com.civil31dot5.fitnessdiary.ui.record.diet.addDietRecordScreen
 import com.civil31dot5.fitnessdiary.ui.record.diet.dietRecordHistoryScreen
 import com.civil31dot5.fitnessdiary.ui.record.diet.navToAddDietRecord
 import com.civil31dot5.fitnessdiary.ui.record.sport.sportRecordScreen
+import com.civil31dot5.fitnessdiary.ui.record.weekdiet.weekDietRoute
 import com.civil31dot5.fitnessdiary.ui.report.ReportScreen
 import com.civil31dot5.fitnessdiary.ui.report.dayRecordScreen
 import com.civil31dot5.fitnessdiary.ui.report.navToDayRecordRoute
@@ -60,5 +61,6 @@ fun FitnessDiaryNavHost(
 
         backupRestoreDataScreen()
 
+        weekDietRoute()
     }
 }

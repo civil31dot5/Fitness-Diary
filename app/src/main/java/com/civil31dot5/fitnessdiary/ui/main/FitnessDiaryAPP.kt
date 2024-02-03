@@ -17,7 +17,6 @@ import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -95,6 +94,7 @@ fun getTopLevelScreenIconResId(screenConfig: ScreenConfig): Int {
         ScreenConfig.BODY_SHAPE -> R.drawable.ic_monitor_weight
         ScreenConfig.REPORT -> R.drawable.ic_analytics
         ScreenConfig.BACKUP_RESTORE -> R.drawable.ic_import_export
+        ScreenConfig.WEEK_DIET -> R.drawable.ic_food_bank
         else -> throw IllegalStateException("wrong screen")
     }
 }

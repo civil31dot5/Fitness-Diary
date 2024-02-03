@@ -45,6 +45,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -74,6 +75,7 @@ android {
 dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':data')
+    implementation project(path: ':common')
     testImplementation project(path: ':testing')
     androidTestImplementation project(path: ':testing')
 
@@ -136,6 +138,8 @@ dependencies {
     implementation libs.appcompat
     implementation libs.material
     implementation libs.constraintlayout
+
+    implementation libs.jvziyaoyao.imageviewer
 
 }
 

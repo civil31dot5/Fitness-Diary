@@ -49,6 +49,7 @@ android {
 dependencies {
 
     implementation project(path: ':domain')
+    implementation project(path: ':common')
     implementation libs.hilt.android
     kapt libs.hilt.compiler
 

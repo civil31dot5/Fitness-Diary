@@ -8,6 +8,7 @@ import com.civil31dot5.fitnessdiary.ui.record.bodyshape.bodyShapeScreenRoute
 import com.civil31dot5.fitnessdiary.ui.record.diet.addDietRecordRoute
 import com.civil31dot5.fitnessdiary.ui.record.diet.dietRecordHistoryRoute
 import com.civil31dot5.fitnessdiary.ui.record.sport.sportRecordRoute
+import com.civil31dot5.fitnessdiary.ui.record.weekdiet.weekDietRoute
 import com.civil31dot5.fitnessdiary.ui.report.dayRecordRoute
 import com.civil31dot5.fitnessdiary.ui.report.reportRoute
 
@@ -27,6 +28,12 @@ enum class ScreenConfig(
     DIET_RECORD(
         route = dietRecordHistoryRoute,
         titleResId = R.string.diet_record,
+        isTopLevel = true,
+        showTopBar = true
+    ),
+    WEEK_DIET(
+        route = weekDietRoute,
+        titleResId = R.string.week_diet,
         isTopLevel = true,
         showTopBar = true
     ),
