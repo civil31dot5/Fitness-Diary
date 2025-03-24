@@ -135,18 +135,22 @@ class RecordRepositoryImpl @Inject constructor(
             .map { it.map { it.toBodyShapeRecord() } }
     }
 
-    override suspend fun createWeekDietImage(from: LocalDate, to: LocalDate): File = withContext(Dispatchers.IO){
+    override suspend fun createWeekDietImage(from: LocalDate, to: LocalDate): File? = withContext(Dispatchers.IO){
         val records = getDietRecords(from, to).first()
         return@withContext createWeekDietImage(records)
     }
 
-    private fun createWeekDietImage(dietRecords: List<DietRecord>): File {
+    private fun createWeekDietImage(dietRecords: List<DietRecord>): File? {
 
         val imageSize = 200
         val borderLineWidth = 2
         val titleHeight = 50
 
         val groupedRecords = dietRecords.groupBy { it.dateTime.toLocalDate() }
+
+        if (groupedRecords.isEmpty()) {
+            return null
+        }
 
         val imageWidth =
             groupedRecords.size * imageSize + (groupedRecords.size + 1) * borderLineWidth
